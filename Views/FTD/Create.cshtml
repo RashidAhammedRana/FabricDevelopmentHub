@@ -1,0 +1,329 @@
+﻿@model FabricDevelopmentHub.ViewModels.FTDViewModel
+
+@{
+    ViewData["Title"] = "Create FTD";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* Full page */
+    .main-content {
+        padding: 0 !important;
+    }
+
+    .ftd-page {
+        width: 100%;
+        min-height: calc(100vh - 0px);
+        margin: 0;
+    }
+
+    .ftd-card {
+        width: 100%;
+        min-height: 100vh;
+        margin: 0;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Existing custom Fabric color */
+    .bg-fabric {
+        background-color: #0f8996 !important;
+    }
+
+    .ftd-header {
+        flex-shrink: 0;
+        padding: 8px 15px;
+    }
+
+        .ftd-header h5 {
+            font-size: 20px;
+            font-weight: 400;
+        }
+
+    .ftd-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .ftd-form {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .ftd-form-fields {
+        flex-shrink: 0;
+    }
+
+    /* Buttons stay at bottom */
+    .ftd-actions {
+        margin-top: auto;
+        padding-top: 20px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .btn-fabric {
+        background-color: #0f8996 !important;
+        border-color: #0f8996 !important;
+        color: #fff !important;
+    }
+
+        .btn-fabric:hover {
+            background-color: #0c727d !important;
+            border-color: #0c727d !important;
+            color: #fff !important;
+        }
+</style>
+
+
+<div class="ftd-page">
+
+    <div class="card ftd-card">
+
+        <!-- TITLE -->
+        <div class="card-header bg-fabric text-white text-center ftd-header">
+            <h5 class="mb-0">
+                Fabric Technical Data
+            </h5>
+        </div>
+
+
+        <!-- BODY -->
+        <div class="ftd-body">
+
+            <form asp-action="Create"
+                  method="post"
+                  class="ftd-form">
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3">
+                </div>
+
+
+                <!-- FORM FIELDS -->
+                <div class="row g-3 ftd-form-fields">
+
+                    <!-- FTD NO -->
+                    <div class="col-lg-2 col-md-3 col-sm-6">
+
+                        <label asp-for="TblFtdMaster.FtdNo"
+                               class="form-label">
+
+                            FTD No.
+                            <span class="text-danger">*</span>
+
+                        </label>
+
+                        <input asp-for="TblFtdMaster.FtdNo"
+                               type="text"
+                               class="form-control"
+                               readonly />
+
+                        <span asp-validation-for="TblFtdMaster.FtdNo"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- Control -->
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+
+                        <label asp-for="TblFtdMaster.Control"
+                               class="form-label">
+
+                            Control
+                            <span class="text-danger">*</span>
+
+                        </label>
+
+                        <select asp-for="TblFtdMaster.Control"
+                                asp-items="ViewBag.ControlList"
+                                class="form-select">
+
+                            <option value="">
+                                -- Select Control --
+                            </option>
+
+                        </select>
+
+                        <span asp-validation-for="TblFtdMaster.Control"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- CONTROL -->
+                    <div class="col-lg-2 col-md-3 col-sm-6">
+
+                        <label asp-for="TblFtdMaster.Company"
+                               class="form-label">
+
+                            LC Company
+                            <span class="text-danger">*</span>
+
+                        </label>
+
+                        <input asp-for="TblFtdMaster.Company"
+                               class="form-control" readonly/>
+
+                        <span asp-validation-for="TblFtdMaster.Company"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- INTERNAL REF -->
+                    <div class="col-lg-2 col-md-3 col-sm-6">
+
+                        <label asp-for="TblFtdMaster.BatchNo"
+                               class="form-label">
+
+                            Internal Ref. No.
+                            <span class="text-danger">*</span>
+
+                        </label>
+
+                        <input asp-for="TblFtdMaster.BatchNo"
+                               class="form-control" readonly/>
+
+                        <span asp-validation-for="TblFtdMaster.BatchNo"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- SYS REQ -->
+                    <div class="col-lg-1 col-md-3 col-sm-6">
+
+                        <label asp-for="TblFtdMaster.SysReq"
+                               class="form-label">
+
+                            Sys. Req.
+                            <span class="text-danger">*</span>
+
+                        </label>
+
+                        <input asp-for="TblFtdMaster.SysReq"
+                               class="form-control" readonly/>
+
+                        <span asp-validation-for="TblFtdMaster.SysReq"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- BUYER -->
+                    <div class="col-lg-1 col-md-3 col-sm-6">
+
+                        <label asp-for="TblFtdMaster.Buyer"
+                               class="form-label">
+
+                            Buyer
+                            <span class="text-danger">*</span>
+
+                        </label>
+
+                        <input asp-for="TblFtdMaster.Buyer"
+                               class="form-control" readonly/>
+
+                        <span asp-validation-for="TblFtdMaster.Buyer"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- STYLE REF -->
+                    <div class="col-lg-1 col-md-3 col-sm-6">
+
+                        <label asp-for="TblFtdMaster.StyleRef"
+                               class="form-label">
+
+                            Style Ref.
+                            <span class="text-danger">*</span>
+
+                        </label>
+
+                        <input asp-for="TblFtdMaster.StyleRef"
+                               class="form-control" readonly/>
+
+                        <span asp-validation-for="TblFtdMaster.StyleRef"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BOTTOM ACTIONS -->
+                <div class="ftd-actions">
+
+                    <a asp-action="FTDList"
+                       class="btn btn-outline-secondary">
+
+                        ← Back
+
+                    </a>
+
+                    <button type="submit" class="btn btn-fabric px-4">
+                        Save
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const inputs = document.querySelectorAll("input");
+
+        inputs.forEach(input => {
+
+            input.addEventListener("input", function () {
+
+                let validationSpan =
+                    document.querySelector(
+                        `[data-valmsg-for="${this.name}"]`
+                    );
+
+                if (validationSpan && this.value.trim() !== "") {
+                    validationSpan.textContent = "";
+                }
+
+            });
+
+        });
+
+    });
+
+</script>
+
+
+@section Scripts {
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}

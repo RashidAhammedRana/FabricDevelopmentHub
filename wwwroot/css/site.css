@@ -20,3 +20,17 @@ html {
 body {
   margin-bottom: 60px;
 }
+.bg-fabric {
+    background-color: #087f8c !important;
+}
+.btn-fabric {
+    background-color: #0f8996 !important;
+    border-color: #0f8996 !important;
+    color: #fff !important;
+}
+
+    .btn-fabric:hover {
+        background-color: #0c727d !important;
+        border-color: #0c727d !important;
+        color: #fff !important;
+    }
