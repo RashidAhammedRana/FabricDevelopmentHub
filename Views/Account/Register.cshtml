@@ -1,0 +1,451 @@
+﻿@model FabricDevelopmentHub.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register for a New Account";
+}
+
+<style>
+
+    /* ================================
+           REGISTER PAGE
+        ================================= */
+
+    .register-page {
+        min-height: calc(100vh - 40px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 30px;
+    }
+
+
+    /* ================================
+           REGISTER CARD
+        ================================= */
+
+    .register-card {
+        width: 520px;
+        padding: 38px 42px 30px 42px;
+        background: rgba(255, 255, 255, 0.97);
+        border-radius: 22px;
+        border: 1px solid #e3ecef;
+        box-shadow: 0 18px 45px rgba(0, 60, 80, 0.18), 0 5px 15px rgba(0, 0, 0, 0.06);
+        position: relative;
+        overflow: hidden;
+    }
+
+
+        /* ================================
+           TOP CURVED LINE
+        ================================= */
+
+        .register-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            border-radius: 22px 22px 0 0;
+            background: linear-gradient( 90deg, #087f8c, #16a085, #3aa6d0 );
+        }
+
+
+    /* ================================
+           TITLE
+        ================================= */
+
+    .register-title {
+        text-align: center;
+        color: #123d50;
+        font-size: 26px;
+        font-weight: 700;
+        margin-top: 5px;
+        margin-bottom: 7px;
+    }
+
+
+    .register-subtitle {
+        text-align: center;
+        color: #718891;
+        font-size: 13px;
+        margin-bottom: 30px;
+    }
+
+
+    /* ================================
+           FORM GROUP
+        ================================= */
+
+    .register-group {
+        margin-bottom: 21px;
+    }
+
+
+    /* ================================
+           LABEL
+        ================================= */
+
+    .register-label {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        color: #315767;
+        margin-bottom: 7px;
+    }
+
+
+    /* ================================
+           INPUT
+        ================================= */
+
+    .register-card .form-control,
+    .register-card .form-select {
+        width: 100%;
+        height: 47px;
+        padding: 10px 14px;
+        border-radius: 9px;
+        border: 1px solid #d4e1e6;
+        background: #f8fbfc;
+        color: #234858;
+        font-size: 14px;
+        transition: all .2s ease;
+        box-sizing: border-box;
+    }
+
+
+        .register-card .form-control::placeholder {
+            color: #9aadb5;
+        }
+
+
+        .register-card .form-control:hover,
+        .register-card .form-select:hover {
+            background: #ffffff;
+            border-color: #b8cfd7;
+        }
+
+
+        .register-card .form-control:focus,
+        .register-card .form-select:focus {
+            background: #ffffff;
+            border-color: #1596a5;
+            box-shadow: 0 0 0 3px rgba(21, 150, 165, 0.10);
+            outline: none;
+        }
+
+
+    /* ================================
+           VALIDATION
+        ================================= */
+
+    .register-card .text-danger {
+        font-size: 12px;
+        margin-top: 4px;
+        display: block;
+    }
+
+
+    /* ================================
+           BUTTON AREA
+        ================================= */
+
+    .register-buttons {
+        display: flex;
+        gap: 12px;
+        margin-top: 28px;
+    }
+
+
+    /* ================================
+           REGISTER BUTTON
+        ================================= */
+
+    .btn-register {
+        flex: 1;
+        height: 47px;
+        border: none;
+        border-radius: 9px;
+        background: linear-gradient( 135deg, #087f8c, #1596a5 );
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 600;
+        box-shadow: 0 7px 18px rgba(8, 127, 140, 0.22);
+        transition: all .2s ease;
+    }
+
+
+        .btn-register:hover {
+            background: linear-gradient( 135deg, #066d78, #0f8795 );
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 9px 22px rgba(8, 127, 140, 0.28);
+        }
+
+
+    /* ================================
+           CANCEL BUTTON
+        ================================= */
+
+    .btn-cancel {
+        flex: 1;
+        height: 47px;
+        border-radius: 9px;
+        border: 1px solid #d2dfe3;
+        background: #f5f7f8;
+        color: #607b84;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all .2s ease;
+    }
+
+
+        .btn-cancel:hover {
+            background: #e9eef0;
+            border-color: #c5d5da;
+            color: #345965;
+        }
+
+
+    /* ================================
+           FOOTER
+        ================================= */
+
+    .register-footer {
+        text-align: center;
+        margin-top: 24px;
+        padding-top: 17px;
+        border-top: 1px solid #e4ecef;
+        color: #8aa0a8;
+        font-size: 11px;
+        line-height: 1.6;
+    }
+
+
+        .register-footer strong {
+            color: #4d7581;
+            font-weight: 600;
+        }
+
+
+    /* ================================
+           SUCCESS MESSAGE
+        ================================= */
+
+    .register-success {
+        border-radius: 8px;
+        font-size: 13px;
+        margin-bottom: 20px;
+    }
+
+
+    /* ================================
+           RESPONSIVE
+        ================================= */
+
+    @@media (max-width: 768px) {
+
+        .register-page {
+            padding: 20px;
+        }
+
+        .register-card {
+            width: 100%;
+            max-width: 520px;
+            padding: 32px 25px 25px 25px;
+        }
+
+        .register-title {
+            font-size: 23px;
+        }
+    }
+
+</style>
+
+
+<div class="register-page">
+
+    <div class="register-card">
+
+
+        <!-- TITLE -->
+
+        <h3 class="register-title">
+            Create Your Account
+        </h3>
+
+        <p class="register-subtitle">
+            Register for Fabric Development &amp; Innovation HUB
+        </p>
+
+
+        <!-- SUCCESS MESSAGE -->
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success register-success">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+
+
+        <!-- FORM -->
+
+        <form method="post" action="/Account/Register">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3">
+            </div>
+
+
+            <!-- COMPANY -->
+
+            <div class="register-group">
+
+                <label asp-for="Company"
+                       class="register-label">
+
+                    Company
+
+                </label>
+
+                <select name="Company" class="form-select">
+                    <option value="">-- Select Company --</option>
+
+                    @foreach (var company in Model.Companies)
+                    {
+                        <option value="@company.Value">@company.Text</option>
+                    }
+                </select>
+
+                <span asp-validation-for="Company"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- USERNAME -->
+
+            <div class="register-group">
+
+                <label asp-for="Email"
+                       class="register-label">
+
+                    Username
+
+                </label>
+
+                <input asp-for="Email"
+                       class="form-control"
+                       placeholder="Enter your username"
+                       autocomplete="username" />
+
+                <span asp-validation-for="Email"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="register-group">
+
+                <label asp-for="Password"
+                       class="register-label">
+
+                    Password
+
+                </label>
+
+                <input asp-for="Password"
+                       class="form-control"
+                       type="password"
+                       placeholder="Enter password"
+                       autocomplete="new-password" />
+
+                <span asp-validation-for="Password"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- CONFIRM PASSWORD -->
+
+            <div class="register-group">
+
+                <label asp-for="ConfirmPassword"
+                       class="register-label">
+
+                    Confirm Password
+
+                </label>
+
+                <input asp-for="ConfirmPassword"
+                       class="form-control"
+                       type="password"
+                       placeholder="Confirm password"
+                       autocomplete="new-password" />
+
+                <span asp-validation-for="ConfirmPassword"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="register-buttons">
+
+                <button type="submit"
+                        class="btn-register">
+
+                    <i class="bi bi-person-plus me-1"></i>
+
+                    Register
+
+                </button>
+
+
+                <button type="button"
+                        class="btn-cancel"
+                        onclick="history.back();">
+
+                    <i class="bi bi-arrow-left me-1"></i>
+
+                    Cancel
+
+                </button>
+
+            </div>
+
+        </form>
+
+
+        <!-- FOOTER -->
+
+        <div class="register-footer">
+
+            <strong>
+                Fabric Development &amp; Innovation HUB
+            </strong>
+
+            <br />
+
+            Turning Ideas into Better Fabrics
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+}

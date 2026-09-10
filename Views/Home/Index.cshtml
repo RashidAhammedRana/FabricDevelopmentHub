@@ -1,0 +1,797 @@
+﻿@{
+    ViewData["Title"] = "Fabric Development & Innovation HUB";
+}
+
+<style>
+    /* ================================
+           FABRIC HUB HOME
+        ================================= */
+
+    .hub-page {
+        min-height: calc(100vh - 40px);
+        background: radial-gradient(circle at 90% 10%, rgba(58,166,208,.10), transparent 30%), radial-gradient(circle at 10% 90%, rgba(22,160,133,.08), transparent 30%), #f5f8fa;
+        padding: 25px 30px 35px;
+    }
+
+
+    /* ================================
+           HERO
+        ================================= */
+
+    .hub-hero {
+        position: relative;
+        min-height: 285px;
+        border-radius: 24px;
+        overflow: hidden;
+        padding: 45px 48px;
+        display: flex;
+        align-items: center;
+        background: linear-gradient(110deg, rgba(5, 67, 80, .96), rgba(8, 127, 140, .91), rgba(22, 160, 133, .88));
+        box-shadow: 0 18px 40px rgba(0, 70, 85, .18);
+    }
+
+
+        /* Textile pattern */
+
+        .hub-hero::after {
+            content: "";
+            position: absolute;
+            right: -80px;
+            top: -120px;
+            width: 430px;
+            height: 430px;
+            border-radius: 50%;
+            background: repeating-linear-gradient( 45deg, rgba(255,255,255,.08) 0px, rgba(255,255,255,.08) 2px, transparent 2px, transparent 10px );
+            transform: rotate(12deg);
+            opacity: .8;
+        }
+
+
+    .hub-hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 720px;
+    }
+
+
+    .hub-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 13px;
+        margin-bottom: 15px;
+        border-radius: 30px;
+        background: rgba(255,255,255,.13);
+        border: 1px solid rgba(255,255,255,.18);
+        color: #dff8f7;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: .5px;
+    }
+
+
+    .hub-hero h1 {
+        margin: 0;
+        color: #ffffff;
+        font-size: 34px;
+        font-weight: 700;
+        letter-spacing: -.5px;
+    }
+
+
+        .hub-hero h1 span {
+            color: #b9f1e3;
+        }
+
+
+    .hub-hero p {
+        margin: 14px 0 0;
+        color: rgba(255,255,255,.82);
+        font-size: 14px;
+        line-height: 1.7;
+        max-width: 650px;
+    }
+
+
+    /* ================================
+           KPI CARDS
+        ================================= */
+
+    .hub-kpi-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+        margin-top: 22px;
+    }
+
+
+    .hub-kpi {
+        background: #ffffff;
+        border: 1px solid #e5edef;
+        border-radius: 17px;
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 7px 22px rgba(0, 50, 70, .07);
+        transition: all .22s ease;
+    }
+
+
+        .hub-kpi:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(0, 50, 70, .11);
+        }
+
+
+        .hub-kpi::after {
+            content: "";
+            position: absolute;
+            right: -25px;
+            bottom: -35px;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: rgba(22,160,133,.06);
+        }
+
+
+    .hub-kpi-icon {
+        width: 43px;
+        height: 43px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        background: #edf8f7;
+        color: #087f8c;
+        font-size: 20px;
+        margin-bottom: 14px;
+    }
+
+
+    .hub-kpi-title {
+        color: #78909a;
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+
+    .hub-kpi-value {
+        color: #163f50;
+        font-size: 23px;
+        font-weight: 700;
+    }
+
+
+    /* ================================
+           SECTION TITLE
+        ================================= */
+
+    .hub-section {
+        margin-top: 30px;
+    }
+
+
+    .hub-section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+
+    .hub-section-title {
+        margin: 0;
+        color: #173f50;
+        font-size: 19px;
+        font-weight: 700;
+    }
+
+
+    .hub-section-subtitle {
+        margin: 4px 0 0;
+        color: #8499a1;
+        font-size: 12px;
+    }
+
+
+    /* ================================
+           MODULE CARDS
+        ================================= */
+
+    .hub-modules {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+    }
+
+
+    .hub-module {
+        background: #ffffff;
+        border: 1px solid #e3ecef;
+        border-radius: 17px;
+        padding: 22px;
+        text-decoration: none;
+        display: block;
+        transition: all .22s ease;
+        box-shadow: 0 6px 20px rgba(0, 50, 70, .055);
+    }
+
+
+        .hub-module:hover {
+            transform: translateY(-3px);
+            border-color: #c7e2e5;
+            box-shadow: 0 12px 27px rgba(0, 70, 85, .10);
+        }
+
+
+    .hub-module-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+
+    .hub-module-icon {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 13px;
+        background: #f0f8fa;
+        color: #087f8c;
+        font-size: 21px;
+    }
+
+
+    .hub-module-arrow {
+        color: #b0c1c7;
+        font-size: 17px;
+        transition: .2s;
+    }
+
+
+    .hub-module:hover .hub-module-arrow {
+        color: #087f8c;
+        transform: translateX(3px);
+    }
+
+
+    .hub-module h4 {
+        color: #214b5c;
+        font-size: 15px;
+        font-weight: 700;
+        margin: 17px 0 6px;
+    }
+
+
+    .hub-module p {
+        color: #81959d;
+        font-size: 12px;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+
+    /* ================================
+           BOTTOM INFO
+        ================================= */
+
+    .hub-info-grid {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 18px;
+    }
+
+
+    .hub-info-card {
+        background: #ffffff;
+        border: 1px solid #e3ecef;
+        border-radius: 17px;
+        padding: 23px;
+        box-shadow: 0 6px 20px rgba(0, 50, 70, .055);
+    }
+
+
+        .hub-info-card h4 {
+            color: #214b5c;
+            font-size: 15px;
+            margin: 0 0 15px;
+            font-weight: 700;
+        }
+
+
+    .hub-focus-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid #edf2f3;
+    }
+
+
+        .hub-focus-item:last-child {
+            border-bottom: none;
+        }
+
+
+    .hub-focus-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 9px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #edf8f7;
+        color: #1596a5;
+        font-size: 15px;
+    }
+
+
+    .hub-focus-text strong {
+        display: block;
+        color: #345968;
+        font-size: 12px;
+    }
+
+
+    .hub-focus-text span {
+        color: #91a2a8;
+        font-size: 11px;
+    }
+
+
+    .hub-tag {
+        display: inline-block;
+        padding: 7px 10px;
+        margin: 4px;
+        border-radius: 20px;
+        background: #f0f7f8;
+        color: #397080;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+
+    /* ================================
+           RESPONSIVE
+        ================================= */
+
+    @@media (max-width: 1100px) {
+
+        .hub-kpi-row {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .hub-modules {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .hub-info-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+
+    @@media (max-width: 768px) {
+
+        .hub-page {
+            padding: 18px;
+        }
+
+        .hub-hero {
+            padding: 32px 25px;
+            min-height: 250px;
+        }
+
+            .hub-hero h1 {
+                font-size: 27px;
+            }
+
+        .hub-kpi-row,
+        .hub-modules {
+            grid-template-columns: 1fr;
+        }
+    }
+
+</style>
+
+
+<div class="hub-page">
+
+    <!-- ================================
+         HERO
+    ================================= -->
+
+    <section class="hub-hero">
+
+        <div class="hub-hero-content">
+
+            <div class="hub-eyebrow">
+                <i class="bi bi-stars"></i>
+                FABRIC DEVELOPMENT &amp; INNOVATION
+            </div>
+
+            <h1>
+                Welcome to the
+                <span>Fabric HUB</span>
+            </h1>
+
+            <p>
+                A centralized platform for fabric development, research,
+                innovation, quality improvement and performance monitoring —
+                turning ideas into better fabrics.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================
+         KPI
+    ================================= -->
+
+    <div class="hub-kpi-row">
+
+        <div class="hub-kpi">
+
+            <div class="hub-kpi-icon">
+                <i class="bi bi-layers"></i>
+            </div>
+
+            <div class="hub-kpi-title">
+                Fabric Development
+            </div>
+
+            <div class="hub-kpi-value">
+                Active
+            </div>
+
+        </div>
+
+
+        <div class="hub-kpi">
+
+            <div class="hub-kpi-icon">
+                <i class="bi bi-lightbulb"></i>
+            </div>
+
+            <div class="hub-kpi-title">
+                Innovation
+            </div>
+
+            <div class="hub-kpi-value">
+                Ideas → Fabrics
+            </div>
+
+        </div>
+
+
+        <div class="hub-kpi">
+
+            <div class="hub-kpi-icon">
+                <i class="bi bi-graph-up-arrow"></i>
+            </div>
+
+            <div class="hub-kpi-title">
+                Quality &amp; Performance
+            </div>
+
+            <div class="hub-kpi-value">
+                Improving
+            </div>
+
+        </div>
+
+
+        <div class="hub-kpi">
+
+            <div class="hub-kpi-icon">
+                <i class="bi bi-recycle"></i>
+            </div>
+
+            <div class="hub-kpi-title">
+                Sustainability
+            </div>
+
+            <div class="hub-kpi-value">
+                Future Ready
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================
+         QUICK ACCESS
+    ================================= -->
+
+    <section class="hub-section">
+
+        <div class="hub-section-header">
+
+            <div>
+                <h3 class="hub-section-title">
+                    Quick Access
+                </h3>
+
+                <p class="hub-section-subtitle">
+                    Explore the key areas of Fabric Development &amp; Innovation HUB
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="hub-modules">
+
+
+            <!-- Fabric Development -->
+
+            <a href="#" class="hub-module">
+
+                <div class="hub-module-top">
+
+                    <div class="hub-module-icon">
+                        <i class="bi bi-diagram-3"></i>
+                    </div>
+
+                    <i class="bi bi-arrow-right hub-module-arrow"></i>
+
+                </div>
+
+                <h4>
+                    Fabric Development
+                </h4>
+
+                <p>
+                    Manage fabric development activities, specifications
+                    and development information.
+                </p>
+
+            </a>
+
+
+            <!-- Research -->
+
+            <a href="#" class="hub-module">
+
+                <div class="hub-module-top">
+
+                    <div class="hub-module-icon">
+                        <i class="bi bi-search"></i>
+                    </div>
+
+                    <i class="bi bi-arrow-right hub-module-arrow"></i>
+
+                </div>
+
+                <h4>
+                    Research &amp; Development
+                </h4>
+
+                <p>
+                    Explore research initiatives, technical studies
+                    and new fabric development opportunities.
+                </p>
+
+            </a>
+
+
+            <!-- Quality -->
+
+            <a href="#" class="hub-module">
+
+                <div class="hub-module-top">
+
+                    <div class="hub-module-icon">
+                        <i class="bi bi-patch-check"></i>
+                    </div>
+
+                    <i class="bi bi-arrow-right hub-module-arrow"></i>
+
+                </div>
+
+                <h4>
+                    Quality &amp; Performance
+                </h4>
+
+                <p>
+                    Monitor fabric quality, performance indicators
+                    and improvement initiatives.
+                </p>
+
+            </a>
+
+
+            <!-- Innovation -->
+
+            <a href="#" class="hub-module">
+
+                <div class="hub-module-top">
+
+                    <div class="hub-module-icon">
+                        <i class="bi bi-lightbulb"></i>
+                    </div>
+
+                    <i class="bi bi-arrow-right hub-module-arrow"></i>
+
+                </div>
+
+                <h4>
+                    Innovation
+                </h4>
+
+                <p>
+                    Capture innovative ideas and transform concepts
+                    into practical fabric solutions.
+                </p>
+
+            </a>
+
+
+            <!-- Sustainability -->
+
+            <a href="#" class="hub-module">
+
+                <div class="hub-module-top">
+
+                    <div class="hub-module-icon">
+                        <i class="bi bi-recycle"></i>
+                    </div>
+
+                    <i class="bi bi-arrow-right hub-module-arrow"></i>
+
+                </div>
+
+                <h4>
+                    Sustainability
+                </h4>
+
+                <p>
+                    Support sustainable materials, processes and
+                    environmentally responsible fabric development.
+                </p>
+
+            </a>
+
+
+            <!-- Reports -->
+
+            <a href="#" class="hub-module">
+
+                <div class="hub-module-top">
+
+                    <div class="hub-module-icon">
+                        <i class="bi bi-bar-chart-line"></i>
+                    </div>
+
+                    <i class="bi bi-arrow-right hub-module-arrow"></i>
+
+                </div>
+
+                <h4>
+                    Reports &amp; Analytics
+                </h4>
+
+                <p>
+                    View development reports, performance trends
+                    and analytical insights.
+                </p>
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================
+         FOCUS AREAS
+    ================================= -->
+
+    <section class="hub-section">
+
+        <div class="hub-info-grid">
+
+
+            <div class="hub-info-card">
+
+                <h4>
+                    <i class="bi bi-bullseye me-2"></i>
+                    Current Focus Areas
+                </h4>
+
+
+                <div class="hub-focus-item">
+
+                    <div class="hub-focus-icon">
+                        <i class="bi bi-layers"></i>
+                    </div>
+
+                    <div class="hub-focus-text">
+                        <strong>Advanced Fabric Development</strong>
+                        <span>Developing improved fabric structures and constructions</span>
+                    </div>
+
+                </div>
+
+
+                <div class="hub-focus-item">
+
+                    <div class="hub-focus-icon">
+                        <i class="bi bi-droplet"></i>
+                    </div>
+
+                    <div class="hub-focus-text">
+                        <strong>Resource Efficiency</strong>
+                        <span>Reducing water, energy and material consumption</span>
+                    </div>
+
+                </div>
+
+
+                <div class="hub-focus-item">
+
+                    <div class="hub-focus-icon">
+                        <i class="bi bi-speedometer2"></i>
+                    </div>
+
+                    <div class="hub-focus-text">
+                        <strong>Performance Improvement</strong>
+                        <span>Improving fabric quality, durability and performance</span>
+                    </div>
+
+                </div>
+
+
+                <div class="hub-focus-item">
+
+                    <div class="hub-focus-icon">
+                        <i class="bi bi-stars"></i>
+                    </div>
+
+                    <div class="hub-focus-text">
+                        <strong>Innovation &amp; Collaboration</strong>
+                        <span>Connecting ideas, people and technical expertise</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="hub-info-card">
+
+                <h4>
+                    <i class="bi bi-grid-3x3-gap me-2"></i>
+                    HUB Capabilities
+                </h4>
+
+                <div>
+
+                    <span class="hub-tag">Fabric Development</span>
+                    <span class="hub-tag">R&amp;D</span>
+                    <span class="hub-tag">Innovation</span>
+                    <span class="hub-tag">Quality</span>
+                    <span class="hub-tag">Performance</span>
+                    <span class="hub-tag">Sustainability</span>
+                    <span class="hub-tag">Testing</span>
+                    <span class="hub-tag">Analytics</span>
+                    <span class="hub-tag">Technical Support</span>
+                    <span class="hub-tag">Collaboration</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+</div>
