@@ -22,20 +22,22 @@ namespace FabricDevelopmentHub.ViewModels
         // FABRIC
         // ==========================
 
-        public List<TblFtdFabric> TblFtdFabrics { get; set; } = new();
+        public List<TblFtdFabric> TblFtdFabric { get; set; } = new();
+        // FABRIC
+        //public TblFtdFabric TblFtdFabric { get; set; } = new();
 
 
         // ==========================
         // KNIT
         // ==========================
 
-        public List<TblFtdKnit> TblFtdKnits { get; set; } = new();
+        public List<TblFtdKnit> TblFtdKnit { get; set; } = new();
 
 
         // ==========================
         // YARN
         // ==========================
 
-        public List<TblFtdYarn> TblFtdYarns { get; set; } = new();
+        public List<TblFtdYarn> TblFtdYarn { get; set; } = new();
     }
 }

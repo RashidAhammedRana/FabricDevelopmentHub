@@ -5,16 +5,21 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 <style>
-    /* Full page */
+
+    /* =========================================================
+           PAGE
+           ========================================================= */
+
     .main-content {
         padding: 0 !important;
     }
 
     .ftd-page {
         width: 100%;
-        min-height: calc(100vh - 0px);
-        margin: 0;
+        min-height: 100vh;
     }
 
     .ftd-card {
@@ -24,49 +29,191 @@
         border: 0 !important;
         border-radius: 0 !important;
         box-shadow: none !important;
-        display: flex;
-        flex-direction: column;
     }
 
-    /* Existing custom Fabric color */
+
+    /* =========================================================
+           HEADER
+           ========================================================= */
+
     .bg-fabric {
         background-color: #0f8996 !important;
     }
 
     .ftd-header {
-        flex-shrink: 0;
-        padding: 8px 15px;
+        padding: 10px 18px;
     }
 
         .ftd-header h5 {
             font-size: 20px;
-            font-weight: 400;
+            font-weight: 500;
         }
 
+
+    /* =========================================================
+           BODY
+           ========================================================= */
+
     .ftd-body {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
         padding: 20px;
     }
 
-    .ftd-form {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
+
+    /* =========================================================
+           SECTION
+           ========================================================= */
+
+    .ftd-section {
+        margin-top: 28px;
     }
 
-    .ftd-form-fields {
-        flex-shrink: 0;
-    }
-
-    /* Buttons stay at bottom */
-    .ftd-actions {
-        margin-top: auto;
-        padding-top: 20px;
+    .ftd-section-header {
         display: flex;
         justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
     }
+
+    .ftd-section-title {
+        margin: 0;
+        font-size: 17px;
+        font-weight: 600;
+        color: #343a40;
+    }
+
+    .ftd-section-line {
+        margin-top: 5px;
+        margin-bottom: 12px;
+    }
+
+
+    /* =========================================================
+           FORM
+           ========================================================= */
+
+    .form-label {
+        font-size: 13px;
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+
+    .form-control,
+    .form-select {
+        font-size: 13px;
+        height: 38px;
+    }
+
+    .readonly-field {
+        background-color: #f5f7f8 !important;
+        cursor: not-allowed;
+    }
+
+
+    /* =========================================================
+           TABLE
+           ========================================================= */
+
+    .ftd-table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        border: 1px solid #dee2e6;
+        border-radius: 6px;
+        background: #fff;
+    }
+
+    .ftd-table {
+        width: 100%;
+        min-width: 1150px;
+        margin-bottom: 0;
+        vertical-align: middle;
+    }
+
+        .ftd-table thead th {
+            background-color: #f1f4f6;
+            color: #343a40;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            text-align: center;
+            vertical-align: middle;
+            padding: 9px 8px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .ftd-table tbody td {
+            padding: 6px 7px;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+
+        .ftd-table tbody tr:hover {
+            background-color: #fafcfc;
+        }
+
+        .ftd-table .form-control {
+            height: 35px;
+            min-width: 75px;
+            font-size: 12px;
+        }
+
+
+    /* =========================================================
+           FABRIC WIDTH
+           ========================================================= */
+
+    .fabric-color {
+        min-width: 130px !important;
+    }
+
+    .fabric-color-type {
+        min-width: 120px !important;
+    }
+
+    .fabrication {
+        min-width: 180px !important;
+    }
+
+    .fabric-dia-type {
+        min-width: 100px !important;
+    }
+
+
+    /* =========================================================
+           YARN WIDTH
+           ========================================================= */
+
+    .yarn-count {
+        min-width: 100px !important;
+    }
+
+    .yarn-lot {
+        min-width: 150px !important;
+    }
+
+    .yarn-brand {
+        min-width: 130px !important;
+    }
+
+    .yarn-remarks {
+        min-width: 220px !important;
+    }
+
+
+    /* =========================================================
+           EMPTY
+           ========================================================= */
+
+    .ftd-empty {
+        padding: 20px !important;
+        text-align: center;
+        color: #6c757d;
+        font-size: 13px;
+    }
+
+
+    /* =========================================================
+           BUTTONS
+           ========================================================= */
 
     .btn-fabric {
         background-color: #0f8996 !important;
@@ -79,6 +226,149 @@
             border-color: #0c727d !important;
             color: #fff !important;
         }
+
+    .btn-add-row {
+        color: #0f8996;
+        border: 1px solid #0f8996;
+        font-size: 13px;
+    }
+
+        .btn-add-row:hover {
+            background-color: #0f8996;
+            color: #fff;
+        }
+
+    .btn-remove-row {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        line-height: 1;
+    }
+
+
+    /* =========================================================
+           ACTIONS
+           ========================================================= */
+
+    .ftd-actions {
+        margin-top: 30px;
+        padding-top: 18px;
+        border-top: 1px solid #dee2e6;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+
+    /* =========================================================
+           SELECT2
+           ========================================================= */
+
+    .select2-container {
+        width: 100% !important;
+    }
+
+        .select2-container .select2-selection--single {
+            height: 38px !important;
+            min-height: 38px !important;
+            border: 1px solid #dee2e6 !important;
+            border-radius: 0.375rem !important;
+            background-color: #fff !important;
+        }
+
+            .select2-container
+            .select2-selection--single
+            .select2-selection__rendered {
+                height: 36px !important;
+                line-height: 36px !important;
+                padding-left: 12px !important;
+                padding-right: 35px !important;
+                font-size: 13px !important;
+                color: #212529 !important;
+            }
+
+            .select2-container
+            .select2-selection--single
+            .select2-selection__placeholder {
+                color: #6c757d !important;
+            }
+
+            .select2-container
+            .select2-selection--single
+            .select2-selection__arrow {
+                height: 36px !important;
+                top: 1px !important;
+                right: 8px !important;
+            }
+
+    .select2-container--open
+    .select2-selection--single {
+        border-color: #86b7fe !important;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important;
+    }
+
+    .select2-search--dropdown {
+        padding: 8px !important;
+    }
+
+        .select2-search--dropdown
+        .select2-search__field {
+            height: 36px !important;
+            font-size: 13px !important;
+            padding: 6px 10px !important;
+            border: 1px solid #ced4da !important;
+            border-radius: 4px !important;
+        }
+
+    .select2-results__option {
+        font-size: 13px !important;
+        padding: 7px 10px !important;
+    }
+
+
+    /* =========================================================
+           LOADING
+           ========================================================= */
+
+    .control-loading {
+        opacity: 0.65;
+        pointer-events: none;
+    }
+
+
+    /* =========================================================
+           MOBILE
+           ========================================================= */
+
+    @@media (max-width: 768px) {
+
+        .ftd-body {
+            padding: 12px;
+        }
+
+        .ftd-header h5 {
+            font-size: 18px;
+        }
+
+        .ftd-section-title {
+            font-size: 16px;
+        }
+
+        .ftd-actions {
+            flex-direction: column;
+            gap: 10px;
+            align-items: stretch;
+        }
+
+            .ftd-actions .btn {
+                width: 100%;
+            }
+    }
+
 </style>
 
 
@@ -86,188 +376,546 @@
 
     <div class="card ftd-card">
 
-        <!-- TITLE -->
+        <!-- =====================================================
+             HEADER
+             ===================================================== -->
+
         <div class="card-header bg-fabric text-white text-center ftd-header">
+
             <h5 class="mb-0">
                 Fabric Technical Data
             </h5>
+
         </div>
 
 
-        <!-- BODY -->
+        <!-- =====================================================
+             BODY
+             ===================================================== -->
+
         <div class="ftd-body">
 
             <form asp-action="Create"
                   method="post"
-                  class="ftd-form">
+                  id="ftdForm">
+
+                <!-- VALIDATION -->
 
                 <div asp-validation-summary="ModelOnly"
                      class="text-danger mb-3">
                 </div>
 
 
-                <!-- FORM FIELDS -->
-                <div class="row g-3 ftd-form-fields">
+                <!-- =================================================
+                     MASTER INFORMATION
+                     ================================================= -->
 
-                    <!-- FTD NO -->
-                    <div class="col-lg-2 col-md-3 col-sm-6">
+                <div class="ftd-section mt-0">
 
-                        <label asp-for="TblFtdMaster.FtdNo"
-                               class="form-label">
+                    <div class="ftd-section-header">
 
-                            FTD No.
-                            <span class="text-danger">*</span>
-
-                        </label>
-
-                        <input asp-for="TblFtdMaster.FtdNo"
-                               type="text"
-                               class="form-control"
-                               readonly />
-
-                        <span asp-validation-for="TblFtdMaster.FtdNo"
-                              class="text-danger">
-                        </span>
+                        <h6 class="ftd-section-title">
+                            Master Information
+                        </h6>
 
                     </div>
 
-
-                    <!-- Control -->
-                    <div class="col-lg-3 col-md-3 col-sm-6">
-
-                        <label asp-for="TblFtdMaster.Control"
-                               class="form-label">
-
-                            Control
-                            <span class="text-danger">*</span>
-
-                        </label>
-
-                        <select asp-for="TblFtdMaster.Control"
-                                asp-items="ViewBag.ControlList"
-                                class="form-select">
-
-                            <option value="">
-                                -- Select Control --
-                            </option>
-
-                        </select>
-
-                        <span asp-validation-for="TblFtdMaster.Control"
-                              class="text-danger">
-                        </span>
-
-                    </div>
+                    <hr class="ftd-section-line" />
 
 
-                    <!-- CONTROL -->
-                    <div class="col-lg-2 col-md-3 col-sm-6">
-
-                        <label asp-for="TblFtdMaster.Company"
-                               class="form-label">
-
-                            LC Company
-                            <span class="text-danger">*</span>
-
-                        </label>
-
-                        <input asp-for="TblFtdMaster.Company"
-                               class="form-control" readonly/>
-
-                        <span asp-validation-for="TblFtdMaster.Company"
-                              class="text-danger">
-                        </span>
-
-                    </div>
+                    <div class="row g-3">
 
 
-                    <!-- INTERNAL REF -->
-                    <div class="col-lg-2 col-md-3 col-sm-6">
+                        <!-- FTD NO -->
 
-                        <label asp-for="TblFtdMaster.BatchNo"
-                               class="form-label">
+                        <div class="col-lg-2 col-md-4 col-sm-6">
 
-                            Internal Ref. No.
-                            <span class="text-danger">*</span>
+                            <label asp-for="TblFtdMaster.FtdNo"
+                                   class="form-label">
 
-                        </label>
+                                FTD No.
+                                <span class="text-danger">*</span>
 
-                        <input asp-for="TblFtdMaster.BatchNo"
-                               class="form-control" readonly/>
+                            </label>
 
-                        <span asp-validation-for="TblFtdMaster.BatchNo"
-                              class="text-danger">
-                        </span>
+                            <input asp-for="TblFtdMaster.FtdNo"
+                                   class="form-control readonly-field"
+                                   readonly />
 
-                    </div>
+                            <span asp-validation-for="TblFtdMaster.FtdNo"
+                                  class="text-danger">
+                            </span>
 
-
-                    <!-- SYS REQ -->
-                    <div class="col-lg-1 col-md-3 col-sm-6">
-
-                        <label asp-for="TblFtdMaster.SysReq"
-                               class="form-label">
-
-                            Sys. Req.
-                            <span class="text-danger">*</span>
-
-                        </label>
-
-                        <input asp-for="TblFtdMaster.SysReq"
-                               class="form-control" readonly/>
-
-                        <span asp-validation-for="TblFtdMaster.SysReq"
-                              class="text-danger">
-                        </span>
-
-                    </div>
+                        </div>
 
 
-                    <!-- BUYER -->
-                    <div class="col-lg-1 col-md-3 col-sm-6">
+                        <!-- CONTROL -->
 
-                        <label asp-for="TblFtdMaster.Buyer"
-                               class="form-label">
+                        <div class="col-lg-3 col-md-4 col-sm-6">
 
-                            Buyer
-                            <span class="text-danger">*</span>
+                            <label asp-for="TblFtdMaster.Control"
+                                   class="form-label">
 
-                        </label>
+                                Control / Batch
+                                <span class="text-danger">*</span>
 
-                        <input asp-for="TblFtdMaster.Buyer"
-                               class="form-control" readonly/>
+                            </label>
 
-                        <span asp-validation-for="TblFtdMaster.Buyer"
-                              class="text-danger">
-                        </span>
+                            <select asp-for="TblFtdMaster.Control"
+                                    asp-items="ViewBag.ControlList"
+                                    class="form-select"
+                                    id="Control">
 
-                    </div>
+                                <option value="">
+                                    -- Search Control / Batch --
+                                </option>
+
+                            </select>
+
+                            <span asp-validation-for="TblFtdMaster.Control"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
 
 
-                    <!-- STYLE REF -->
-                    <div class="col-lg-1 col-md-3 col-sm-6">
+                        <!-- COMPANY -->
 
-                        <label asp-for="TblFtdMaster.StyleRef"
-                               class="form-label">
+                        <div class="col-lg-2 col-md-4 col-sm-6">
 
-                            Style Ref.
-                            <span class="text-danger">*</span>
+                            <label asp-for="TblFtdMaster.Company"
+                                   class="form-label">
 
-                        </label>
+                                LC Company
+                                <span class="text-danger">*</span>
 
-                        <input asp-for="TblFtdMaster.StyleRef"
-                               class="form-control" readonly/>
+                            </label>
 
-                        <span asp-validation-for="TblFtdMaster.StyleRef"
-                              class="text-danger">
-                        </span>
+                            <input asp-for="TblFtdMaster.Company"
+                                   id="TblFtdMaster_Company"
+                                   class="form-control readonly-field"
+                                   readonly />
+
+                            <span asp-validation-for="TblFtdMaster.Company"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+
+                        <!-- INTERNAL REF -->
+
+                        <div class="col-lg-2 col-md-4 col-sm-6">
+
+                            <label class="form-label">
+
+                                Internal Ref. No.
+                                <span class="text-danger">*</span>
+
+                            </label>
+
+                            <input type="text"
+                                   id="TblFtdMaster_InternalRef"
+                                   class="form-control readonly-field"
+                                   readonly />
+
+                        </div>
+
+
+                        <!-- BATCH NO -->
+
+                        <div class="col-lg-2 col-md-4 col-sm-6">
+
+                            <label asp-for="TblFtdMaster.BatchNo"
+                                   class="form-label">
+
+                                Batch No.
+                                <span class="text-danger">*</span>
+
+                            </label>
+
+                            <input asp-for="TblFtdMaster.BatchNo"
+                                   id="TblFtdMaster_BatchNo"
+                                   class="form-control readonly-field"
+                                   readonly />
+
+                            <span asp-validation-for="TblFtdMaster.BatchNo"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+
+                        <!-- SYS REQ -->
+
+                        <div class="col-lg-1 col-md-4 col-sm-6">
+
+                            <label asp-for="TblFtdMaster.SysReq"
+                                   class="form-label">
+
+                                Sys. Req.
+                                <span class="text-danger">*</span>
+
+                            </label>
+
+                            <input asp-for="TblFtdMaster.SysReq"
+                                   id="TblFtdMaster_SysReq"
+                                   type="text"
+                                   class="form-control readonly-field"
+                                   readonly />
+
+                            <span asp-validation-for="TblFtdMaster.SysReq"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+
+                        <!-- BUYER -->
+
+                        <div class="col-lg-2 col-md-4 col-sm-6">
+
+                            <label asp-for="TblFtdMaster.Buyer"
+                                   class="form-label">
+
+                                Buyer
+                                <span class="text-danger">*</span>
+
+                            </label>
+
+                            <input asp-for="TblFtdMaster.Buyer"
+                                   id="TblFtdMaster_Buyer"
+                                   class="form-control readonly-field"
+                                   readonly />
+
+                            <span asp-validation-for="TblFtdMaster.Buyer"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+
+                        <!-- STYLE REF -->
+
+                        <div class="col-lg-5 col-md-5 col-sm-6">
+
+                            <label asp-for="TblFtdMaster.StyleRef"
+                                   class="form-label">
+
+                                Style Ref.
+                                <span class="text-danger">*</span>
+
+                            </label>
+
+                            <input asp-for="TblFtdMaster.StyleRef"
+                                   id="TblFtdMaster_StyleRef"
+                                   class="form-control readonly-field"
+                                   readonly />
+
+                            <span asp-validation-for="TblFtdMaster.StyleRef"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
 
                     </div>
 
                 </div>
 
 
-                <!-- BOTTOM ACTIONS -->
+                <!-- =================================================
+                     FABRIC DETAILS
+                     ================================================= -->
+
+                <div class="ftd-section">
+
+                    <div class="ftd-section-header">
+
+                        <h6 class="ftd-section-title">
+                            Fabric Details
+                        </h6>
+
+                    </div>
+
+                    <hr class="ftd-section-line" />
+
+
+                    <div class="ftd-table-wrapper">
+
+                        <table class="table table-bordered ftd-table"
+                               id="fabricTable">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th style="width:50px;">#</th>
+
+                                    <th>Color</th>
+
+                                    <th>Color Type</th>
+
+                                    <th>Fabrication</th>
+
+                                    <th>Req. Dia</th>
+
+                                    <th>Dia Type</th>
+
+                                    <th>Req. GSM</th>
+
+                                    <th>Fin. Dia</th>
+
+                                    <th>Fin. Dia Type</th>
+
+                                    <th>Fin. GSM</th>
+
+                                    @* <th style="width:70px;">Action</th> *@
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="fabricTableBody">
+
+                                @if (Model.TblFtdFabric != null &&
+                                                                Model.TblFtdFabric.Count > 0)
+                                {
+                                    for (int i = 0;
+                                    i < Model.TblFtdFabric.Count;
+                                    i++)
+                                    {
+                                        <tr class="fabric-row">
+
+                                            <td class="text-center row-number">
+                                                @(i + 1)
+                                            </td>
+
+                                            <td>
+                                                <input asp-for="TblFtdFabric[i].Color"
+                                                       class="form-control fabric-color readonly-field"
+                                                       readonly />
+                                            </td>
+
+                                            <td>
+                                                <input asp-for="TblFtdFabric[i].ColorType"
+                                                       class="form-control fabric-color-type readonly-field"
+                                                       readonly />
+                                            </td>
+
+                                            <td>
+                                                <input asp-for="TblFtdFabric[i].Fabrication"
+                                                       class="form-control fabrication readonly-field"
+                                                       readonly />
+                                            </td>
+
+                                            <td>
+                                                <input asp-for="TblFtdFabric[i].ReqDia"
+                                                       class="form-control readonly-field"
+                                                       readonly />
+                                            </td>
+
+                                            <td>
+                                                <input asp-for="TblFtdFabric[i].DiaType"
+                                                       class="form-control fabric-dia-type readonly-field"
+                                                       readonly />
+                                            </td>
+
+                                            <td>
+                                                <input asp-for="TblFtdFabric[i].ReqGsm"
+                                                       class="form-control readonly-field"
+                                                       readonly />
+                                            </td>
+
+                                            <td>
+                                                <input asp-for="TblFtdFabric[i].FinDia"
+                                                       class="form-control readonly-field"
+                                                       readonly />
+                                            </td>
+
+                                            <td>
+                                                <input asp-for="TblFtdFabric[i].FinDiaType"
+                                                       class="form-control fabric-dia-type readonly-field"
+                                                       readonly />
+                                            </td>
+
+                                            <td>
+                                                <input asp-for="TblFtdFabric[i].FinGsm"
+                                                       class="form-control readonly-field"
+                                                       readonly />
+                                            </td>
+
+@*                                             <td class="text-center">
+                                                <button type="button"class="btn btn-outline-danger btn-sm btn-remove-row btn-remove-fabric">
+                                                    ×
+                                                </button>
+                                            </td> *@
+
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr id="fabricEmptyRow">
+
+                                        <td colspan="11"
+                                            class="ftd-empty">
+
+                                            No fabric details available.
+
+                                        </td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     YARN DETAILS
+                     ================================================= -->
+
+                <div class="ftd-section">
+
+                    <div class="ftd-section-header">
+
+                        <h6 class="ftd-section-title">
+                            Yarn Details
+                        </h6>
+
+                    </div>
+
+                    <hr class="ftd-section-line" />
+
+
+                    <div class="ftd-table-wrapper">
+
+                        <table class="table table-bordered ftd-table"
+                               id="yarnTable">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th style="width:50px;">#</th>
+
+                                    <th>Count</th>
+
+                                    <th>Lot No.</th>
+
+                                    <th>Brand</th>
+
+                                    <th>TPI</th>
+
+                                    <th>Sus. Std.</th>
+
+                                    <th>Remarks</th>
+
+                                    @* <th style="width:70px;">Action</th> *@
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="yarnTableBody">
+
+                                @if (Model.TblFtdYarn != null &&
+                                                                Model.TblFtdYarn.Count > 0)
+                                {
+                                    for (int i = 0;
+                                    i < Model.TblFtdYarn.Count;
+                                    i++)
+                                    {
+                                        <tr class="yarn-row">
+
+                                            <td class="text-center row-number">
+                                                @(i + 1)
+                                            </td>
+
+                                            <td>
+                                                <input asp-for="TblFtdYarn[i].Count"
+                                                       class="form-control yarn-count readonly-field"
+                                                       readonly />
+                                            </td>
+
+                                            <td>
+                                                <input asp-for="TblFtdYarn[i].LotNo"
+                                                       class="form-control yarn-lot readonly-field"
+                                                       readonly />
+                                            </td>
+
+                                            <td>
+                                                <input asp-for="TblFtdYarn[i].Brand"
+                                                       class="form-control yarn-brand readonly-field"
+                                                       readonly />
+                                            </td>
+
+                                            <td>
+                                                <input asp-for="TblFtdYarn[i].Tpi"
+                                                       class="form-control readonly-field"
+                                                       readonly />
+                                            </td>
+
+                                            <td>
+                                                <input asp-for="TblFtdYarn[i].Std"
+                                                       class="form-control readonly-field"
+                                                       readonly />
+                                            </td>
+
+                                            <td>
+                                                <input asp-for="TblFtdYarn[i].Remarks"
+                                                       class="form-control yarn-remarks readonly-field"
+                                                       readonly />
+                                            </td>
+
+                                            <td class="text-center">
+
+                                                <button type="button"
+                                                        class="btn btn-outline-danger btn-sm btn-remove-row btn-remove-yarn">
+
+                                                    ×
+
+                                                </button>
+
+                                            </td>
+
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr id="yarnEmptyRow">
+
+                                        <td colspan="8"
+                                            class="ftd-empty">
+
+                                            No yarn details available.
+
+                                        </td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     ACTIONS
+                     ================================================= -->
+
                 <div class="ftd-actions">
 
                     <a asp-action="FTDList"
@@ -277,8 +925,11 @@
 
                     </a>
 
-                    <button type="submit" class="btn btn-fabric px-4">
-                        Save
+                    <button type="submit"
+                            class="btn btn-fabric px-4">
+
+                        Save FTD
+
                     </button>
 
                 </div>
@@ -292,38 +943,906 @@
 </div>
 
 
-<script>
-
-    document.addEventListener("DOMContentLoaded", function () {
-
-        const inputs = document.querySelectorAll("input");
-
-        inputs.forEach(input => {
-
-            input.addEventListener("input", function () {
-
-                let validationSpan =
-                    document.querySelector(
-                        `[data-valmsg-for="${this.name}"]`
-                    );
-
-                if (validationSpan && this.value.trim() !== "") {
-                    validationSpan.textContent = "";
-                }
-
-            });
-
-        });
-
-    });
-
-</script>
-
-
 @section Scripts {
 
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+    <script>
+
+        $(document).ready(function () {
+
+
+            // =========================================================
+            // SELECT2
+            // =========================================================
+
+            $("#Control").select2({
+
+                placeholder: "-- Search Control / Batch --",
+
+                allowClear: true,
+
+                width: "100%"
+
+            });
+
+
+            // =========================================================
+            // UPDATE FABRIC ROW NUMBERS
+            // =========================================================
+
+            function updateFabricRowNumbers() {
+
+                $("#fabricTableBody .fabric-row").each(function (index) {
+
+                    $(this)
+                        .find(".row-number")
+                        .text(index + 1);
+
+                });
+
+            }
+
+
+            // =========================================================
+            // UPDATE YARN ROW NUMBERS
+            // =========================================================
+
+            function updateYarnRowNumbers() {
+
+                $("#yarnTableBody .yarn-row").each(function (index) {
+
+                    $(this)
+                        .find(".row-number")
+                        .text(index + 1);
+
+                });
+
+            }
+
+
+            // =========================================================
+            // CLEAR MASTER DATA
+            // =========================================================
+
+            function clearMasterFields() {
+
+                $("#TblFtdMaster_Company").val("");
+
+                $("#TblFtdMaster_BatchNo").val("");
+
+                $("#TblFtdMaster_SysReq").val("");
+
+                $("#TblFtdMaster_Buyer").val("");
+
+                $("#TblFtdMaster_StyleRef").val("");
+
+            }
+
+
+            // =========================================================
+            // CLEAR FABRIC TABLE
+            // =========================================================
+
+            function clearFabricTable() {
+
+                $("#fabricTableBody")
+                    .find(".fabric-row")
+                    .remove();
+
+                $("#fabricEmptyRow")
+                    .remove();
+
+                $("#fabricTableBody").append(`
+
+                    <tr id="fabricEmptyRow">
+
+                        <td colspan="11"
+                            class="ftd-empty">
+
+                            No fabric details available.
+
+                        </td>
+
+                    </tr>
+
+                `);
+
+            }
+
+
+            // =========================================================
+            // CLEAR YARN TABLE
+            // =========================================================
+
+            function clearYarnTable() {
+
+                $("#yarnTableBody")
+                    .find(".yarn-row")
+                    .remove();
+
+                $("#yarnEmptyRow")
+                    .remove();
+
+                $("#yarnTableBody").append(`
+
+                    <tr id="yarnEmptyRow">
+
+                        <td colspan="8"
+                            class="ftd-empty">
+
+                            No yarn details available.
+
+                        </td>
+
+                    </tr>
+
+                `);
+
+            }
+
+
+            // =========================================================
+            // ESCAPE HTML
+            // =========================================================
+
+            function escapeHtml(value) {
+
+                if (
+                    value === null ||
+                    value === undefined
+                ) {
+
+                    return "";
+
+                }
+
+                return String(value)
+
+                    .replace(/&/g, "&amp;")
+
+                    .replace(/</g, "&lt;")
+
+                    .replace(/>/g, "&gt;")
+
+                    .replace(/"/g, "&quot;")
+
+                    .replace(/'/g, "&#039;");
+
+            }
+
+
+            // =========================================================
+            // LOAD FABRIC DETAILS
+            // =========================================================
+
+            function loadFabricDetails(batchNo) {
+
+                if (!batchNo) {
+
+                    clearFabricTable();
+
+                    return;
+
+                }
+
+
+                console.log(
+                    "Loading Fabric for Batch:",
+                    batchNo
+                );
+
+
+                // -----------------------------------------------------
+                // SHOW LOADING
+                // -----------------------------------------------------
+
+                $("#fabricTableBody").html(`
+
+                    <tr>
+
+                        <td colspan="11"
+                            class="ftd-empty">
+
+                            Loading fabric details...
+
+                        </td>
+
+                    </tr>
+
+                `);
+
+
+                // -----------------------------------------------------
+                // AJAX
+                // -----------------------------------------------------
+
+                $.ajax({
+
+                    url:
+                        '@Url.Action("GetFabricDetails", "FTD")',
+
+                    type: "GET",
+
+                    data: {
+
+                        batchNo: batchNo
+
+                    },
+
+
+                    // =================================================
+                    // SUCCESS
+                    // =================================================
+
+                    success: function (response) {
+
+                        console.log(
+                            "Fabric Response:",
+                            response
+                        );
+
+
+                        if (
+                            !response ||
+                            !response.success
+                        ) {
+
+                            clearFabricTable();
+
+                            alert(
+                                response?.message ||
+                                "No fabric details found."
+                            );
+
+                            return;
+
+                        }
+
+
+                        let fabrics =
+                            response.data || [];
+
+
+                        // -------------------------------------------------
+                        // CLEAR TABLE
+                        // -------------------------------------------------
+
+                        $("#fabricTableBody")
+                            .empty();
+
+
+                        // -------------------------------------------------
+                        // NO DATA
+                        // -------------------------------------------------
+
+                        if (fabrics.length === 0) {
+
+                            $("#fabricTableBody").append(`
+
+                                <tr id="fabricEmptyRow">
+
+                                    <td colspan="11"
+                                        class="ftd-empty">
+
+                                        No fabric details available
+                                        for selected Batch.
+
+                                    </td>
+
+                                </tr>
+
+                            `);
+
+                            return;
+
+                        }
+
+
+                        // -------------------------------------------------
+                        // ADD MULTIPLE FABRIC ROWS
+                        // -------------------------------------------------
+
+                        fabrics.forEach(function (item, index) {
+
+
+                            let row = `
+
+                                <tr class="fabric-row">
+
+                                    <!-- NUMBER -->
+
+                                    <td class="text-center row-number">
+
+                                        ${index + 1}
+
+                                    </td>
+
+
+                                    <!-- COLOR -->
+
+                                    <td>
+
+                                        <input
+                                            type="text"
+
+                                            name="TblFtdFabric[${index}].Color"
+
+                                            value="${escapeHtml(
+                                                item.colorName
+                                            )}"
+
+                                            class="form-control
+                                                   fabric-color
+                                                   readonly-field"
+
+                                            readonly />
+
+                                    </td>
+
+
+                                    <!-- COLOR TYPE -->
+
+                                    <td>
+
+                                        <input
+                                            type="text"
+
+                                            name="TblFtdFabric[${index}].ColorType"
+
+                                            value="${escapeHtml(
+                                                item.colorTypeId
+                                            )}"
+
+                                            class="form-control
+                                                   fabric-color-type
+                                                   readonly-field"
+
+                                            readonly />
+
+                                    </td>
+
+
+                                    <!-- FABRICATION -->
+
+                                    <td>
+
+                                        <input
+                                            type="text"
+
+                                            name="TblFtdFabric[${index}].Fabrication"
+
+                                            value="${escapeHtml(
+                                                item.fabricDescription
+                                            )}"
+
+                                            class="form-control
+                                                   fabrication
+                                                   readonly-field"
+
+                                            readonly />
+
+                                    </td>
+
+
+                                    <!-- REQ DIA -->
+
+                                    <td>
+
+                                        <input
+                                            type="text"
+
+                                            name="TblFtdFabric[${index}].ReqDia"
+
+                                            value="${escapeHtml(
+                                                item.dia
+                                            )}"
+
+                                            class="form-control
+                                                   readonly-field"
+
+                                            readonly />
+
+                                    </td>
+
+
+                                    <!-- DIA TYPE -->
+
+                                    <td>
+
+                                        <input
+                                            type="text"
+
+                                            name="TblFtdFabric[${index}].DiaType"
+
+                                            value="${escapeHtml(
+                                                item.diaWidth
+                                            )}"
+
+                                            class="form-control
+                                                   fabric-dia-type
+                                                   readonly-field"
+
+                                            readonly />
+
+                                    </td>
+
+
+                                    <!-- REQ GSM -->
+
+                                    <td>
+
+                                        <input
+                                            type="text"
+
+                                            name="TblFtdFabric[${index}].ReqGsm"
+
+                                            value="${escapeHtml(
+                                                item.gsmWeight
+                                            )}"
+
+                                            class="form-control
+                                                   readonly-field"
+
+                                            readonly />
+
+                                    </td>
+
+
+                                    <!-- FIN DIA -->
+
+                                    <td>
+
+                                        <input
+                                            type="text"
+
+                                            name="TblFtdFabric[${index}].FinDia"
+
+                                            value=""
+
+                                            class="form-control
+                                                   readonly-field"
+
+                                            readonly />
+
+                                    </td>
+
+
+                                    <!-- FIN DIA TYPE -->
+
+                                    <td>
+
+                                        <input
+                                            type="text"
+
+                                            name="TblFtdFabric[${index}].FinDiaType"
+
+                                            value=""
+
+                                            class="form-control
+                                                   fabric-dia-type
+                                                   readonly-field"
+
+                                            readonly />
+
+                                    </td>
+
+
+                                    <!-- FIN GSM -->
+
+                                    <td>
+
+                                        <input
+                                            type="text"
+
+                                            name="TblFtdFabric[${index}].FinGsm"
+
+                                            value=""
+
+                                            class="form-control
+                                                   readonly-field"
+
+                                            readonly />
+
+                                    </td>
+
+                                </tr>
+
+                            `;
+
+
+                            $("#fabricTableBody")
+                                .append(row);
+
+                        });
+
+
+                        updateFabricRowNumbers();
+
+                    },
+
+
+                    // =================================================
+                    // ERROR
+                    // =================================================
+
+                    error: function (xhr) {
+
+                        console.error(
+                            "Fabric AJAX Error:",
+                            xhr
+                        );
+
+
+                        clearFabricTable();
+
+
+                        let message =
+                            "Unable to load Fabric details.";
+
+
+                        if (
+                            xhr.responseJSON &&
+                            xhr.responseJSON.message
+                        ) {
+
+                            message =
+                                xhr.responseJSON.message;
+
+                        }
+
+
+                        alert(message);
+
+                    }
+
+                });
+
+            }
+
+
+            // =========================================================
+            // CONTROL / BATCH CHANGE
+            // =========================================================
+
+            $("#Control").on(
+                "change",
+                function () {
+
+
+                    let selectedValue =
+                        $(this).val();
+
+
+                    console.log(
+                        "Selected Value:",
+                        selectedValue
+                    );
+
+
+                    // =================================================
+                    // NOTHING SELECTED
+                    // =================================================
+
+                    if (!selectedValue) {
+
+                        clearMasterFields();
+
+                        clearFabricTable();
+
+                        clearYarnTable();
+
+                        return;
+
+                    }
+
+
+                    // =================================================
+                    // SPLIT INTERNAL REF + BATCH
+                    // =================================================
+
+                    let parts =
+                        selectedValue.split("|");
+
+
+                    let internalRef =
+                        parts[0]
+                            ? parts[0].trim()
+                            : "";
+
+
+                    let batchNo =
+                        parts[1]
+                            ? parts[1].trim()
+                            : "";
+
+
+                    console.log(
+                        "Internal Ref:",
+                        internalRef
+                    );
+
+
+                    console.log(
+                        "Batch No:",
+                        batchNo
+                    );
+
+
+                    // =================================================
+                    // VALIDATION
+                    // =================================================
+
+                    if (!internalRef || !batchNo) {
+
+                        alert(
+                            "Invalid Control / Batch selection."
+                        );
+
+                        return;
+
+                    }
+
+
+                    // =================================================
+                    // CLEAR OLD DATA
+                    // =================================================
+
+                    clearMasterFields();
+
+                    clearFabricTable();
+
+                    clearYarnTable();
+
+
+                    // =================================================
+                    // DISABLE CONTROL DURING LOAD
+                    // =================================================
+
+                    $("#Control")
+                        .prop("disabled", true);
+
+
+                    // =================================================
+                    // LOAD MASTER DATA
+                    // =================================================
+
+                    $.ajax({
+
+                        url:
+                            '@Url.Action("GetControlDetails", "FTD")',
+
+                        type: "GET",
+
+                        data: {
+
+                            internalRef:
+                                internalRef,
+
+                            batchNo:
+                                batchNo
+
+                        },
+
+
+                        // =================================================
+                        // SUCCESS
+                        // =================================================
+
+                        success: function (response) {
+
+                            console.log(
+                                "Master Response:",
+                                response
+                            );
+
+
+                            if (
+                                !response ||
+                                !response.success ||
+                                !response.data
+                            ) {
+
+                                alert(
+                                    response?.message ||
+                                    "No master data found."
+                                );
+
+                                return;
+
+                            }
+
+
+                            let data =
+                                response.data;
+
+
+                            // =================================================
+                            // MASTER DATA
+                            // =================================================
+
+
+                            // COMPANY
+
+                            $("#TblFtdMaster_Company")
+                                .val(
+                                    data.companyName || ""
+                                );
+
+
+                            // BATCH NO
+
+                            $("#TblFtdMaster_BatchNo")
+                                .val(
+                                    data.batchNo || ""
+                                );
+
+                                $("#TblFtdMaster_InternalRef")
+                                .val(
+                                    data.internalRef || ""
+                                );
+
+
+                            // SYS REQ
+
+                            $("#TblFtdMaster_SysReq")
+                                .val(
+                                    data.sysReq || ""
+                                );
+
+
+                            // BUYER
+
+                            $("#TblFtdMaster_Buyer")
+                                .val(
+                                    data.buyerName || ""
+                                );
+
+
+                            // STYLE REF
+
+                            $("#TblFtdMaster_StyleRef")
+                                .val(
+                                    data.styleRefNo || ""
+                                );
+
+
+                            // =================================================
+                            // LOAD FABRIC AGAINST SELECTED BATCH
+                            // =================================================
+
+                            loadFabricDetails(
+                                batchNo
+                            );
+
+                        },
+
+
+                        // =================================================
+                        // ERROR
+                        // =================================================
+
+                        error: function (xhr) {
+
+                            console.error(
+                                "Master AJAX Error:",
+                                xhr
+                            );
+
+
+                            clearMasterFields();
+
+                            clearFabricTable();
+
+
+                            let message =
+                                "Unable to load Control details.";
+
+
+                            if (
+                                xhr.responseJSON &&
+                                xhr.responseJSON.message
+                            ) {
+
+                                message =
+                                    xhr.responseJSON.message;
+
+                            }
+
+
+                            alert(message);
+
+                        },
+
+
+                        // =================================================
+                        // COMPLETE
+                        // =================================================
+
+                        complete: function () {
+
+                            $("#Control")
+                                .prop("disabled", false);
+
+                        }
+
+                    });
+
+                });
+
+
+            // =========================================================
+            // SELECT2 CLEAR
+            // =========================================================
+
+            $("#Control").on(
+                "select2:clear",
+                function () {
+
+                    clearMasterFields();
+
+                    clearFabricTable();
+
+                    clearYarnTable();
+
+                }
+            );
+
+
+            // =========================================================
+            // REMOVE FABRIC ROW
+            // =========================================================
+
+            $(document).on(
+                "click",
+                ".btn-remove-fabric",
+                function () {
+
+                    $(this)
+                        .closest(".fabric-row")
+                        .remove();
+
+                    updateFabricRowNumbers();
+
+                }
+            );
+
+
+            // =========================================================
+            // REMOVE YARN ROW
+            // =========================================================
+
+            $(document).on(
+                "click",
+                ".btn-remove-yarn",
+                function () {
+
+                    $(this)
+                        .closest(".yarn-row")
+                        .remove();
+
+                    updateYarnRowNumbers();
+
+                }
+            );
+
+
+            // =========================================================
+            // INITIAL ROW NUMBERS
+            // =========================================================
+
+            updateFabricRowNumbers();
+
+            updateYarnRowNumbers();
+
+        });
+
+    </script>
+
 
 }
