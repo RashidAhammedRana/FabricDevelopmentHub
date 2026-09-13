@@ -229,7 +229,53 @@ namespace FabricDevelopmentHub.Controllers
             }
         }
 
+        // GET YARN DETAILS BY BATCH
+        // =========================================================
 
+        [HttpGet]
+        public async Task<IActionResult> GetYarnDetails(string batchNo)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(batchNo))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Batch No is required."
+                    });
+                }
+
+                var result = await _context.Database
+                    .SqlQueryRaw<FTDYarnDto>(
+                        "EXEC dbo.SP_GET_YARN_DETAILS @BATCH_NO = {0}",
+                        batchNo
+                    )
+                    .ToListAsync();
+
+                return Json(new
+                {
+                    success = true,
+
+                    data = result.Select(x => new
+                    {
+                        count = x.Count,
+                        lot = x.Lot,
+                        brand = x.Brand
+                    }).ToList()
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "An error occurred while loading Yarn details.",
+                    error = ex.Message,
+                    innerError = ex.InnerException?.Message
+                });
+            }
+        }
         // =========================================================
         // CONTROL DTO
         // =========================================================
@@ -289,7 +335,12 @@ namespace FabricDevelopmentHub.Controllers
             public decimal? DtlsId { get; set; }
         }
 
-
+        public class FTDYarnDto
+        {
+            public string? Count { get; set; }
+            public string? Lot { get; set; }
+            public string? Brand { get; set; }
+        }
 
     }
 }
