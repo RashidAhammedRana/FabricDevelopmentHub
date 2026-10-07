@@ -30,6 +30,8 @@ namespace FabricDevelopmentHub.Data
         public virtual DbSet<TblFtdKnit> TblFtdKnits { get; set; }
         public virtual DbSet<TblFtdMaster> TblFtdMasters { get; set; }
         public virtual DbSet<TblFtdYarn> TblFtdYarns { get; set; }
+        public virtual DbSet<TblFtdDyeingBasic> TblFtdDyeingBasics { get; set; }
+        public virtual DbSet<TblFtdDyeingRecipe> TblFtdDyeingRecipes { get; set; }
 
 
 
@@ -240,9 +242,12 @@ namespace FabricDevelopmentHub.Data
                 entity.Property(e => e.Source)
                     .HasMaxLength(50)
                     .HasColumnName("SOURCE");
-                entity.Property(e => e.StripeMeasure)
-                    .HasMaxLength(50)
-                    .HasColumnName("STRIPE_MEASURE");
+                entity.Property(e => e.StripeMeasure).HasMaxLength(50).HasColumnName("STRIPE_MEASURE");
+                entity.Property(e => e.ProgramNo).HasMaxLength(50).HasColumnName("PROGRAM_NO");
+                entity.Property(e => e.ColorName).HasMaxLength(50).HasColumnName("COLOR_NAME");
+                entity.Property(e => e.Measurement).HasMaxLength(50).HasColumnName("MASUREMENT");
+                entity.Property(e => e.Uom).HasMaxLength(50).HasColumnName("UOM");
+                entity.Property(e => e.FeederNo).HasMaxLength(50).HasColumnName("FEEDER_NO");
                 entity.Property(e => e.Trdate).HasColumnName("TRDATE");
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
@@ -344,6 +349,82 @@ namespace FabricDevelopmentHub.Data
                 entity.HasOne(d => d.Ftd).WithMany(p => p.TblFtdYarns)
                     .HasForeignKey(d => d.Ftdid)
                     .HasConstraintName("FK_TBL_FTD_YARN_TBL_FTD_YARN");
+            });
+
+            modelBuilder.Entity<TblFtdDyeingBasic>(entity =>
+            {
+                entity.HasKey(e => e.Trid);
+
+                entity.ToTable("TBL_FTD_DYEING_BASIC");
+
+                entity.Property(e => e.Trid).HasColumnName("TRID");
+                entity.Property(e => e.BatchNo)
+                    .HasMaxLength(50)
+                    .HasColumnName("BATCH_NO");
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CREATED_AT");
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(50)
+                    .HasColumnName("CREATED_BY");
+                entity.Property(e => e.DyeingPart)
+                    .HasMaxLength(50)
+                    .HasColumnName("DYEING_PART");
+                entity.Property(e => e.EnzayemPer).HasColumnName("ENZAYEM_PER");
+                entity.Property(e => e.InhouseDyeing).HasColumnName("INHOUSE_DYEING");
+                entity.Property(e => e.IsNonRft)
+                    .HasMaxLength(50)
+                    .HasColumnName("IS_NON_RFT");
+                entity.Property(e => e.MachineNo)
+                    .HasMaxLength(50)
+                    .HasColumnName("MACHINE_NO");
+                entity.Property(e => e.ProductName)
+                    .HasMaxLength(50)
+                    .HasColumnName("PRODUCT_NAME");
+                entity.Property(e => e.Shade)
+                    .HasMaxLength(50)
+                    .HasColumnName("SHADE");
+                entity.Property(e => e.ShadeP).HasColumnName("SHADE_P");
+                entity.Property(e => e.Trdate).HasColumnName("TRDATE");
+                entity.Property(e => e.UpdatedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("UPDATED_AT");
+                entity.Property(e => e.UpdatedBy)
+                    .HasMaxLength(50)
+                    .HasColumnName("UPDATED_BY");
+            });
+
+            modelBuilder.Entity<TblFtdDyeingRecipe>(entity =>
+            {
+                entity.HasKey(e => e.Trid);
+
+                entity.ToTable("TBL_FTD_DYEING_RECIPE");
+
+                entity.Property(e => e.Trid)
+                    .ValueGeneratedNever()
+                    .HasColumnName("TRID");
+                entity.Property(e => e.BatchNo)
+                    .HasMaxLength(50)
+                    .HasColumnName("BATCH_NO");
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CREATED_AT");
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(50)
+                    .HasColumnName("CREATED_BY");
+                entity.Property(e => e.RecipeDetails)
+                    .HasMaxLength(50)
+                    .HasColumnName("RECIPE_DETAILS");
+                entity.Property(e => e.Ratio)
+                    .HasMaxLength(50)
+                    .HasColumnName("RATIO");
+                entity.Property(e => e.Trdate).HasColumnName("TRDATE");
+                entity.Property(e => e.UpdatedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("UPDATED_AT");
+                entity.Property(e => e.UpdatedBy)
+                    .HasMaxLength(50)
+                    .HasColumnName("UPDATED_BY");
             });
 
             OnModelCreatingPartial(modelBuilder);

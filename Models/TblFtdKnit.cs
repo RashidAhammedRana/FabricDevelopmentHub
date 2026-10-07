@@ -28,6 +28,11 @@ public partial class TblFtdKnit
     public int? McDia { get; set; }
 
     public string? StripeMeasure { get; set; }
+    public string? ProgramNo { get; set; }
+    public string? ColorName { get; set; }
+    public string? Measurement { get; set; }
+    public string? Uom { get; set; }
+    public string? FeederNo { get; set; }
 
     public byte[]? YarnPhoto { get; set; }
 

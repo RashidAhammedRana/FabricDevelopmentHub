@@ -6,370 +6,8 @@
 }
 
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link href="~/css/ftd.css" rel="stylesheet" />
 
-<style>
-
-    /* =========================================================
-           PAGE
-           ========================================================= */
-
-    .main-content {
-        padding: 0 !important;
-    }
-
-    .ftd-page {
-        width: 100%;
-        min-height: 100vh;
-    }
-
-    .ftd-card {
-        width: 100%;
-        min-height: 100vh;
-        margin: 0;
-        border: 0 !important;
-        border-radius: 0 !important;
-        box-shadow: none !important;
-    }
-
-
-    /* =========================================================
-           HEADER
-           ========================================================= */
-
-    .bg-fabric {
-        background-color: #0f8996 !important;
-    }
-
-    .ftd-header {
-        padding: 10px 18px;
-    }
-
-        .ftd-header h5 {
-            font-size: 20px;
-            font-weight: 500;
-        }
-
-
-    /* =========================================================
-           BODY
-           ========================================================= */
-
-    .ftd-body {
-        padding: 20px;
-    }
-
-
-    /* =========================================================
-           SECTION
-           ========================================================= */
-
-    .ftd-section {
-        margin-top: 28px;
-    }
-
-    .ftd-section-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
-    }
-
-    .ftd-section-title {
-        margin: 0;
-        font-size: 17px;
-        font-weight: 600;
-        color: #343a40;
-    }
-
-    .ftd-section-line {
-        margin-top: 5px;
-        margin-bottom: 12px;
-    }
-
-
-    /* =========================================================
-           FORM
-           ========================================================= */
-
-    .form-label {
-        font-size: 13px;
-        font-weight: 500;
-        margin-bottom: 5px;
-    }
-
-    .form-control,
-    .form-select {
-        font-size: 13px;
-        height: 38px;
-    }
-
-    .readonly-field {
-        background-color: #f5f7f8 !important;
-        cursor: not-allowed;
-    }
-
-
-    /* =========================================================
-           TABLE
-           ========================================================= */
-
-    .ftd-table-wrapper {
-        width: 100%;
-        overflow-x: auto;
-        border: 1px solid #dee2e6;
-        border-radius: 6px;
-        background: #fff;
-    }
-
-    .ftd-table {
-        width: 100%;
-        min-width: 1150px;
-        margin-bottom: 0;
-        vertical-align: middle;
-    }
-
-        .ftd-table thead th {
-            background-color: #f1f4f6;
-            color: #343a40;
-            font-size: 12px;
-            font-weight: 600;
-            white-space: nowrap;
-            text-align: center;
-            vertical-align: middle;
-            padding: 9px 8px;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .ftd-table tbody td {
-            padding: 6px 7px;
-            vertical-align: middle;
-            white-space: nowrap;
-        }
-
-        .ftd-table tbody tr:hover {
-            background-color: #fafcfc;
-        }
-
-        .ftd-table .form-control {
-            height: 35px;
-            min-width: 75px;
-            font-size: 12px;
-        }
-
-
-    /* =========================================================
-           FABRIC WIDTH
-           ========================================================= */
-
-    .fabric-color {
-        min-width: 130px !important;
-    }
-
-    .fabric-color-type {
-        min-width: 120px !important;
-    }
-
-    .fabrication {
-        min-width: 180px !important;
-    }
-
-    .fabric-dia-type {
-        min-width: 100px !important;
-    }
-
-
-    /* =========================================================
-           YARN WIDTH
-           ========================================================= */
-
-    .yarn-count {
-        min-width: 100px !important;
-    }
-
-    .yarn-lot {
-        min-width: 150px !important;
-    }
-
-    .yarn-brand {
-        min-width: 130px !important;
-    }
-
-    .yarn-remarks {
-        min-width: 220px !important;
-    }
-
-
-    /* =========================================================
-           EMPTY
-           ========================================================= */
-
-    .ftd-empty {
-        padding: 20px !important;
-        text-align: center;
-        color: #6c757d;
-        font-size: 13px;
-    }
-
-
-    /* =========================================================
-           BUTTONS
-           ========================================================= */
-
-    .btn-fabric {
-        background-color: #0f8996 !important;
-        border-color: #0f8996 !important;
-        color: #fff !important;
-    }
-
-        .btn-fabric:hover {
-            background-color: #0c727d !important;
-            border-color: #0c727d !important;
-            color: #fff !important;
-        }
-
-    .btn-add-row {
-        color: #0f8996;
-        border: 1px solid #0f8996;
-        font-size: 13px;
-    }
-
-        .btn-add-row:hover {
-            background-color: #0f8996;
-            color: #fff;
-        }
-
-    .btn-remove-row {
-        width: 32px;
-        height: 32px;
-        padding: 0;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 18px;
-        line-height: 1;
-    }
-
-
-    /* =========================================================
-           ACTIONS
-           ========================================================= */
-
-    .ftd-actions {
-        margin-top: 30px;
-        padding-top: 18px;
-        border-top: 1px solid #dee2e6;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-
-    /* =========================================================
-           SELECT2
-           ========================================================= */
-
-    .select2-container {
-        width: 100% !important;
-    }
-
-        .select2-container .select2-selection--single {
-            height: 38px !important;
-            min-height: 38px !important;
-            border: 1px solid #dee2e6 !important;
-            border-radius: 0.375rem !important;
-            background-color: #fff !important;
-        }
-
-            .select2-container
-            .select2-selection--single
-            .select2-selection__rendered {
-                height: 36px !important;
-                line-height: 36px !important;
-                padding-left: 12px !important;
-                padding-right: 35px !important;
-                font-size: 13px !important;
-                color: #212529 !important;
-            }
-
-            .select2-container
-            .select2-selection--single
-            .select2-selection__placeholder {
-                color: #6c757d !important;
-            }
-
-            .select2-container
-            .select2-selection--single
-            .select2-selection__arrow {
-                height: 36px !important;
-                top: 1px !important;
-                right: 8px !important;
-            }
-
-    .select2-container--open
-    .select2-selection--single {
-        border-color: #86b7fe !important;
-        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important;
-    }
-
-    .select2-search--dropdown {
-        padding: 8px !important;
-    }
-
-        .select2-search--dropdown
-        .select2-search__field {
-            height: 36px !important;
-            font-size: 13px !important;
-            padding: 6px 10px !important;
-            border: 1px solid #ced4da !important;
-            border-radius: 4px !important;
-        }
-
-    .select2-results__option {
-        font-size: 13px !important;
-        padding: 7px 10px !important;
-    }
-
-
-    /* =========================================================
-           LOADING
-           ========================================================= */
-
-    .control-loading {
-        opacity: 0.65;
-        pointer-events: none;
-    }
-
-
-    /* =========================================================
-           MOBILE
-           ========================================================= */
-
-    @@media (max-width: 768px) {
-
-        .ftd-body {
-            padding: 12px;
-        }
-
-        .ftd-header h5 {
-            font-size: 18px;
-        }
-
-        .ftd-section-title {
-            font-size: 16px;
-        }
-
-        .ftd-actions {
-            flex-direction: column;
-            gap: 10px;
-            align-items: stretch;
-        }
-
-            .ftd-actions .btn {
-                width: 100%;
-            }
-    }
-
-</style>
 
 
 <div class="ftd-page">
@@ -509,7 +147,7 @@
 
                             <label class="form-label">
 
-                                Internal Ref. No.
+                                Control No.
                                 <span class="text-danger">*</span>
 
                             </label>
@@ -729,20 +367,17 @@
 
                                             <td>
                                                 <input asp-for="TblFtdFabric[i].FinDia"
-                                                       class="form-control readonly-field"
-                                                       readonly />
+                                                       class="form-control readonly-field"/>
                                             </td>
 
                                             <td>
                                                 <input asp-for="TblFtdFabric[i].FinDiaType"
-                                                       class="form-control fabric-dia-type readonly-field"
-                                                       readonly />
+                                                       class="form-control fabric-dia-type readonly-field"/>
                                             </td>
 
                                             <td>
                                                 <input asp-for="TblFtdFabric[i].FinGsm"
-                                                       class="form-control readonly-field"
-                                                       readonly />
+                                                       class="form-control readonly-field"/>
                                             </td>
 
 @*                                             <td class="text-center">
@@ -911,6 +546,411 @@
 
                 </div>
 
+                <!-- =================================================
+                <!-- =================================================
+                     KNIT DETAILS
+                     ================================================= -->
+
+                <div class="ftd-section">
+
+                    <div class="ftd-section-header">
+
+                        <h6 class="ftd-section-title">
+                            Knitting Details
+                        </h6>
+
+                    </div>
+
+                    <hr class="ftd-section-line" />
+
+
+                    <div class="ftd-table-wrapper">
+
+                        <table class="table table-bordered ftd-table"
+                               id="knitTable">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th style="width:50px;">#</th>
+                                    <th>Program No.</th>
+                                    <th>Source</th>
+                                    <th>Knit Company</th>
+                                    <th>Machine</th>
+                                    <th>Dia</th>
+                                    <th>Gauge</th>
+                                    <th>S.L</th>
+                                    <th>RPM</th>
+                                    <th>Color</th>
+                                    <th>Measurement</th>
+                                    <th>UOM</th>
+                                    <th>No. of Feeder</th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="knitTableBody">
+
+                                @if (Model.TblFtdKnit != null &&
+                                                                Model.TblFtdKnit.Count > 0)
+                                {
+                                    for (int i = 0;
+                                    i < Model.TblFtdKnit.Count;
+                                    i++)
+                                    {
+                                        <tr class="knit-row">
+
+                                            <td class="text-center row-number">
+                                                @(i + 1)
+                                            </td>
+
+
+                                            <td>
+                                                <input asp-for="TblFtdKnit[i].ProgramNo"
+                                                       class="form-control readonly-field"
+                                                       readonly />
+                                            </td>
+
+
+                                            <td>
+                                                <input asp-for="TblFtdKnit[i].Source"
+                                                       class="form-control readonly-field"
+                                                       readonly />
+                                            </td>
+
+
+                                            <td>
+                                                <input asp-for="TblFtdKnit[i].KnitCom"
+                                                       class="form-control readonly-field"
+                                                       readonly />
+                                            </td>
+
+
+                                            <td>
+                                                <input asp-for="TblFtdKnit[i].McNo"
+                                                       class="form-control readonly-field"
+                                                       readonly />
+                                            </td>
+
+
+                                            <td>
+                                                <input asp-for="TblFtdKnit[i].McDia"
+                                                       class="form-control readonly-field"
+                                                       readonly />
+                                            </td>
+
+
+                                            <td>
+                                                <input asp-for="TblFtdKnit[i].McGauge"
+                                                       class="form-control readonly-field"
+                                                       readonly />
+                                            </td>
+
+
+                                            <td>
+                                                <input asp-for="TblFtdKnit[i].Sl"
+                                                       class="form-control readonly-field"
+                                                       readonly />
+                                            </td>
+
+                                            <td>
+                                                <input asp-for="TblFtdKnit[i].Rpm" class="form-control"/>
+                                            </td>
+
+                                            <td>
+                                                <input asp-for="TblFtdKnit[i].ColorName"
+                                                       class="form-control readonly-field"
+                                                       readonly />
+                                            </td>
+
+                                            <td>
+                                                <input asp-for="TblFtdKnit[i].Measurement"
+                                                       class="form-control readonly-field"
+                                                       readonly />
+                                            </td>
+
+
+                                            <td>
+                                                <input asp-for="TblFtdKnit[i].Uom"
+                                                       class="form-control readonly-field"
+                                                       readonly />
+                                            </td>
+
+
+                                            <td>
+                                                <input asp-for="TblFtdKnit[i].FeederNo"
+                                                       class="form-control readonly-field"
+                                                       readonly />
+                                            </td>
+
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr id="knitEmptyRow">
+
+                                        <td colspan="12"
+                                            class="ftd-empty">
+
+                                            No Knit details available.
+
+                                        </td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+                <!-- =================================================
+                DYEING BASIC DETAILS
+                ================================================= -->
+
+                <div class="ftd-section">
+
+                    <div class="ftd-section-header">
+
+                        <h6 class="ftd-section-title">
+                            Dyeing Basic Data
+                        </h6>
+
+                    </div>
+
+                    <hr class="ftd-section-line" />
+
+                    <div class="ftd-table-wrapper">
+
+                        <table class="table table-bordered ftd-table"
+                               id="dyeingBasicTable">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th style="width:50px;">#</th>
+
+                                    <th>Machine</th>
+
+                                    <th>Inhouse Dyeing</th>
+
+                                    <th>Shade %</th>
+
+                                    <th>Shade</th>
+
+                                    <th>Dyeing Part</th>
+
+                                    <th>Non RFT</th>
+
+                                    <th>Product Name</th>
+
+                                    <th>Enzyme %</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="dyeingBasicTableBody">
+
+                                @if (Model.TblFtdDyeingBasic != null && Model.TblFtdDyeingBasic.Count > 0)
+                                {
+                                    for (int i = 0; i < Model.TblFtdDyeingBasic.Count; i++)
+                                    {
+                                        <tr class="dyeing-basic-row">
+
+                                            <td class="text-center row-number">
+                                                @(i + 1)
+                                            </td>
+
+                                            <td>
+                                                <input asp-for="TblFtdDyeingBasic[i].MachineNo"
+                                                       class="form-control readonly-field"
+                                                       readonly />
+                                            </td>
+
+                                            <td>
+                                                <input asp-for="TblFtdDyeingBasic[i].InhouseDyeing"
+                                                       class="form-control readonly-field"
+                                                       readonly />
+                                            </td>
+
+                                            <td>
+                                                <input asp-for="TblFtdDyeingBasic[i].ShadeP"
+                                                       class="form-control readonly-field"
+                                                       readonly />
+                                            </td>
+
+                                            <td>
+                                                <input asp-for="TblFtdDyeingBasic[i].Shade"
+                                                       class="form-control readonly-field"
+                                                       readonly />
+                                            </td>
+
+                                            <td>
+                                                <input asp-for="TblFtdDyeingBasic[i].DyeingPart"
+                                                       class="form-control readonly-field"
+                                                       readonly />
+                                            </td>
+
+                                            <td>
+                                                <input asp-for="TblFtdDyeingBasic[i].IsNonRft"
+                                                       class="form-control readonly-field"
+                                                       readonly />
+                                            </td>
+
+                                            <td>
+                                                <input asp-for="TblFtdDyeingBasic[i].ProductName"
+                                                       class="form-control readonly-field"
+                                                       readonly />
+                                            </td>
+
+                                            <td>
+                                                <input asp-for="TblFtdDyeingBasic[i].EnzayemPer"
+                                                       class="form-control readonly-field"
+                                                       readonly />
+                                            </td>
+
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr id="dyeingBasicEmptyRow">
+
+                                        <td colspan="9"
+                                            class="ftd-empty">
+
+                                            No Dyeing Basic Data available.
+
+                                        </td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+                <!-- =================================================
+                DYEING RECIPE DETAILS
+                ================================================= -->
+
+                <div class="ftd-section">
+
+                    <div class="ftd-section-header">
+
+                        <h6 class="ftd-section-title">
+                            Dyeing Recipe Details
+                        </h6>
+
+                    </div>
+
+                    <hr class="ftd-section-line" />
+
+                    <div class="ftd-table-wrapper">
+
+                        <table class="table table-bordered ftd-table"
+                               id="dyeingRecipeTable">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th style="width:50px;">
+                                        #
+                                    </th>
+
+                                    <th>
+                                        Recipe Details
+                                    </th>
+
+                                    <th>
+                                        Ratio
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="dyeingRecipeTableBody">
+
+                                @if (Model.TblFtdDyeingRecipe != null && Model.TblFtdDyeingRecipe.Count > 0)
+                                {
+                                    for (int i = 0;
+                                    i < Model.TblFtdDyeingRecipe.Count;
+                                    i++)
+                                    {
+                                        <tr class="dyeing-recipe-row">
+
+                                            <!-- NUMBER -->
+
+                                            <td class="text-center row-number">
+                                                @(i + 1)
+                                            </td>
+
+
+                                            <!-- RECIPE DETAILS -->
+
+                                            <td>
+
+                                                <input asp-for="TblFtdDyeingRecipe[i].RecipeDetails"
+                                                       class="form-control readonly-field"
+                                                       readonly />
+
+                                            </td>
+
+
+                                            <!-- RATIO -->
+
+                                            <td>
+
+                                                <input asp-for="TblFtdDyeingRecipe[i].Ratio"
+                                                       class="form-control"
+                                                       type="number"
+                                                       step="0.01"
+                                                       readonly />
+
+                                            </td>
+
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr id="dyeingRecipeEmptyRow">
+
+                                        <td colspan="3"
+                                            class="ftd-empty">
+
+                                            No Dyeing Recipe details available.
+
+                                        </td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+
 
                 <!-- =================================================
                      ACTIONS
@@ -968,6 +1008,21 @@
         });
 
 
+    // UPDATE KNIT ROW NUMBERS
+    // =========================================================
+
+    function updateKnitRowNumbers() {
+
+        $("#knitTableBody .knit-row").each(function (index) {
+
+            $(this)
+                .find(".row-number")
+                .text(index + 1);
+
+        });
+    }
+
+
         // =========================================================
         // UPDATE FABRIC ROW NUMBERS
         // =========================================================
@@ -1001,6 +1056,36 @@
 
         }
 
+        // UPDATE Dyeing Basic ROW NUMBERS
+        // =========================================================
+        function updateDyeingBasicRowNumbers() {
+
+        $("#dyeingBasicTableBody .dyeing-basic-row").each(function (index) {
+
+            $(this)
+                .find(".row-number")
+                .text(index + 1);
+
+        });
+            // =========================================================
+    // UPDATE DYEING RECIPE ROW NUMBERS
+    // =========================================================
+
+    function updateDyeingRecipeRowNumbers() {
+
+        $("#dyeingRecipeTableBody .dyeing-recipe-row")
+            .each(function (index) {
+
+                $(this)
+                    .find(".row-number")
+                    .text(index + 1);
+
+            });
+
+    }
+
+
+    }
 
         // =========================================================
         // CLEAR MASTER DATA
@@ -1021,6 +1106,35 @@
             $("#TblFtdMaster_InternalRef").val("");
 
         }
+
+
+    // CLEAR KNIT TABLE
+    // =========================================================
+
+    function clearKnitTable() {
+
+        $("#knitTableBody")
+            .find(".knit-row")
+            .remove();
+
+        $("#knitEmptyRow")
+            .remove();
+
+        $("#knitTableBody").append(`
+
+            <tr id="knitEmptyRow">
+
+                <td colspan="12"
+                    class="ftd-empty">
+
+                    No Knit details available.
+
+                </td>
+
+            </tr>
+
+        `);
+    }
 
 
         // =========================================================
@@ -1084,6 +1198,66 @@
 
         }
 
+            // =========================================================
+    // CLEAR DYEING BASIC TABLE
+    // =========================================================
+
+    function clearDyeingBasicTable() {
+
+        $("#dyeingBasicTableBody")
+            .find(".dyeing-basic-row")
+            .remove();
+
+        $("#dyeingBasicEmptyRow")
+            .remove();
+
+        $("#dyeingBasicTableBody").append(`
+
+            <tr id="dyeingBasicEmptyRow">
+
+                <td colspan="9"
+                    class="ftd-empty">
+
+                    No Dyeing Basic details available.
+
+                </td>
+
+            </tr>
+
+        `);
+    }
+
+        // =========================================================
+    // CLEAR DYEING RECIPE TABLE
+    // =========================================================
+
+    function clearDyeingRecipeTable() {
+
+        $("#dyeingRecipeTableBody")
+            .find(".dyeing-recipe-row")
+            .remove();
+
+        $("#dyeingRecipeEmptyRow")
+            .remove();
+
+        $("#dyeingRecipeTableBody").append(`
+
+            <tr id="dyeingRecipeEmptyRow">
+
+                <td colspan="3"
+                    class="ftd-empty">
+
+                    No Dyeing Recipe details available.
+
+                </td>
+
+            </tr>
+
+        `);
+    }
+
+
+
 
         // =========================================================
         // ESCAPE HTML
@@ -1113,6 +1287,478 @@
                 .replace(/'/g, "&#039;");
 
         }
+
+    // =========================================================
+    // LOAD KNIT DETAILS
+    // =========================================================
+
+    function loadKnitDetails(batchNo) {
+
+        if (!batchNo) {
+
+            clearKnitTable();
+
+            return;
+        }
+
+
+        console.log(
+            "Loading Knit Details for Batch:",
+            batchNo
+        );
+
+
+        // ---------------------------------------------------------
+        // SHOW LOADING
+        // ---------------------------------------------------------
+
+        $("#knitTableBody").html(`
+
+            <tr>
+
+                <td colspan="12"
+                    class="ftd-empty">
+
+                    Loading knitting details...
+
+                </td>
+
+            </tr>
+
+        `);
+
+
+        // ---------------------------------------------------------
+        // AJAX
+        // ---------------------------------------------------------
+
+        $.ajax({
+
+            url:
+                '@Url.Action("GetKnitDetails", "FTD")',
+
+            type: "GET",
+
+            data: {
+
+                batchNo: batchNo
+
+            },
+
+
+            // =====================================================
+            // SUCCESS
+            // =====================================================
+
+            success: function (response) {
+
+                console.log(
+                    "Knit Response:",
+                    response
+                );
+
+
+                // -------------------------------------------------
+                // INVALID RESPONSE
+                // -------------------------------------------------
+
+                if (
+                    !response ||
+                    !response.success
+                ) {
+
+                    clearKnitTable();
+
+                    console.warn(
+                        response?.message ||
+                        "No Knit details found."
+                    );
+
+                    return;
+                }
+
+
+                let knits =
+                    response.data || [];
+
+
+                // -------------------------------------------------
+                // CLEAR TABLE
+                // -------------------------------------------------
+
+                $("#knitTableBody")
+                    .empty();
+
+
+                // -------------------------------------------------
+                // NO DATA
+                // -------------------------------------------------
+
+                if (knits.length === 0) {
+
+                    $("#knitTableBody").append(`
+
+                        <tr id="knitEmptyRow">
+
+                            <td colspan="13"
+                                class="ftd-empty">
+
+                                No Knit details available
+                                for selected Batch.
+
+                            </td>
+
+                        </tr>
+
+                    `);
+
+                    return;
+                }
+
+
+                // -------------------------------------------------
+                // ADD KNIT ROWS
+                // -------------------------------------------------
+
+                knits.forEach(function (item, index) {
+
+                    let row = `
+
+                        <tr class="knit-row">
+
+                            <!-- =================================
+                                 NUMBER
+                                 ================================= -->
+
+                            <td class="text-center row-number">
+
+                                ${index + 1}
+
+                            </td>
+
+
+                            <!-- =================================
+                                 PROGRAM NO
+                                 ================================= -->
+
+                            <td>
+
+                                <input
+                                    type="text"
+
+                                    name="TblFtdKnit[${index}].ProgramNo"
+
+                                    value="${escapeHtml(
+                                        item.programNo
+                                    )}"
+
+                                    class="form-control
+                                           knit-programNo
+                                           readonly-field"
+
+                                    readonly />
+
+                            </td>
+
+
+                            <!-- =================================
+                                 SOURCE
+                                 ================================= -->
+
+                            <td>
+
+                                <input
+                                    type="text"
+
+                                    name="TblFtdKnit[${index}].Source"
+
+                                    value="${escapeHtml(
+                                        item.source
+                                    )}"
+
+                                    class="form-control
+                                           knit-source
+                                           readonly-field"
+
+                                    readonly />
+
+                            </td>
+
+
+                            <!-- =================================
+                                 KNIT COMPANY
+                                 ================================= -->
+
+                            <td>
+
+                                <input
+                                    type="text"
+
+                                    name="TblFtdKnit[${index}].KnitCom"
+
+                                    value="${escapeHtml(
+                                        item.knitCom
+                                    )}"
+
+                                    class="form-control
+                                           knit-company
+                                           readonly-field"
+
+                                    readonly />
+
+                            </td>
+
+
+                            <!-- =================================
+                                 MACHINE NO
+                                 ================================= -->
+
+                            <td>
+
+                                <input
+                                    type="text"
+
+                                    name="TblFtdKnit[${index}].McNo"
+
+                                    value="${escapeHtml(
+                                        item.mcNo
+                                    )}"
+
+                                    class="form-control
+                                           knit-mcNo
+                                           readonly-field"
+
+                                    readonly />
+
+                            </td>
+
+
+                            <!-- =================================
+                                 MACHINE DIA
+                                 ================================= -->
+
+                            <td>
+
+                                <input
+                                    type="text"
+
+                                    name="TblFtdKnit[${index}].McDia"
+
+                                    value="${escapeHtml(
+                                        item.mcDia
+                                    )}"
+
+                                    class="form-control
+                                           knit-mcDia
+                                           readonly-field"
+
+                                    readonly />
+
+                            </td>
+
+
+                            <!-- =================================
+                                 MACHINE GAUGE
+                                 ================================= -->
+
+                            <td>
+
+                                <input
+                                    type="text"
+
+                                    name="TblFtdKnit[${index}].McGauge"
+
+                                    value="${escapeHtml(
+                                        item.mcGauge
+                                    )}"
+
+                                    class="form-control
+                                           knit-mcGauge
+                                           readonly-field"
+
+                                    readonly />
+
+                            </td>
+
+
+                            <!-- =================================
+                                 STITCH LENGTH
+                                 ================================= -->
+
+                            <td>
+
+                                <input
+                                    type="text"
+
+                                    name="TblFtdKnit[${index}].Sl"
+
+                                    value="${escapeHtml(
+                                        item.sl
+                                    )}"
+
+                                    class="form-control
+                                           knit-sl
+                                           readonly-field"
+
+                                    readonly />
+
+                            </td>
+                             <td>
+                                <input type="number" name="TblFtdKnit[${index}].Rpm"
+
+                                    value="${escapeHtml(
+                                        item.rpm
+                                    )}"
+
+                                    class="form-control knit-rpm"/>
+
+                            </td>
+
+                           <!-- =================================
+                                 COLOR
+                            ================================= -->
+
+                            <td>
+
+                                <input
+                                    type="text"
+
+                                    name="TblFtdKnit[${index}].ColorName"
+
+                                    value="${escapeHtml(
+                                        item.colorName
+                                    )}"
+
+                                    class="form-control
+                                           knit-colorName
+                                           readonly-field"
+
+                                    readonly />
+
+                            </td>
+                            <!-- =================================
+                                 MEASUREMENT
+                                 ================================= -->
+
+                            <td>
+
+                                <input
+                                    type="text"
+
+                                    name="TblFtdKnit[${index}].Measurement"
+
+                                    value="${escapeHtml(
+                                        item.measurement
+                                    )}"
+
+                                    class="form-control
+                                           knit-measurement
+                                           readonly-field"
+
+                                    readonly />
+
+                            </td>
+
+
+                            <!-- =================================
+                                 UOM
+                                 ================================= -->
+
+                            <td>
+
+                                <input
+                                    type="text"
+
+                                    name="TblFtdKnit[${index}].Uom"
+
+                                    value="${escapeHtml(
+                                        item.uom
+                                    )}"
+
+                                    class="form-control
+                                           knit-uom
+                                           readonly-field"
+
+                                    readonly />
+
+                            </td>
+
+
+                            <!-- =================================
+                                 FEEDER
+                                 ================================= -->
+
+                            <td>
+
+                                <input
+                                    type="text"
+
+                                    name="TblFtdKnit[${index}].FeederNo"
+
+                                    value="${escapeHtml(
+                                        item.feederNo
+                                    )}"
+
+                                    class="form-control
+                                           knit-feederNo
+                                           readonly-field"
+
+                                    readonly />
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+
+                    $("#knitTableBody")
+                        .append(row);
+
+                });
+
+
+                updateKnitRowNumbers();
+
+            },
+
+
+            // =====================================================
+            // ERROR
+            // =====================================================
+
+            error: function (xhr) {
+
+                console.error(
+                    "Knit AJAX Error:",
+                    xhr
+                );
+
+
+                clearKnitTable();
+
+
+                let message =
+                    "Unable to load Knit details.";
+
+
+                if (
+                    xhr.responseJSON &&
+                    xhr.responseJSON.message
+                ) {
+
+                    message =
+                        xhr.responseJSON.message;
+                }
+
+
+                alert(message);
+
+            }
+
+        });
+    }
+
 
 
         // =========================================================
@@ -1251,32 +1897,16 @@
                         let row = `
 
                             <tr class="fabric-row">
-
                                 <!-- NUMBER -->
-
                                 <td class="text-center row-number">
-
                                     ${index + 1}
-
                                 </td>
-
-
                                 <!-- COLOR -->
-
                                 <td>
-
-                                    <input
-                                        type="text"
-
+                                    <input type="text"
                                         name="TblFtdFabric[${index}].Color"
-
-                                        value="${escapeHtml(
-                                            item.colorName
-                                        )}"
-
-                                        class="form-control
-                                               fabric-color
-                                               readonly-field"
+                                        value="${escapeHtml(item.colorName)}"
+                                        class="form-control fabric-color readonly-field"
 
                                         readonly />
 
@@ -1394,14 +2024,9 @@
                                 <!-- FIN DIA -->
 
                                 <td>
-
-                                    <input
-                                        type="text"
-
+                                    <input type="text"
                                         name="TblFtdFabric[${index}].FinDia"
-
                                         value=""
-
                                         class="form-control
                                                readonly-field"
 
@@ -1442,9 +2067,7 @@
                                         value=""
 
                                         class="form-control
-                                               readonly-field"
-
-                                        readonly />
+                                               readonly-field" readonly/>
 
                                 </td>
 
@@ -1779,6 +2402,610 @@
 
         }
 
+            // =========================================================
+    // LOAD DYEING BASIC DETAILS
+    // =========================================================
+
+    function loadDyeingBasicData(batchNo) {
+
+        if (!batchNo) {
+
+            clearDyeingBasicTable();
+
+            return;
+        }
+
+        console.log(
+            "Loading Dyeing Basic Data for Batch:",
+            batchNo
+        );
+
+
+        // ---------------------------------------------------------
+        // SHOW LOADING
+        // ---------------------------------------------------------
+
+        $("#dyeingBasicTableBody").html(`
+
+            <tr>
+
+                <td colspan="9"
+                    class="ftd-empty">
+
+                    Loading dyeing basic data...
+
+                </td>
+
+            </tr>
+
+        `);
+
+
+        // ---------------------------------------------------------
+        // AJAX
+        // ---------------------------------------------------------
+
+        $.ajax({
+
+            url:
+                '@Url.Action("GetDyeingBasicData", "FTD")',
+
+            type: "GET",
+
+            data: {
+                batchNo: batchNo
+            },
+
+
+            // =====================================================
+            // SUCCESS
+            // =====================================================
+
+            success: function (response) {
+
+                console.log(
+                    "Dyeing Basic Response:",
+                    response
+                );
+
+
+                // -------------------------------------------------
+                // INVALID RESPONSE
+                // -------------------------------------------------
+
+                if (
+                    !response ||
+                    !response.success
+                ) {
+
+                    clearDyeingBasicTable();
+
+                    console.warn(
+                        response?.message ||
+                        "No Dyeing Basic Data found."
+                    );
+
+                    return;
+                }
+
+
+                let dyeingData =
+                    response.data || [];
+
+
+                // -------------------------------------------------
+                // CLEAR TABLE
+                // -------------------------------------------------
+
+                $("#dyeingBasicTableBody")
+                    .empty();
+
+
+                // -------------------------------------------------
+                // NO DATA
+                // -------------------------------------------------
+
+                if (dyeingData.length === 0) {
+
+                    $("#dyeingBasicTableBody").append(`
+
+                        <tr id="dyeingBasicEmptyRow">
+
+                            <td colspan="9"
+                                class="ftd-empty">
+
+                                No Dyeing Basic Data available
+                                for selected Batch.
+
+                            </td>
+
+                        </tr>
+
+                    `);
+
+                    return;
+                }
+
+
+                // -------------------------------------------------
+                // ADD DYEING ROWS
+                // -------------------------------------------------
+
+                dyeingData.forEach(function (item, index) {
+
+                    let row = `
+
+                        <tr class="dyeing-basic-row">
+
+                            <!-- NUMBER -->
+
+                            <td class="text-center row-number">
+
+                                ${index + 1}
+
+                            </td>
+
+
+                            <!-- MACHINE -->
+
+                            <td>
+
+                                <input
+                                    type="text"
+
+                                    name="TblFtdDyeingBasic[${index}].MachineNo"
+
+                                    value="${escapeHtml(
+                                        item.machineNo
+                                    )}"
+
+                                    class="form-control
+                                           readonly-field"
+
+                                    readonly />
+
+                            </td>
+
+
+                            <!-- INHOUSE DYEING -->
+
+                            <td>
+
+                                <input
+                                    type="text"
+
+                                    name="TblFtdDyeingBasic[${index}].InhouseDyeing"
+
+                                    value="${escapeHtml(
+                                        item.inhouseDyeing
+                                    )}"
+
+                                    class="form-control
+                                           readonly-field"
+
+                                    readonly />
+
+                            </td>
+
+
+                            <!-- SHADE P -->
+
+                            <td>
+
+                                <input
+                                    type="text"
+
+                                    name="TblFtdDyeingBasic[${index}].ShadeP"
+
+                                    value="${escapeHtml(
+                                        item.shadeP
+                                    )}"
+
+                                    class="form-control
+                                           readonly-field"
+
+                                    readonly />
+
+                            </td>
+
+
+                            <!-- SHADE -->
+
+                            <td>
+
+                                <input
+                                    type="text"
+
+                                    name="TblFtdDyeingBasic[${index}].Shade"
+
+                                    value="${escapeHtml(
+                                        item.shade
+                                    )}"
+
+                                    class="form-control
+                                           readonly-field"
+
+                                    readonly />
+
+                            </td>
+
+
+                            <!-- DYEING PART -->
+
+                            <td>
+
+                                <input
+                                    type="text"
+
+                                    name="TblFtdDyeingBasic[${index}].DyeingPart"
+
+                                    value="${escapeHtml(
+                                        item.dyeingPart
+                                    )}"
+
+                                    class="form-control
+                                           readonly-field"
+
+                                    readonly />
+
+                            </td>
+
+
+                            <!-- NON RFT -->
+
+                            <td>
+
+                                <input
+                                    type="text"
+
+                                    name="TblFtdDyeingBasic[${index}].IsNonRft"
+
+                                    value="${escapeHtml(
+                                        item.isNonRft
+                                    )}"
+
+                                    class="form-control
+                                           readonly-field"
+
+                                    readonly />
+
+                            </td>
+
+
+                            <!-- PRODUCT NAME -->
+
+                            <td>
+
+                                <input
+                                    type="text"
+
+                                    name="TblFtdDyeingBasic[${index}].ProductName"
+
+                                    value="${escapeHtml(
+                                        item.productName
+                                    )}"
+
+                                    class="form-control
+                                           readonly-field"
+
+                                    readonly />
+
+                            </td>
+
+
+                            <!-- ENZYME % -->
+
+                            <td>
+
+                                <input
+                                    type="text"
+
+                                    name="TblFtdDyeingBasic[${index}].EnzayemPer"
+
+                                    value="${escapeHtml(
+                                        item.enzayemPer
+                                    )}"
+
+                                    class="form-control
+                                           readonly-field"
+
+                                    readonly />
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+
+                    $("#dyeingBasicTableBody")
+                        .append(row);
+
+                });
+
+            },
+
+
+            // =====================================================
+            // ERROR
+            // =====================================================
+
+            error: function (xhr) {
+
+                console.error(
+                    "Dyeing Basic AJAX Error:",
+                    xhr
+                );
+
+
+                clearDyeingBasicTable();
+
+
+                let message =
+                    "Unable to load Dyeing Basic Data.";
+
+
+                if (
+                    xhr.responseJSON &&
+                    xhr.responseJSON.message
+                ) {
+
+                    message =
+                        xhr.responseJSON.message;
+
+                }
+
+
+                alert(message);
+
+            }
+
+        });
+    }
+
+        // =========================================================
+    // LOAD DYEING RECIPE DETAILS
+    // =========================================================
+
+    function loadDyeingRecipeData(batchNo) {
+
+        if (!batchNo) {
+
+            clearDyeingRecipeTable();
+
+            return;
+        }
+
+
+        console.log(
+            "Loading Dyeing Recipe Data for Batch:",
+            batchNo
+        );
+
+
+        // =====================================================
+        // SHOW LOADING
+        // =====================================================
+
+        $("#dyeingRecipeTableBody").html(`
+
+            <tr>
+
+                <td colspan="3"
+                    class="ftd-empty">
+
+                    Loading dyeing recipe details...
+
+                </td>
+
+            </tr>
+
+        `);
+
+
+        // =====================================================
+        // AJAX
+        // =====================================================
+
+        $.ajax({
+
+            url:
+                '@Url.Action("GetDyeingRecipeData", "FTD")',
+
+            type: "GET",
+
+            data: {
+
+                batchNo: batchNo
+
+            },
+
+
+            // =================================================
+            // SUCCESS
+            // =================================================
+
+            success: function (response) {
+
+                console.log(
+                    "Dyeing Recipe Response:",
+                    response
+                );
+
+
+                // =============================================
+                // INVALID RESPONSE
+                // =============================================
+
+                if (
+                    !response ||
+                    !response.success
+                ) {
+
+                    clearDyeingRecipeTable();
+
+                    console.warn(
+                        response?.message ||
+                        "No Dyeing Recipe details found."
+                    );
+
+                    return;
+                }
+
+
+                let recipeData =
+                    response.data || [];
+
+
+                // =============================================
+                // CLEAR TABLE
+                // =============================================
+
+                $("#dyeingRecipeTableBody")
+                    .empty();
+
+
+                // =============================================
+                // NO DATA
+                // =============================================
+
+                if (recipeData.length === 0) {
+
+                    $("#dyeingRecipeTableBody").append(`
+
+                        <tr id="dyeingRecipeEmptyRow">
+
+                            <td colspan="3"
+                                class="ftd-empty">
+
+                                No Dyeing Recipe details available
+                                for selected Batch.
+
+                            </td>
+
+                        </tr>
+
+                    `);
+
+                    return;
+                }
+
+
+                // =============================================
+                // ADD RECIPE ROWS
+                // =============================================
+
+                recipeData.forEach(function (item, index) {
+
+                    let row = `
+
+                        <tr class="dyeing-recipe-row">
+
+                            <!-- NUMBER -->
+
+                            <td class="text-center row-number">
+
+                                ${index + 1}
+
+                            </td>
+
+
+                            <!-- RECIPE DETAILS -->
+
+                            <td>
+
+                                <input
+                                    type="text"
+
+                                    name="TblFtdDyeingRecipe[${index}].RecipeDetails"
+
+                                    value="${escapeHtml(
+                                        item.recipeDetails
+                                    )}"
+
+                                    class="form-control
+                                           readonly-field"
+
+                                    readonly />
+
+                            </td>
+
+
+                            <!-- RATIO -->
+
+                            <td>
+
+                                <input
+                                    type="number"
+
+                                    name="TblFtdDyeingRecipe[${index}].Ratio"
+
+                                    value="${escapeHtml(
+                                        item.ratio
+                                    )}"
+
+                                    class="form-control"
+
+                                    step="0.01"
+
+                                    readonly />
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+
+                    $("#dyeingRecipeTableBody")
+                        .append(row);
+
+                });
+
+
+                updateDyeingRecipeRowNumbers();
+
+            },
+
+
+            // =================================================
+            // ERROR
+            // =================================================
+
+            error: function (xhr) {
+
+                console.error(
+                    "Dyeing Recipe AJAX Error:",
+                    xhr
+                );
+
+
+                clearDyeingRecipeTable();
+
+
+                let message =
+                    "Unable to load Dyeing Recipe details.";
+
+
+                if (
+                    xhr.responseJSON &&
+                    xhr.responseJSON.message
+                ) {
+
+                    message =
+                        xhr.responseJSON.message;
+
+                }
+
+
+                alert(message);
+
+            }
+
+        });
+
+    }
+
 
         // =========================================================
         // CONTROL / BATCH CHANGE
@@ -1802,7 +3029,7 @@
                 // NOTHING SELECTED
                 // =================================================
 
-                if (!selectedValue) {
+                    if (!selectedValue) {
 
                     clearMasterFields();
 
@@ -1810,9 +3037,15 @@
 
                     clearYarnTable();
 
-                    return;
+                    clearKnitTable();
 
-                }
+                    clearDyeingBasicTable();
+
+                    clearDyeingRecipeTable();
+
+                    return;
+                    }
+
 
 
                 // =================================================
@@ -1862,7 +3095,7 @@
                     clearFabricTable();
 
                     clearYarnTable();
-
+                    clearFabricTable();
                     return;
 
                 }
@@ -1878,6 +3111,7 @@
 
                 clearYarnTable();
 
+                clearFabricTable();
 
                 // =================================================
                 // DISABLE CONTROL DURING LOAD
@@ -1901,7 +3135,7 @@
                     data: {
 
                         internalRef:
-                            internalRef,
+                            batchNo,
 
                         batchNo:
                             batchNo
@@ -1967,7 +3201,7 @@
                         $("#TblFtdMaster_InternalRef")
                             .val(
                                 data.internalRef ||
-                                internalRef
+                                batchNo
                             );
 
 
@@ -1995,6 +3229,8 @@
                             );
 
 
+
+
                         // =================================================
                         // LOAD FABRIC AGAINST SELECTED BATCH
                         // =================================================
@@ -2011,6 +3247,24 @@
                         loadYarnDetails(
                             batchNo
                         );
+
+                        // LOAD KNIT DETAILS AGAINST SELECTED BATCH
+                        // =================================================
+
+                        loadKnitDetails(
+                            batchNo
+                        );
+
+                        // LOAD DYEING BASIC
+                        // =================================================
+                        loadDyeingBasicData(
+                        batchNo
+                        );
+                        // LOAD DYEING RECIPE
+                        // =================================================
+                       loadDyeingRecipeData(
+                       batchNo
+                       );
 
                     },
 
@@ -2032,6 +3286,8 @@
                         clearFabricTable();
 
                         clearYarnTable();
+
+                        clearFabricTable();
 
 
                         let message =
@@ -2074,18 +3330,25 @@
         // SELECT2 CLEAR
         // =========================================================
 
-        $("#Control").on(
-            "select2:clear",
-            function () {
+    $("#Control").on(
+        "select2:clear",
+        function () {
 
-                clearMasterFields();
+            clearMasterFields();
 
-                clearFabricTable();
+            clearFabricTable();
 
-                clearYarnTable();
+            clearYarnTable();
 
-            }
-        );
+            clearKnitTable();
+
+            clearDyeingBasicTable();
+
+            clearDyeingRecipeTable();
+
+        }
+    );
+
 
 
         // =========================================================
@@ -2131,8 +3394,11 @@
         // =========================================================
 
         updateFabricRowNumbers();
-
         updateYarnRowNumbers();
+        updateKnitRowNumbers();
+        updateDyeingBasicRowNumbers();
+        updateDyeingRecipeRowNumbers();
+
 
     });
 

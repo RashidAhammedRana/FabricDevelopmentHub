@@ -39,5 +39,8 @@ namespace FabricDevelopmentHub.ViewModels
         // ==========================
 
         public List<TblFtdYarn> TblFtdYarn { get; set; } = new();
+        public List<TblFtdDyeingBasic> TblFtdDyeingBasic { get; set; } = new();
+        public List<TblFtdDyeingRecipe> TblFtdDyeingRecipe { get; set; } = new();
+
     }
 }

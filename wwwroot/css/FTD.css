@@ -1,0 +1,357 @@
+﻿
+.main-content {
+    padding: 0 !important;
+}
+
+.ftd-page {
+    width: 100%;
+    min-height: 100vh;
+}
+
+.ftd-card {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+
+/* =========================================================
+           HEADER
+           ========================================================= */
+
+.bg-fabric {
+    background-color: #0f8996 !important;
+}
+
+.ftd-header {
+    padding: 10px 18px;
+}
+
+    .ftd-header h5 {
+        font-size: 20px;
+        font-weight: 500;
+    }
+
+
+/* =========================================================
+           BODY
+           ========================================================= */
+
+.ftd-body {
+    padding: 20px;
+}
+
+
+/* =========================================================
+           SECTION
+           ========================================================= */
+
+.ftd-section {
+    margin-top: 28px;
+}
+
+.ftd-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.ftd-section-title {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 600;
+    color: #343a40;
+}
+
+.ftd-section-line {
+    margin-top: 5px;
+    margin-bottom: 12px;
+}
+
+
+/* =========================================================
+           FORM
+           ========================================================= */
+
+.form-label {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.form-control,
+.form-select {
+    font-size: 13px;
+    height: 38px;
+}
+
+.readonly-field {
+    background-color: #f5f7f8 !important;
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+           TABLE
+           ========================================================= */
+
+.ftd-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    background: #fff;
+}
+
+.ftd-table {
+    width: 100%;
+    min-width: 1150px;
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+
+    .ftd-table thead th {
+        background-color: #f1f4f6;
+        color: #343a40;
+        font-size: 12px;
+        font-weight: 600;
+        white-space: nowrap;
+        text-align: center;
+        vertical-align: middle;
+        padding: 9px 8px;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .ftd-table tbody td {
+        padding: 6px 7px;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    .ftd-table tbody tr:hover {
+        background-color: #fafcfc;
+    }
+
+    .ftd-table .form-control {
+        height: 35px;
+        min-width: 75px;
+        font-size: 12px;
+    }
+
+
+/* =========================================================
+           FABRIC WIDTH
+           ========================================================= */
+
+.fabric-color {
+    min-width: 130px !important;
+}
+
+.fabric-color-type {
+    min-width: 120px !important;
+}
+
+.fabrication {
+    min-width: 180px !important;
+}
+
+.fabric-dia-type {
+    min-width: 100px !important;
+}
+
+
+/* =========================================================
+           YARN WIDTH
+           ========================================================= */
+
+.yarn-count {
+    min-width: 100px !important;
+}
+
+.yarn-lot {
+    min-width: 150px !important;
+}
+
+.yarn-brand {
+    min-width: 130px !important;
+}
+
+.yarn-remarks {
+    min-width: 220px !important;
+}
+
+
+/* =========================================================
+           EMPTY
+           ========================================================= */
+
+.ftd-empty {
+    padding: 20px !important;
+    text-align: center;
+    color: #6c757d;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+           BUTTONS
+           ========================================================= */
+
+.btn-fabric {
+    background-color: #0f8996 !important;
+    border-color: #0f8996 !important;
+    color: #fff !important;
+}
+
+    .btn-fabric:hover {
+        background-color: #0c727d !important;
+        border-color: #0c727d !important;
+        color: #fff !important;
+    }
+
+.btn-add-row {
+    color: #0f8996;
+    border: 1px solid #0f8996;
+    font-size: 13px;
+}
+
+    .btn-add-row:hover {
+        background-color: #0f8996;
+        color: #fff;
+    }
+
+.btn-remove-row {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    line-height: 1;
+}
+
+
+/* =========================================================
+           ACTIONS
+           ========================================================= */
+
+.ftd-actions {
+    margin-top: 30px;
+    padding-top: 18px;
+    border-top: 1px solid #dee2e6;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+/* =========================================================
+           SELECT2
+           ========================================================= */
+
+.select2-container {
+    width: 100% !important;
+}
+
+    .select2-container .select2-selection--single {
+        height: 38px !important;
+        min-height: 38px !important;
+        border: 1px solid #dee2e6 !important;
+        border-radius: 0.375rem !important;
+        background-color: #fff !important;
+    }
+
+        .select2-container
+        .select2-selection--single
+        .select2-selection__rendered {
+            height: 36px !important;
+            line-height: 36px !important;
+            padding-left: 12px !important;
+            padding-right: 35px !important;
+            font-size: 13px !important;
+            color: #212529 !important;
+        }
+
+        .select2-container
+        .select2-selection--single
+        .select2-selection__placeholder {
+            color: #6c757d !important;
+        }
+
+        .select2-container
+        .select2-selection--single
+        .select2-selection__arrow {
+            height: 36px !important;
+            top: 1px !important;
+            right: 8px !important;
+        }
+
+.select2-container--open
+.select2-selection--single {
+    border-color: #86b7fe !important;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important;
+}
+
+.select2-search--dropdown {
+    padding: 8px !important;
+}
+
+    .select2-search--dropdown
+    .select2-search__field {
+        height: 36px !important;
+        font-size: 13px !important;
+        padding: 6px 10px !important;
+        border: 1px solid #ced4da !important;
+        border-radius: 4px !important;
+    }
+
+.select2-results__option {
+    font-size: 13px !important;
+    padding: 7px 10px !important;
+}
+
+
+/* =========================================================
+           LOADING
+           ========================================================= */
+
+.control-loading {
+    opacity: 0.65;
+    pointer-events: none;
+}
+
+
+/* =========================================================
+           MOBILE
+           ========================================================= */
+
+@@media (max-width: 768px) {
+
+    .ftd-body {
+        padding: 12px;
+    }
+
+    .ftd-header h5 {
+        font-size: 18px;
+    }
+
+    .ftd-section-title {
+        font-size: 16px;
+    }
+
+    .ftd-actions {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+
+        .ftd-actions .btn {
+            width: 100%;
+        }
+}
+

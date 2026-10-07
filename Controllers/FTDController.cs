@@ -276,6 +276,174 @@ namespace FabricDevelopmentHub.Controllers
                 });
             }
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetKnitDetails(string batchNo)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(batchNo))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Batch No is required."
+                    });
+                }
+
+                var result = await _context.Database
+                    .SqlQueryRaw<FTDKnitDto>(
+                        "EXEC dbo.SP_GET_FTD_KNIT_DETAILS @BATCH_NO = {0}",
+                        batchNo
+                    )
+                    .ToListAsync();
+
+                return Json(new
+                {
+                    success = true,
+                    count = result.Count,
+
+                    data = result.Select(x => new
+                    {
+                        programNo = x.PROGRAM_NO,
+                        source = x.KNITTING_SOURCE,
+                        knitCom = x.COMPANY_NAME,
+                        mcNo = x.MACHINE_NO,
+                        mcDia = x.MACHINE_DIA,
+                        mcGauge = x.MACHINE_GG,
+                        sl = x.STITCH_LENGTH,
+                        measurement = x.MEASUREMENT,
+                        colorName = x.COLOR_NAME,
+                        uom = x.UOM,
+                        feederNo = x.TOTFIDDER
+                    }).ToList()
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "An error occurred while loading Knit details.",
+                    error = ex.Message,
+                    innerError = ex.InnerException?.Message
+                });
+            }
+        }
+
+        //Dyeing Basic Data By Batch
+        [HttpGet]
+        public async Task<IActionResult> GetDyeingBasicData(string batchNo)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(batchNo))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Batch No is required."
+                    });
+                }
+
+                var result = await _context.Database
+                    .SqlQueryRaw<FTDDyeingBasicDto>(
+                        "EXEC dbo.SP_GET_FTD_DYEING_BASIC_DATA @BATCH_NO = {0}",
+                        batchNo
+                    )
+                    .ToListAsync();
+
+                return Json(new
+                {
+                    success = true,
+
+                    data = result.Select(x => new
+                    {
+                        batchNo = x.BATCH_NO,
+                        machineNo = x.MACHINE,
+                        inhouseDyeing = x.INHOUSE_DYEING,
+                        shadeP = x.SHADE_P,
+                        shade = x.SHADE,
+                        dyeingPart = x.DYEING_PART,
+                        isNonRft = x.IS_NON_RFT,
+                        productName = x.PRODUCT_NAME_DETAILS,
+                        enzayemPer = x.RATIO
+                    }).ToList()
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("======================================");
+                Console.WriteLine("GET DYEING BASIC DATA ERROR");
+                Console.WriteLine("======================================");
+                Console.WriteLine(ex.ToString());
+                Console.WriteLine("======================================");
+
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "An error occurred while loading Dyeing Basic data.",
+                    error = ex.Message,
+                    innerError = ex.InnerException?.Message
+                });
+            }
+        }
+
+
+        //Dyeing Recipe Data By Batch
+        [HttpGet]
+        public async Task<IActionResult> GetDyeingRecipeData(string batchNo)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(batchNo))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Batch No is required."
+                    });
+                }
+
+                var result = await _context.Database
+                    .SqlQueryRaw<FTDDyeingRecipeDto>(
+                        "EXEC dbo.SP_GET_FTD_DYEING_RECIPE_DATA @BATCH_NO = {0}",
+                        batchNo
+                    )
+                    .ToListAsync();
+
+                return Json(new
+                {
+                    success = true,
+
+                    data = result.Select(x => new
+                    {
+                        batchNo = x.BATCH_NO,
+                        recipeDetails = x.RECIPE_DETAILS,
+                        ratio = x.RATIO
+                    }).ToList()
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GET DYEING RECIPE DATA ERROR");
+                Console.WriteLine("======================================");
+                Console.WriteLine(ex.ToString());
+                Console.WriteLine("======================================");
+
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "An error occurred while loading Dyeing Recipe data.",
+                    error = ex.Message,
+                    innerError = ex.InnerException?.Message
+                });
+            }
+        }
+
+
+
         // =========================================================
         // CONTROL DTO
         // =========================================================
@@ -341,6 +509,55 @@ namespace FabricDevelopmentHub.Controllers
             public string? Lot { get; set; }
             public string? Brand { get; set; }
         }
+
+        public class FTDKnitDto
+        {
+            public string? PROGRAM_NO { get; set; }
+
+            public string? KNITTING_SOURCE { get; set; }
+
+            public string? COMPANY_NAME { get; set; }
+
+            public string? MACHINE_NO { get; set; }
+
+            public string? MACHINE_DIA { get; set; }
+
+            public string? MACHINE_GG { get; set; }
+
+            public string? STITCH_LENGTH { get; set; }
+
+            public string? COLOR_NAME { get; set; }
+
+            public string? MEASUREMENT { get; set; }
+
+            public string? UOM { get; set; }
+
+            public string? TOTFIDDER { get; set; }
+        }
+
+        public class FTDDyeingBasicDto
+        {
+            public string? BATCH_NO { get; set; }
+            public string? MACHINE { get; set; }
+            public double? INHOUSE_DYEING { get; set; }
+            public double? SHADE_P { get; set; }
+            public string? SHADE { get; set; }
+            public string? DYEING_PART { get; set; }
+            public string? IS_NON_RFT { get; set; }
+            public string? PRODUCT_NAME_DETAILS { get; set; }
+            public double? RATIO { get; set; }
+        }
+
+        public class FTDDyeingRecipeDto
+        {
+            public string? BATCH_NO { get; set; }
+            public double? RATIO { get; set; }
+            public string? RECIPE_DETAILS { get; set; }
+        }
+
+
+        
+
 
     }
 }
