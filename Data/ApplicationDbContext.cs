@@ -378,9 +378,9 @@ namespace FabricDevelopmentHub.Data
                 entity.Property(e => e.MachineNo)
                     .HasMaxLength(50)
                     .HasColumnName("MACHINE_NO");
-                entity.Property(e => e.ProductName)
-                    .HasMaxLength(50)
-                    .HasColumnName("PRODUCT_NAME");
+                entity.Property(e => e.LabDipNo).HasColumnName("LAB_DIP_NO");
+                entity.Property(e => e.ProductName).HasMaxLength(50).HasColumnName("PRODUCT_NAME");
+                entity.Property(e => e.Ratio).HasMaxLength(50).HasColumnName("RATIO");
                 entity.Property(e => e.Shade)
                     .HasMaxLength(50)
                     .HasColumnName("SHADE");

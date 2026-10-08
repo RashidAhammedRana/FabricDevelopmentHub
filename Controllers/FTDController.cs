@@ -441,8 +441,98 @@ namespace FabricDevelopmentHub.Controllers
                 });
             }
         }
+        // =========================================================
+        // GET LAB DIP LIST
+        // =========================================================
+
+        [HttpGet]
+        public async Task<IActionResult> GetLabDipList()
+        {
+            try
+            {
+                var result = await _context.Database
+                    .SqlQueryRaw<FTDLabDipListDto>(
+                        "EXEC dbo.SP_GET_LAB_DIP_LIST"
+                    )
+                    .ToListAsync();
+
+                return Json(new
+                {
+                    success = true,
+
+                    data = result.Select(x => new
+                    {
+                        labDipNo = x.LAB_DIP_NO
+                    }).ToList()
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GET LAB DIP LIST ERROR");
+                Console.WriteLine("======================================");
+                Console.WriteLine(ex.ToString());
+                Console.WriteLine("======================================");
+
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "An error occurred while loading Lab Dip list.",
+                    error = ex.Message,
+                    innerError = ex.InnerException?.Message
+                });
+            }
+        }
 
 
+        [HttpGet]
+        public async Task<IActionResult> GetLabDipDetails(string labDipNo)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(labDipNo))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Lab Dip No is required."
+                    });
+                }
+
+                var result = await _context.Database
+                    .SqlQueryRaw<FTDLabDipDto>(
+                        "EXEC dbo.SP_GET_LAB_DIP_DETAILS @LAB_DIP_NO = {0}",
+                        labDipNo
+                    )
+                    .ToListAsync();
+
+                return Json(new
+                {
+                    success = true,
+
+                    data = result.Select(x => new
+                    {
+                        labDipNo = x.LAB_DIP_NO,
+                        labProductName = x.LAB_PRODUCT_NAME,
+                        labRatio = x.LAB_RATIO
+                    }).ToList()
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GET LAB DIP DETAILS ERROR");
+                Console.WriteLine("======================================");
+                Console.WriteLine(ex.ToString());
+                Console.WriteLine("======================================");
+
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "An error occurred while loading Lab Dip details.",
+                    error = ex.Message,
+                    innerError = ex.InnerException?.Message
+                });
+            }
+        }
 
         // =========================================================
         // CONTROL DTO
@@ -555,8 +645,20 @@ namespace FabricDevelopmentHub.Controllers
             public string? RECIPE_DETAILS { get; set; }
         }
 
+        public class FTDLabDipListDto
+        {
+            public string? LAB_DIP_NO { get; set; }
+        }
+        public class FTDLabDipDto
+        {
+            public string? LAB_DIP_NO { get; set; }
 
-        
+            public string? LAB_PRODUCT_NAME { get; set; }
+
+            public double? LAB_RATIO { get; set; }
+        }
+
+
 
 
     }
