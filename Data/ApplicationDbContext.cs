@@ -32,6 +32,7 @@ namespace FabricDevelopmentHub.Data
         public virtual DbSet<TblFtdYarn> TblFtdYarns { get; set; }
         public virtual DbSet<TblFtdDyeingBasic> TblFtdDyeingBasics { get; set; }
         public virtual DbSet<TblFtdDyeingRecipe> TblFtdDyeingRecipes { get; set; }
+        public virtual DbSet<TblFinishProcessHeatset> TblFinishProcessHeatset { get; set; }
 
 
 
@@ -425,6 +426,30 @@ namespace FabricDevelopmentHub.Data
                 entity.Property(e => e.UpdatedBy)
                     .HasMaxLength(50)
                     .HasColumnName("UPDATED_BY");
+            });
+
+            //TblFinishProcessHeatset
+            modelBuilder.Entity<TblFinishProcessHeatset>(entity =>
+            {
+                entity.HasKey(e => e.Trid);
+                entity.ToTable("TBL_FINISH_PROCESS_HEATSET");
+                entity.Property(e => e.Trid).HasColumnName("TRID");
+                entity.Property(e => e.AHeatsetDia).HasColumnName("A_HEATSET_DIA");
+                entity.Property(e => e.AHeatsetGsm).HasColumnName("A_HEATSET_GSM");
+                entity.Property(e => e.Blower).HasColumnName("BLOWER");
+                entity.Property(e => e.Comments).HasColumnName("COMMENTS");
+                entity.Property(e => e.DweelTime).HasColumnName("DWEEL_TIME"); 
+                entity.Property(e => e.Ftdid).HasColumnName("FTDID");
+                entity.Property(e => e.GreyDia).HasColumnName("GREY_DIA");
+                entity.Property(e => e.GreyGsm).HasColumnName("GREY_GSM");
+                entity.Property(e => e.Noc).HasColumnName("NOC");
+                entity.Property(e => e.Nop).HasColumnName("NOP");
+                entity.Property(e => e.OFeed).HasColumnName("O_FEED");
+                entity.Property(e => e.Pp).HasColumnName("PP");
+                entity.Property(e => e.Speed).HasColumnName("SPEED");
+                entity.Property(e => e.Stretching).HasColumnName("STRETCHING");
+                entity.Property(e => e.Temp).HasColumnName("TEMP");
+                entity.Property(e => e.UFeed).HasColumnName("U_FEED");
             });
 
             OnModelCreatingPartial(modelBuilder);
