@@ -33,6 +33,11 @@ namespace FabricDevelopmentHub.Data
         public virtual DbSet<TblFtdDyeingBasic> TblFtdDyeingBasics { get; set; }
         public virtual DbSet<TblFtdDyeingRecipe> TblFtdDyeingRecipes { get; set; }
         public virtual DbSet<TblFinishProcessHeatset> TblFinishProcessHeatset { get; set; }
+        public virtual DbSet<TblFinishProcessStenteringAb> TblFinishProcessStenteringAb { get; set; }
+        public virtual DbSet<TblFinishProcessStenteringBb> TblFinishProcessStenteringBb { get; set; }
+        public virtual DbSet<TblSingeing> TblSingeing { get; set; }
+        public virtual DbSet<TblSqueezing> TblSqueezing { get; set; }
+        public virtual DbSet<TblBrush> TblBrushe { get; set; }
 
 
 
@@ -450,6 +455,100 @@ namespace FabricDevelopmentHub.Data
                 entity.Property(e => e.Stretching).HasColumnName("STRETCHING");
                 entity.Property(e => e.Temp).HasColumnName("TEMP");
                 entity.Property(e => e.UFeed).HasColumnName("U_FEED");
+            });
+
+            modelBuilder.Entity<TblFinishProcessStenteringAb>(entity =>
+            {
+                entity.HasKey(e => e.Trid);
+
+                entity.ToTable("TBL_FINISH_PROCESS_STENTERING_AB");
+
+                entity.Property(e => e.Trid).HasColumnName("TRID");
+                entity.Property(e => e.ADia).HasColumnName("A_DIA");
+                entity.Property(e => e.AGsm).HasColumnName("A_GSM");
+                entity.Property(e => e.AShrinkage).HasColumnName("A_SHRINKAGE");
+                entity.Property(e => e.BlowerSpeed).HasColumnName("BLOWER_SPEED");
+                entity.Property(e => e.Chemical).HasColumnName("CHEMICAL");
+                entity.Property(e => e.Comments)
+                    .HasMaxLength(50)
+                    .HasColumnName("COMMENTS");
+                entity.Property(e => e.Ftdid).HasColumnName("FTDID");
+                entity.Property(e => e.Noc).HasColumnName("NOC");
+                entity.Property(e => e.OFeed).HasColumnName("O_FEED");
+                entity.Property(e => e.PPressure1).HasColumnName("P_PRESSURE_1");
+                entity.Property(e => e.PPressure2).HasColumnName("P_PRESSURE_2");
+                entity.Property(e => e.Speed).HasColumnName("SPEED");
+                entity.Property(e => e.StretchPer).HasColumnName("STRETCH_PER");
+                entity.Property(e => e.Temp).HasColumnName("TEMP");
+            });
+
+            modelBuilder.Entity<TblFinishProcessStenteringBb>(entity =>
+            {
+                entity.HasKey(e => e.Trid);
+
+                entity.ToTable("TBL_FINISH_PROCESS_STENTERING_BB");
+
+                entity.Property(e => e.Trid).HasColumnName("TRID");
+                entity.Property(e => e.ADia).HasColumnName("A_DIA");
+                entity.Property(e => e.AGsm).HasColumnName("A_GSM");
+                entity.Property(e => e.AShrinkage).HasColumnName("A_SHRINKAGE");
+                entity.Property(e => e.BlowerSpeed).HasColumnName("BLOWER_SPEED");
+                entity.Property(e => e.Chemical).HasColumnName("CHEMICAL");
+                entity.Property(e => e.Comments).HasColumnName("COMMENTS");
+                entity.Property(e => e.Ftdid).HasColumnName("FTDID");
+                entity.Property(e => e.Noc).HasColumnName("NOC");
+                entity.Property(e => e.OFeed).HasColumnName("O_FEED");
+                entity.Property(e => e.PPressure1).HasColumnName("P_PRESSURE_1");
+                entity.Property(e => e.PPressure2).HasColumnName("P_PRESSURE_2");
+                entity.Property(e => e.Speed).HasColumnName("SPEED");
+                entity.Property(e => e.StretchPer).HasColumnName("STRETCH_PER");
+                entity.Property(e => e.Temp).HasColumnName("TEMP");
+            });
+            modelBuilder.Entity<TblSingeing>(entity =>
+            {
+                entity.HasKey(e => e.Trid);
+
+                entity.ToTable("TBL_SINGEING");
+
+                entity.Property(e => e.Trid).HasColumnName("TRID");
+                entity.Property(e => e.ASingeingDia).HasColumnName("A_SINGEING_DIA");
+                entity.Property(e => e.ASingeingGsm).HasColumnName("A_SINGEING_GSM");
+                entity.Property(e => e.BurnerTemp).HasColumnName("BURNER_TEMP");
+                entity.Property(e => e.FlameHeight).HasColumnName("FLAME_HEIGHT");
+                entity.Property(e => e.Ftdid).HasColumnName("FTDID");
+                entity.Property(e => e.Speed).HasColumnName("SPEED");
+            });
+
+            modelBuilder.Entity<TblSqueezing>(entity =>
+            {
+                entity.HasKey(e => e.Trid);
+
+                entity.ToTable("TBL_SQUEEZING");
+
+                entity.Property(e => e.Trid).HasColumnName("TRID");
+                entity.Property(e => e.DiaType)
+                    .HasMaxLength(50)
+                    .HasColumnName("DIA_TYPE");
+                entity.Property(e => e.Ftdid).HasColumnName("FTDID");
+                entity.Property(e => e.Pp).HasColumnName("PP");
+            });
+            modelBuilder.Entity<TblBrush>(entity =>
+            {
+                entity.HasKey(e => e.Trid);
+                entity.ToTable("TBL_BRUSH");
+                entity.Property(e => e.Trid).HasColumnName("TRID");
+                entity.Property(e => e.ADia).HasColumnName("A_DIA");
+                entity.Property(e => e.AGsm).HasColumnName("A_GSM");
+                entity.Property(e => e.Ftdid).HasColumnName("FTDID");
+                entity.Property(e => e.LCp).HasColumnName("L_CP");
+                entity.Property(e => e.LDrumSpeed).HasColumnName("L_DRUM_SPEED");
+                entity.Property(e => e.LPile).HasColumnName("L_PILE");
+                entity.Property(e => e.LTension).HasColumnName("L_TENSION");
+                entity.Property(e => e.McSpeed).HasColumnName("MC_SPEED");
+                entity.Property(e => e.UCp).HasColumnName("U_CP");
+                entity.Property(e => e.UDrumSpeed).HasColumnName("U_DRUM_SPEED");
+                entity.Property(e => e.UPile).HasColumnName("U_PILE");
+                entity.Property(e => e.UTension).HasColumnName("U_TENSION");
             });
 
             OnModelCreatingPartial(modelBuilder);

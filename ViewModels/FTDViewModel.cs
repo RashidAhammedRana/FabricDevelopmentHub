@@ -4,39 +4,18 @@ namespace FabricDevelopmentHub.ViewModels
 {
     public class FTDViewModel
     {
-        // ==========================
-        // MASTER
-        // ==========================
-
         public TblFtdMaster TblFtdMaster { get; set; } = new();
-
-
-        // ==========================
-        // TRANSACTION DATE
-        // ==========================
-
+        public TblFinishProcessHeatset TblFinishProcessHeatset { get; set; } = new();
+        public TblFinishProcessStenteringAb TblFinishProcessStenteringAb { get; set; } = new();
+        public TblFinishProcessStenteringBb TblFinishProcessStenteringBb { get; set; } = new();
+        public TblSingeing TblSingeing { get; set; } = new();
+        public TblSqueezing TblSqueezing { get; set; } = new();
+        public TblBrush TblBrush { get; set; } = new();
         public DateTime Date { get; set; } = DateTime.Today;
 
 
-        // ==========================
-        // FABRIC
-        // ==========================
-
         public List<TblFtdFabric> TblFtdFabric { get; set; } = new();
-        // FABRIC
-        //public TblFtdFabric TblFtdFabric { get; set; } = new();
-
-
-        // ==========================
-        // KNIT
-        // ==========================
-
         public List<TblFtdKnit> TblFtdKnit { get; set; } = new();
-
-
-        // ==========================
-        // YARN
-        // ==========================
 
         public List<TblFtdYarn> TblFtdYarn { get; set; } = new();
         public List<TblFtdDyeingBasic> TblFtdDyeingBasic { get; set; } = new();

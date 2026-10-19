@@ -21,7 +21,7 @@ namespace FabricDevelopmentHub.Controllers
         // INDEX
         // =========================================================
 
-        public IActionResult Index()
+        public IActionResult FTDList()
         {
             return View();
         }
