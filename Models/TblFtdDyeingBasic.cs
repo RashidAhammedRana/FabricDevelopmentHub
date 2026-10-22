@@ -8,7 +8,7 @@ public partial class TblFtdDyeingBasic
     public int Trid { get; set; }
 
     public DateOnly? Trdate { get; set; }
-
+    public int? Ftdid { get; set; }
     public string? BatchNo { get; set; }
 
     public string? MachineNo { get; set; }

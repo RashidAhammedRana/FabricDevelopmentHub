@@ -38,6 +38,8 @@ namespace FabricDevelopmentHub.Data
         public virtual DbSet<TblSingeing> TblSingeing { get; set; }
         public virtual DbSet<TblSqueezing> TblSqueezing { get; set; }
         public virtual DbSet<TblBrush> TblBrushe { get; set; }
+        public virtual DbSet<TblCompacting> TblCompacting { get; set; }
+        public virtual DbSet<TblOtherProcess> TblOtherProcess { get; set; }
 
 
 
@@ -190,12 +192,10 @@ namespace FabricDevelopmentHub.Data
                     .HasMaxLength(250)
                     .HasColumnName("FABRICATION");
                 entity.Property(e => e.FinDia).HasColumnName("FIN_DIA");
-                entity.Property(e => e.FinDiaType)
-                    .HasMaxLength(50)
-                    .HasColumnName("FIN_DIA_TYPE");
+                entity.Property(e => e.FinDiaType).HasMaxLength(50).HasColumnName("FIN_DIA_TYPE");
                 entity.Property(e => e.FinGsm).HasColumnName("FIN_GSM");
                 entity.Property(e => e.Ftdid).HasColumnName("FTDID");
-                entity.Property(e => e.ReqDia).HasColumnName("REQ_DIA");
+                entity.Property(e => e.ReqDia).HasMaxLength(50).HasColumnName("REQ_DIA");
                 entity.Property(e => e.ReqGsm).HasColumnName("REQ_GSM");
                 entity.Property(e => e.Trdate).HasColumnName("TRDATE");
                 entity.Property(e => e.UpdatedAt)
@@ -216,9 +216,7 @@ namespace FabricDevelopmentHub.Data
 
                 entity.ToTable("TBL_FTD_KNIT");
 
-                entity.Property(e => e.Trid)
-                    .ValueGeneratedNever()
-                    .HasColumnName("TRID");
+                entity.Property(e => e.Trid).ValueGeneratedOnAdd().HasColumnName("TRID");
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("CREATED_AT");
@@ -236,8 +234,8 @@ namespace FabricDevelopmentHub.Data
                 entity.Property(e => e.McBrand)
                     .HasMaxLength(50)
                     .HasColumnName("MC_BRAND");
-                entity.Property(e => e.McDia).HasColumnName("MC_DIA");
-                entity.Property(e => e.McGauge).HasColumnName("MC_GAUGE");
+                entity.Property(e => e.McDia).HasMaxLength(50).HasColumnName("MC_DIA");
+                entity.Property(e => e.McGauge).HasMaxLength(50).HasColumnName("MC_GAUGE");
                 entity.Property(e => e.McNo)
                     .HasMaxLength(50)
                     .HasColumnName("MC_NO");
@@ -296,13 +294,9 @@ namespace FabricDevelopmentHub.Data
                 entity.Property(e => e.CreatedBy)
                     .HasMaxLength(50)
                     .HasColumnName("CREATED_BY");
-                entity.Property(e => e.FtdNo)
-                    .HasMaxLength(50)
-                    .HasColumnName("FTD_NO");
-                entity.Property(e => e.StyleRef)
-                    .HasMaxLength(50)
-                    .HasColumnName("STYLE_REF");
-                entity.Property(e => e.SysReq).HasColumnName("SYS_REQ");
+                entity.Property(e => e.FtdNo).HasMaxLength(50).HasColumnName("FTD_NO");
+                entity.Property(e => e.StyleRef).HasMaxLength(50).HasColumnName("STYLE_REF");
+                entity.Property(e => e.SysReq).HasMaxLength(50).HasColumnName("SYS_REQ");
                 entity.Property(e => e.Trdate).HasColumnName("TRDATE");
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
@@ -323,7 +317,7 @@ namespace FabricDevelopmentHub.Data
                     .HasMaxLength(50)
                     .HasColumnName("BRAND");
                 entity.Property(e => e.Count)
-                    .HasMaxLength(50)
+                    .HasMaxLength(100)
                     .HasColumnName("COUNT");
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
@@ -364,6 +358,7 @@ namespace FabricDevelopmentHub.Data
                 entity.ToTable("TBL_FTD_DYEING_BASIC");
 
                 entity.Property(e => e.Trid).HasColumnName("TRID");
+                entity.Property(e => e.Ftdid).HasColumnName("FTDID");
                 entity.Property(e => e.BatchNo)
                     .HasMaxLength(50)
                     .HasColumnName("BATCH_NO");
@@ -406,9 +401,8 @@ namespace FabricDevelopmentHub.Data
 
                 entity.ToTable("TBL_FTD_DYEING_RECIPE");
 
-                entity.Property(e => e.Trid)
-                    .ValueGeneratedNever()
-                    .HasColumnName("TRID");
+                entity.Property(e => e.Trid).ValueGeneratedOnAdd().HasColumnName("TRID");
+                entity.Property(e => e.Ftdid).HasColumnName("FTDID");
                 entity.Property(e => e.BatchNo)
                     .HasMaxLength(50)
                     .HasColumnName("BATCH_NO");
@@ -421,9 +415,7 @@ namespace FabricDevelopmentHub.Data
                 entity.Property(e => e.RecipeDetails)
                     .HasMaxLength(50)
                     .HasColumnName("RECIPE_DETAILS");
-                entity.Property(e => e.Ratio)
-                    .HasMaxLength(50)
-                    .HasColumnName("RATIO");
+                entity.Property(e => e.Ratio).HasColumnName("RATIO");
                 entity.Property(e => e.Trdate).HasColumnName("TRDATE");
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
@@ -469,9 +461,7 @@ namespace FabricDevelopmentHub.Data
                 entity.Property(e => e.AShrinkage).HasColumnName("A_SHRINKAGE");
                 entity.Property(e => e.BlowerSpeed).HasColumnName("BLOWER_SPEED");
                 entity.Property(e => e.Chemical).HasColumnName("CHEMICAL");
-                entity.Property(e => e.Comments)
-                    .HasMaxLength(50)
-                    .HasColumnName("COMMENTS");
+                entity.Property(e => e.Comments).HasMaxLength(50).HasColumnName("COMMENTS");
                 entity.Property(e => e.Ftdid).HasColumnName("FTDID");
                 entity.Property(e => e.Noc).HasColumnName("NOC");
                 entity.Property(e => e.OFeed).HasColumnName("O_FEED");
@@ -494,7 +484,7 @@ namespace FabricDevelopmentHub.Data
                 entity.Property(e => e.AShrinkage).HasColumnName("A_SHRINKAGE");
                 entity.Property(e => e.BlowerSpeed).HasColumnName("BLOWER_SPEED");
                 entity.Property(e => e.Chemical).HasColumnName("CHEMICAL");
-                entity.Property(e => e.Comments).HasColumnName("COMMENTS");
+                entity.Property(e => e.Comments).HasMaxLength(50).HasColumnName("COMMENTS");
                 entity.Property(e => e.Ftdid).HasColumnName("FTDID");
                 entity.Property(e => e.Noc).HasColumnName("NOC");
                 entity.Property(e => e.OFeed).HasColumnName("O_FEED");
@@ -549,6 +539,48 @@ namespace FabricDevelopmentHub.Data
                 entity.Property(e => e.UDrumSpeed).HasColumnName("U_DRUM_SPEED");
                 entity.Property(e => e.UPile).HasColumnName("U_PILE");
                 entity.Property(e => e.UTension).HasColumnName("U_TENSION");
+            });
+
+            modelBuilder.Entity<TblCompacting>(entity =>
+            {
+                entity.HasKey(e => e.Trid);
+                entity.ToTable("TBL_COMPACTING");
+                entity.Property(e => e.Trid).HasColumnName("TRID");
+                entity.Property(e => e.ADia).HasColumnName("A_DIA");
+                entity.Property(e => e.AGsm).HasColumnName("A_GSM");
+                entity.Property(e => e.Comments).HasColumnName("COMMENTS");
+                entity.Property(e => e.CompactionPer).HasColumnName("COMPACTION_PER");
+                entity.Property(e => e.FGsm).HasColumnName("F_GSM");
+                entity.Property(e => e.Ftdid).HasColumnName("FTDID");
+                entity.Property(e => e.OFeed).HasColumnName("O_FEED");
+                entity.Property(e => e.RDia).HasColumnName("R_DIA");
+                entity.Property(e => e.RGsm).HasColumnName("R_GSM");
+                entity.Property(e => e.Shrinkage).HasColumnName("SHRINKAGE");
+                entity.Property(e => e.Speed).HasColumnName("SPEED");
+                entity.Property(e => e.Steam).HasColumnName("STEAM");
+                entity.Property(e => e.Temp).HasColumnName("TEMP");
+            });
+
+            modelBuilder.Entity<TblOtherProcess>(entity =>
+            {
+                entity.HasKey(e => e.Trid);
+                entity.ToTable("TBL_OTHER_PROCESS");
+                entity.Property(e => e.Trid).HasColumnName("TRID");
+                entity.Property(e => e.AopRemarks).HasMaxLength(50).HasColumnName("AOP_REMARKS");
+                entity.Property(e => e.AopType).HasColumnName("AOP_TYPE");
+                entity.Property(e => e.Ftdid).HasColumnName("FTDID");
+                entity.Property(e => e.GmtColorAw).HasColumnName("GMT_COLOR_AW");
+                entity.Property(e => e.GmtColorBw).HasColumnName("GMT_COLOR_BW");
+                entity.Property(e => e.ImageP).HasMaxLength(50).HasColumnName("IMAGE_P");
+                entity.Property(e => e.ImageW).HasMaxLength(50).HasColumnName("IMAGE_W");
+                entity.Property(e => e.NoOfColorP).HasColumnName("NO_OF_COLOR_P");
+                entity.Property(e => e.NoOfColorW).HasColumnName("NO_OF_COLOR_W");
+                entity.Property(e => e.PrintRemarks).HasMaxLength(50).HasColumnName("PRINT_REMARKS");
+                entity.Property(e => e.PrintType).HasColumnName("PRINT_TYPE");
+                entity.Property(e => e.RepeatSizeP).HasColumnName("REPEAT_SIZE_P");
+                entity.Property(e => e.RepeatSizeW).HasColumnName("REPEAT_SIZE_W");
+                entity.Property(e => e.WashRemarks).HasColumnName("WASH_REMARKS");
+                entity.Property(e => e.WashType).HasColumnName("WASH_TYPE");
             });
 
             OnModelCreatingPartial(modelBuilder);

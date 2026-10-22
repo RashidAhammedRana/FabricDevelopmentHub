@@ -11,8 +11,8 @@
 <style>
 
     /* =========================================
-       FTD STEPPER
-       ========================================= */
+               FTD STEPPER
+               ========================================= */
 
     .stepper-wrapper {
         display: flex;
@@ -107,8 +107,8 @@
     }
 
     /* =========================================
-       STEP CONTENT
-       ========================================= */
+               STEP CONTENT
+               ========================================= */
 
     .step-content {
         display: none;
@@ -120,23 +120,20 @@
         }
 
     @@keyframes stepFadeIn {
-        from
+        from {
+            opacity: 0;
+            transform: translateY(6px);
+        }
 
-    {
-        opacity: 0;
-        transform: translateY(6px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     /* =========================================
-       STEPPER ACTION BUTTONS
-       ========================================= */
+               STEPPER ACTION BUTTONS
+               ========================================= */
 
     .ftd-actions {
         display: flex;
@@ -172,46 +169,43 @@
         }
 
     /* =========================================
-       RESPONSIVE
-       ========================================= */
+               RESPONSIVE
+               ========================================= */
 
     @@media (max-width: 576px) {
-        .stepper-wrapper
-
-    {
-        margin: 20px auto 25px;
-    }
-
-    .step-counter {
-        width: 36px;
-        height: 36px;
-        font-size: 14px;
-    }
-
-    .stepper-item:not(:last-child)::after {
-        top: 17px;
-        left: calc(50% + 19px);
-        width: calc(100% - 38px);
-    }
-
-    .step-name {
-        font-size: 12px;
-    }
-
-    .ftd-actions {
-        flex-wrap: wrap;
-    }
-
-        .ftd-actions > a {
-            margin-bottom: 5px;
+        .stepper-wrapper {
+            margin: 20px auto 25px;
         }
 
-        .ftd-actions > div {
-            display: flex;
+        .step-counter {
+            width: 36px;
+            height: 36px;
+            font-size: 14px;
+        }
+
+        .stepper-item:not(:last-child)::after {
+            top: 17px;
+            left: calc(50% + 19px);
+            width: calc(100% - 38px);
+        }
+
+        .step-name {
+            font-size: 12px;
+        }
+
+        .ftd-actions {
             flex-wrap: wrap;
-            gap: 8px;
         }
 
+            .ftd-actions > a {
+                margin-bottom: 5px;
+            }
+
+            .ftd-actions > div {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
     }
 </style>
 
@@ -260,6 +254,11 @@
                     <div class="stepper-item" data-step="5">
                         <div class="step-counter">5</div>
                         <div class="step-name">Brush</div>
+                    </div>
+
+                    <div class="stepper-item" data-step="6">
+                        <div class="step-counter">6</div>
+                        <div class="step-name">Compacting & Other Process</div>
                     </div>
 
                 </div>
@@ -1054,22 +1053,22 @@
                         <hr class="ftd-section-line" />
 
                         <div class="row g-3">
+                            <!-- Show Only FTD No.--!>
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label class="form-label">FTD No.</label>
+                                <div class="form-control bg-light">
+                                    <span class="text-dark">
+                                        @Model.TblFtdMaster.FtdNo
+                                    </span>
+                                </div>
+                            </div>
 
                             <!-- FTD ID -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessHeatset.Ftdid"
-                                       class="form-label">
-                                    FTD ID
-                                </label>
-
-                                <input asp-for="TblFinishProcessHeatset.Ftdid"
-                                       class="form-control"
-                                       type="number" readonly />
-
-                                <span asp-validation-for="TblFinishProcessHeatset.Ftdid"
-                                      class="text-danger"></span>
-                            </div>
+                            @* <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessHeatset.Ftdid" class="form-label">FTD ID</label>
+                                <input asp-for="TblFinishProcessHeatset.Ftdid" class="form-control" type="number" readonly />
+                                <span asp-validation-for="TblFinishProcessHeatset.Ftdid" class="text-danger"></span>
+                            </div> *@
 
                             <!-- NOC -->
 
@@ -1332,7 +1331,6 @@
 
                 </div>
                 <!-- STEP 2 END -->
-
                 <!-- STEP 3 START -->
                 <div class="step-content" id="step-3">
 
@@ -1348,9 +1346,17 @@
 
                         <div class="row g-3">
 
-                            <!-- FTD ID -->
-
+                            <!-- Show Only FTD No.--!>
                             <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label class="form-label">FTD No.</label>
+                                <div class="form-control bg-light">
+                                    <span class="text-dark">
+                                        @Model.TblFtdMaster.FtdNo
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- FTD ID -->
+                            @* <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblFinishProcessStenteringAb.Ftdid"
                                        class="form-label">
                                     FTD ID
@@ -1362,14 +1368,14 @@
 
                                 <span asp-validation-for="TblFinishProcessStenteringAb.Ftdid"
                                       class="text-danger"></span>
-                            </div>
+                            </div> *@
 
                             <!-- Temp -->
 
                             <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblFinishProcessStenteringAb.Temp"
                                        class="form-label">
-                                     Temp
+                                    Temp
                                 </label>
 
                                 <input asp-for="TblFinishProcessStenteringAb.Temp"
@@ -1604,7 +1610,7 @@
 
                             <!-- FTD ID -->
 
-                            <div class="col-lg-2 col-md-3 col-sm-6">
+                           @*  <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblFinishProcessStenteringBb.Ftdid"
                                        class="form-label">
                                     FTD ID
@@ -1616,7 +1622,7 @@
 
                                 <span asp-validation-for="TblFinishProcessStenteringBb.Ftdid"
                                       class="text-danger"></span>
-                            </div>
+                            </div> *@
 
                             <!-- Temp -->
 
@@ -1859,10 +1865,17 @@
                         <hr class="ftd-section-line" />
 
                         <div class="row g-3">
-
-                            <!-- FTD ID -->
-
+                            <!-- Show Only FTD No.--!>
                             <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label class="form-label">FTD No.</label>
+                                <div class="form-control bg-light">
+                                    <span class="text-dark">
+                                        @Model.TblFtdMaster.FtdNo
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- FTD ID -->
+                            @* <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblSingeing.Ftdid"
                                        class="form-label">
                                     FTD ID
@@ -1874,7 +1887,7 @@
 
                                 <span asp-validation-for="TblSingeing.Ftdid"
                                       class="text-danger"></span>
-                            </div>
+                            </div> *@
 
                             <!-- BurnerTemp -->
 
@@ -1979,7 +1992,7 @@
 
                             <!-- FTD ID -->
 
-                            <div class="col-lg-2 col-md-3 col-sm-6">
+                            @* <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblSqueezing.Ftdid"
                                        class="form-label">
                                     FTD ID
@@ -1991,7 +2004,7 @@
 
                                 <span asp-validation-for="TblSqueezing.Ftdid"
                                       class="text-danger"></span>
-                            </div>
+                            </div> *@
 
                             <!-- Pp -->
 
@@ -2046,13 +2059,21 @@
 
                         <div class="row g-3">
 
-                            <!-- FTD ID -->
-
+                            <!-- Show Only FTD No.--!>
                             <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label class="form-label">FTD No.</label>
+                                <div class="form-control bg-light">
+                                    <span class="text-dark">
+                                        @Model.TblFtdMaster.FtdNo
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- FTD ID -->
+                            @* <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblBrush.Ftdid" class="form-label">FTD ID</label>
                                 <input asp-for="TblBrush.Ftdid"class="form-control"type="number" readonly />
                                 <span asp-validation-for="TblBrush.Ftdid" class="text-danger"></span>
-                            </div>
+                            </div> *@
 
                             <!-- UPile -->
                             <div class="col-lg-2 col-md-3 col-sm-6">
@@ -2126,6 +2147,219 @@
 
                 </div>
                 <!-- STEP 5 END -->
+                <!-- STEP 6 START -->
+                <div class="step-content" id="step-3">
+                    <div class="ftd-section mt-0">
+                        <div class="ftd-section-header">
+                            <h6 class="ftd-section-title">
+                                Compacting
+                            </h6>
+                        </div>
+
+                        <hr class="ftd-section-line" />
+                        <div class="row g-3">
+                            <!-- Show Only FTD No.--!>
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label class="form-label">FTD No.</label>
+                                <div class="form-control bg-light">
+                                    <span class="text-dark">
+                                        @Model.TblFtdMaster.FtdNo
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- FTD ID -->
+                            @* <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblCompacting.Ftdid"class="form-label">FTD ID</label>
+                                <input asp-for="TblCompacting.Ftdid"class="form-control"type="number" readonly />
+                                <span asp-validation-for="TblCompacting.Ftdid"class="text-danger"></span>
+                            </div> *@
+
+                            <!-- Temp -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblCompacting.Temp" class="form-label">Temp</label>
+                                <input asp-for="TblCompacting.Temp" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblCompacting.Temp" class="text-danger"></span>
+                            </div>
+
+                            <!-- Speed -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblCompacting.Speed" class="form-label">Speed</label>
+                                <input asp-for="TblCompacting.Speed" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblCompacting.Speed" class="text-danger"></span>
+                            </div>
+
+                            <!-- OFeed-->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblCompacting.OFeed" class="form-label">O-Feed</label>
+                                <input asp-for="TblCompacting.OFeed" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblCompacting.OFeed" class="text-danger"></span>
+                            </div>
+
+                            <!-- StretchPer -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblCompacting.CompactionPer" class="form-label"> Compaction Percent</label>
+                                <input asp-for="TblCompacting.CompactionPer" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblCompacting.CompactionPer" class="text-danger"></span>
+                            </div>
+
+                            <!-- Steam -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblCompacting.Steam" class="form-label">Steam</label>
+                                <input asp-for="TblCompacting.Steam" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblCompacting.Steam" class="text-danger"></span>
+                            </div>
+
+                            <!-- ADia -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblCompacting.ADia" class="form-label"> A.Dia</label>
+                                <input asp-for="TblCompacting.ADia" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblCompacting.ADia" class="text-danger"></span>
+                            </div>
+
+                            <!-- AGsm -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblCompacting.AGsm" class="form-label"> A.Gsm </label>
+                                <input asp-for="TblCompacting.AGsm" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblCompacting.AGsm" class="text-danger"></span>
+                            </div>
+
+                            <!-- FGsm -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblCompacting.FGsm" class="form-label"> F.Gsm </label>
+                                <input asp-for="TblCompacting.FGsm" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblCompacting.FGsm" class="text-danger"></span>
+                            </div>
+
+                            <!-- RDia -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblCompacting.RDia" class="form-label">R. Dia </label>
+                                <input asp-for="TblCompacting.RDia" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblCompacting.RDia" class="text-danger"></span>
+                            </div>
+
+                            <!-- RGsm -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblCompacting.RGsm" class="form-label">R.Gsm</label>
+                                <input asp-for="TblCompacting.RGsm" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblCompacting.RGsm" class="text-danger"></span>
+                            </div>
+
+                            <!-- Shrinkage -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblCompacting.Shrinkage" class="form-label">Shrinkage</label>
+                                <input asp-for="TblCompacting.Shrinkage" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblCompacting.Shrinkage" class="text-danger"></span>
+                            </div>
+
+                            <!-- Comments -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessStenteringAb.Comments" class="form-label"> Comments </label>
+                                <input asp-for="TblFinishProcessStenteringAb.Comments" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblFinishProcessStenteringAb.Comments" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Other Process-->
+                    <div class="ftd-section mt-5">
+
+                        <div class="ftd-section-header">
+                            <h6 class="ftd-section-title">
+                                Other Process
+                            </h6>
+                        </div>
+
+                        <hr class="ftd-section-line" />
+
+                        <div class="row g-3">
+
+                            <!-- FTD ID -->
+                            @* <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblOtherProcess.Ftdid" class="form-label">FTD ID</label>
+                                <input asp-for="TblOtherProcess.Ftdid" class="form-control" type="number" readonly />
+                                <span asp-validation-for="TblOtherProcess.Ftdid" class="text-danger"></span>
+                            </div> *@
+
+                            <!-- Temp -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblOtherProcess.AopType" class="form-label"> AOP Type </label>
+                                <input asp-for="TblOtherProcess.AopType" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblOtherProcess.AopType" class="text-danger"></span>
+                            </div>
+                            <!-- NoOfColorW -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblOtherProcess.NoOfColorW" class="form-label"> No.Of Color (W)</label>
+                                <input asp-for="TblOtherProcess.NoOfColorW" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblOtherProcess.NoOfColorW" class="text-danger"></span>
+                            </div>
+                            <!-- RepeatSizeW -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblOtherProcess.RepeatSizeW" class="form-label"> Repeat Size (W)</label>
+                                <input asp-for="TblOtherProcess.RepeatSizeW" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblOtherProcess.RepeatSizeW" class="text-danger"></span>
+                            </div>
+                            <!-- AopRemarks -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblOtherProcess.AopRemarks" class="form-label"> AOP Remarks</label>
+                                <input asp-for="TblOtherProcess.AopRemarks" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblOtherProcess.AopRemarks" class="text-danger"></span>
+                            </div>
+                            <!-- WashType -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblOtherProcess.WashType" class="form-label"> Wash Type</label>
+                                <input asp-for="TblOtherProcess.WashType" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblOtherProcess.WashType" class="text-danger"></span>
+                            </div>
+                            <!-- GmtColorBw -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblOtherProcess.GmtColorBw" class="form-label"> Gmt.Color(Bw)</label>
+                                <input asp-for="TblOtherProcess.GmtColorBw" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblOtherProcess.GmtColorBw" class="text-danger"></span>
+                            </div>
+                            <!-- GmtColorAw -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblOtherProcess.GmtColorAw" class="form-label"> Gmt.Color (Aw)</label>
+                                <input asp-for="TblOtherProcess.GmtColorAw" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblOtherProcess.GmtColorAw" class="text-danger"></span>
+                            </div>
+                            <!-- WashRemarks -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblOtherProcess.WashRemarks" class="form-label"> Wash Remarks</label>
+                                <input asp-for="TblOtherProcess.WashRemarks" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblOtherProcess.WashRemarks" class="text-danger"></span>
+                            </div>
+                            <!-- PrintType -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblOtherProcess.PrintType" class="form-label"> Print Type</label>
+                                <input asp-for="TblOtherProcess.PrintType" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblOtherProcess.PrintType" class="text-danger"></span>
+                            </div>
+                            <!-- NoOfColorP -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblOtherProcess.NoOfColorP" class="form-label"> No.Of Color (P)</label>
+                                <input asp-for="TblOtherProcess.NoOfColorP" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblOtherProcess.NoOfColorP" class="text-danger"></span>
+                            </div>
+                            <!-- RepeatSizeP -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblOtherProcess.RepeatSizeP" class="form-label"> Repeat Size (P)</label>
+                                <input asp-for="TblOtherProcess.RepeatSizeP" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblOtherProcess.RepeatSizeP" class="text-danger"></span>
+                            </div>
+                            <!-- PrintRemarks -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblOtherProcess.PrintRemarks" class="form-label"> Print Remarks</label>
+                                <input asp-for="TblOtherProcess.PrintRemarks" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblOtherProcess.PrintRemarks" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- STEP 6 END -->
                 <!-- ==========================================
                      STEPPER ACTIONS
                      ========================================== -->
@@ -2157,7 +2391,14 @@
                                 id="saveBtn"
                                 class="btn btn-fabric px-4"
                                 style="display:none;">
-                            Save
+
+                            <span id="saveBtnText">Save</span>
+
+                            <span id="saveBtnSpinner"
+                                  class="spinner-border spinner-border-sm ms-2"
+                                  role="status"
+                                  style="display:none;">
+                            </span>
                         </button>
 
                     </div>
@@ -2172,9 +2413,77 @@
 
 </div>
 
+<div id="saveLoader"
+     style="display:none;
+            position:fixed;
+            inset:0;
+            background:rgba(255,255,255,0.7);
+            z-index:99999;
+            align-items:center;
+            justify-content:center;
+            flex-direction:column;">
+
+    <div class="spinner-border text-primary"
+         style="width:3rem;height:3rem;"
+         role="status">
+    </div>
+
+    <span class="mt-3 fw-semibold" style="color:#555;">
+        Please wait while data is saving...
+    </span>
+
+</div>
+
 @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const form = document.getElementById('ftdForm');
+        const saveBtn = document.getElementById('saveBtn');
+        const loader = document.getElementById('saveLoader');
+        const spinner = document.getElementById('saveBtnSpinner');
+        const btnText = document.getElementById('saveBtnText');
+
+        if (!form || !saveBtn || !loader) {
+            console.error('Save loader: Form, button, or loader not found.');
+            return;
+        }
+
+        form.addEventListener('submit', function (event) {
+
+            // Prevent invalid form submission
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            // Prevent duplicate submission
+            if (saveBtn.disabled) {
+                event.preventDefault();
+                return;
+            }
+
+            // Show loader
+            loader.style.display = 'flex';
+
+            if (spinner) {
+                spinner.style.display = 'inline-block';
+            }
+
+            if (btnText) {
+                btnText.textContent = 'Saving...';
+            }
+
+            saveBtn.disabled = true;
+
+        });
+
+    });
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
@@ -2201,74 +2510,69 @@
 
         let currentStep = 1;
 
-        function showStep(stepNumber) {
+            function showStep(stepNumber) {
 
-            currentStep = stepNumber;
+        currentStep = stepNumber;
 
-            // Show the selected step content
-            steps.forEach(function (step, index) {
+        // Show the selected step content
+        steps.forEach(function (step, index) {
 
-                const isActive = index + 1 === stepNumber;
+            const isActive = index + 1 === stepNumber;
 
-                step.classList.toggle("active", isActive);
+            step.classList.toggle("active", isActive);
 
-                // Prevent hidden step controls from receiving focus
-                if (isActive) {
-                    step.removeAttribute("hidden");
-                } else {
-                    step.setAttribute("hidden", "");
-                }
-            });
-
-            // Update stepper indicators
-            stepperItems.forEach(function (item, index) {
-
-                const itemStep = index + 1;
-
-                item.classList.toggle(
-                    "active",
-                    itemStep === stepNumber
-                );
-
-                item.classList.toggle(
-                    "completed",
-                    itemStep < stepNumber
-                );
-            });
-
-            // Update navigation buttons
-            if (prevBtn) {
-                prevBtn.style.display =
-                    stepNumber === 1 ? "none" : "inline-block";
+            // Prevent hidden step controls from receiving focus
+            if (isActive) {
+                step.removeAttribute("hidden");
+            } else {
+                step.setAttribute("hidden", "");
             }
+        });
 
-            if (nextBtn) {
-                nextBtn.style.display =
-                    stepNumber === steps.length ? "none" : "inline-block";
-            }
+        // Update stepper indicators
+        stepperItems.forEach(function (item, index) {
 
-            if (saveBtn) {
-                saveBtn.style.display =
-                    stepNumber === steps.length ? "inline-block" : "none";
-            }
+            const itemStep = index + 1;
 
-            // Keep the Back to List link available
-            if (backBtn) {
-                backBtn.style.display = "inline-block";
-            }
+            item.classList.toggle(
+                "active",
+                itemStep === stepNumber
+            );
 
-            // Start the new step at the top
-            // const stepContent = document.getElementById(
-            //     "step-" + stepNumber
-            // );
+            item.classList.toggle(
+                "completed",
+                itemStep < stepNumber
+            );
+        });
 
-            if (stepContent) {
-                stepContent.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-            }
+        // Update navigation buttons
+        if (prevBtn) {
+            prevBtn.style.display =
+                stepNumber === 1 ? "none" : "inline-block";
         }
+
+        if (nextBtn) {
+            nextBtn.style.display =
+                stepNumber === steps.length ? "none" : "inline-block";
+        }
+
+        if (saveBtn) {
+            saveBtn.style.display =
+                stepNumber === steps.length ? "inline-block" : "none";
+        }
+
+        // Keep the Back to List link available
+        if (backBtn) {
+            backBtn.style.display = "inline-block";
+        }
+
+        // Scroll to the top of the page without targeting
+        // the step container, avoiding unexpected header positioning.
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
 
         // Next button
         if (nextBtn) {

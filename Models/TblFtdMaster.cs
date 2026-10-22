@@ -17,7 +17,7 @@ public partial class TblFtdMaster
 
     public string? BatchNo { get; set; }
 
-    public int? SysReq { get; set; }
+    public string? SysReq { get; set; }
 
     public string? Buyer { get; set; }
 

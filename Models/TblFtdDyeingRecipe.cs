@@ -8,12 +8,13 @@ public partial class TblFtdDyeingRecipe
     public int Trid { get; set; }
 
     public DateOnly? Trdate { get; set; }
+    public int? Ftdid { get; set; }
 
     public string? BatchNo { get; set; }
 
     public string? RecipeDetails { get; set; }
 
-    public string? Ratio { get; set; }
+    public float? Ratio { get; set; }
 
     public DateTime? CreatedAt { get; set; }
 

@@ -17,7 +17,7 @@ public partial class TblFtdFabric
 
     public string? Fabrication { get; set; }
 
-    public double? ReqDia { get; set; }
+    public string? ReqDia { get; set; }
 
     public string? DiaType { get; set; }
 

@@ -11,6 +11,8 @@ namespace FabricDevelopmentHub.ViewModels
         public TblSingeing TblSingeing { get; set; } = new();
         public TblSqueezing TblSqueezing { get; set; } = new();
         public TblBrush TblBrush { get; set; } = new();
+        public TblCompacting TblCompacting { get; set; } = new();
+        public TblOtherProcess TblOtherProcess { get; set; } = new();
         public DateTime Date { get; set; } = DateTime.Today;
 
 

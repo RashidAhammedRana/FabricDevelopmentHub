@@ -21,11 +21,11 @@ public partial class TblFtdKnit
 
     public string? McBrand { get; set; }
 
-    public int? McGauge { get; set; }
+    public string? McGauge { get; set; }
 
     public double? Rpm { get; set; }
 
-    public int? McDia { get; set; }
+    public string? McDia { get; set; }
 
     public string? StripeMeasure { get; set; }
     public string? ProgramNo { get; set; }
@@ -40,7 +40,7 @@ public partial class TblFtdKnit
 
     public byte[]? GsPhoto { get; set; }
 
-    public string GsPhotoContentType { get; set; } = null!;
+    public string? GsPhotoContentType { get; set; }
 
     public DateTime? CreatedAt { get; set; }
 
