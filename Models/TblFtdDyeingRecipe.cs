@@ -14,7 +14,7 @@ public partial class TblFtdDyeingRecipe
 
     public string? RecipeDetails { get; set; }
 
-    public float? Ratio { get; set; }
+    public double? Ratio { get; set; }
 
     public DateTime? CreatedAt { get; set; }
 

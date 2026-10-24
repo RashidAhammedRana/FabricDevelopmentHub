@@ -40,6 +40,7 @@ namespace FabricDevelopmentHub.Data
         public virtual DbSet<TblBrush> TblBrushe { get; set; }
         public virtual DbSet<TblCompacting> TblCompacting { get; set; }
         public virtual DbSet<TblOtherProcess> TblOtherProcess { get; set; }
+        public virtual DbSet<TblLabDetails> TblLabDetails { get; set; }
 
 
 
@@ -379,9 +380,7 @@ namespace FabricDevelopmentHub.Data
                 entity.Property(e => e.MachineNo)
                     .HasMaxLength(50)
                     .HasColumnName("MACHINE_NO");
-                entity.Property(e => e.LabDipNo).HasColumnName("LAB_DIP_NO");
                 entity.Property(e => e.ProductName).HasMaxLength(50).HasColumnName("PRODUCT_NAME");
-                entity.Property(e => e.Ratio).HasMaxLength(50).HasColumnName("RATIO");
                 entity.Property(e => e.Shade)
                     .HasMaxLength(50)
                     .HasColumnName("SHADE");
@@ -583,6 +582,16 @@ namespace FabricDevelopmentHub.Data
                 entity.Property(e => e.WashType).HasColumnName("WASH_TYPE");
             });
 
+            modelBuilder.Entity<TblLabDetails>(entity =>
+            {
+                entity.HasKey(e => e.Trid);
+                entity.ToTable("TBL_LAB_DETAILS");
+                entity.Property(e => e.Trid).HasColumnName("TRID");
+                entity.Property(e => e.Ftdid).HasColumnName("FTDID");
+                entity.Property(e => e.LabDipNo).HasMaxLength(50).HasColumnName("LAB_DIP_NO");
+                entity.Property(e => e.LabProductName).HasMaxLength(50).HasColumnName("LAB_PRODUCT_NAME");
+                entity.Property(e => e.Ratio).HasColumnName("RATIO");
+            });
             OnModelCreatingPartial(modelBuilder);
         }
 

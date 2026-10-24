@@ -186,26 +186,20 @@ namespace FabricDevelopmentHub.Controllers
             try
             {
                 // -------------------------------------------------
-                // 1. SAVE FTD MASTER
+                // SAVE FTD MASTER
                 // -------------------------------------------------
 
                 var master = model.TblFtdMaster;
-
+                master.Trdate = DateOnly.FromDateTime(DateTime.Now);
                 _context.TblFtdMasters.Add(master);
-
                 await _context.SaveChangesAsync();
 
                 // Database-generated FTDID
                 int ftdId = master.Ftdid;
 
-                _logger.LogInformation(
-                    "FTD Master saved. FTDID: {FtdId}, FTD No: {FtdNo}",
-                    ftdId,
-                    master.FtdNo);
-
 
                 // -------------------------------------------------
-                // 2. SAVE FABRIC DETAILS
+                // SAVE FABRIC DETAILS
                 // -------------------------------------------------
 
                 if (model.TblFtdFabric != null)
@@ -219,7 +213,7 @@ namespace FabricDevelopmentHub.Controllers
 
 
                 // -------------------------------------------------
-                // 3. SAVE YARN DETAILS
+                // SAVE YARN DETAILS
                 // -------------------------------------------------
 
                 if (model.TblFtdYarn != null)
@@ -233,7 +227,7 @@ namespace FabricDevelopmentHub.Controllers
 
 
                 // -------------------------------------------------
-                // 4. SAVE KNITTING DETAILS
+                // SAVE KNITTING DETAILS
                 // -------------------------------------------------
 
                 if (model.TblFtdKnit != null)
@@ -247,7 +241,7 @@ namespace FabricDevelopmentHub.Controllers
 
 
                 // -------------------------------------------------
-                // 5. SAVE DYEING BASIC DETAILS
+                // SAVE DYEING BASIC DETAILS
                 // -------------------------------------------------
 
                 if (model.TblFtdDyeingBasic != null)
@@ -261,9 +255,17 @@ namespace FabricDevelopmentHub.Controllers
                     }
                 }
 
+                // SAVE LAB DETAILS
+                if (model.TblLabDetails != null)
+                {
+                    model.TblLabDetails.Ftdid = ftdId;
+
+                    _context.TblLabDetails.Add(
+                        model.TblLabDetails);
+                }
 
                 // -------------------------------------------------
-                // 6. SAVE DYEING RECIPE DETAILS
+                // SAVE DYEING RECIPE DETAILS
                 // -------------------------------------------------
 
                 if (model.TblFtdDyeingRecipe != null)
@@ -279,7 +281,7 @@ namespace FabricDevelopmentHub.Controllers
 
 
                 // -------------------------------------------------
-                // 7. SAVE HEATSET
+                // SAVE HEATSET
                 // -------------------------------------------------
 
                 if (model.TblFinishProcessHeatset != null)
@@ -292,7 +294,7 @@ namespace FabricDevelopmentHub.Controllers
 
 
                 // -------------------------------------------------
-                // 8. SAVE STENTERING A/B
+                // SAVE STENTERING A/B
                 // -------------------------------------------------
 
                 if (model.TblFinishProcessStenteringAb != null)
@@ -305,7 +307,7 @@ namespace FabricDevelopmentHub.Controllers
 
 
                 // -------------------------------------------------
-                // 9. SAVE STENTERING B/B
+                // SAVE STENTERING B/B
                 // -------------------------------------------------
 
                 if (model.TblFinishProcessStenteringBb != null)
@@ -318,7 +320,7 @@ namespace FabricDevelopmentHub.Controllers
 
 
                 // -------------------------------------------------
-                // 10. SAVE SINGEING
+                // SAVE SINGEING
                 // -------------------------------------------------
 
                 if (model.TblSingeing != null)
@@ -331,7 +333,7 @@ namespace FabricDevelopmentHub.Controllers
 
 
                 // -------------------------------------------------
-                // 11. SAVE SQUEEZING
+                // SAVE SQUEEZING
                 // -------------------------------------------------
 
                 if (model.TblSqueezing != null)
@@ -344,7 +346,7 @@ namespace FabricDevelopmentHub.Controllers
 
 
                 // -------------------------------------------------
-                // 12. SAVE BRUSH
+                // SAVE BRUSH
                 // -------------------------------------------------
 
                 if (model.TblBrush != null)
@@ -356,7 +358,7 @@ namespace FabricDevelopmentHub.Controllers
                 }
 
                 // -------------------------------------------------
-                // 13. SAVE Compacting Data
+                // SAVE Compacting Data
                 // -------------------------------------------------
 
                 if (model.TblCompacting != null)
@@ -366,7 +368,7 @@ namespace FabricDevelopmentHub.Controllers
                 }
 
                 // -------------------------------------------------
-                // 14. SAVE Compacting Data
+                // SAVE Compacting Data
                 // -------------------------------------------------
 
                 if (model.TblOtherProcess != null)
@@ -375,7 +377,7 @@ namespace FabricDevelopmentHub.Controllers
                     _context.TblOtherProcess.Add(model.TblOtherProcess);
                 }
                 // -------------------------------------------------
-                // 15. LOG PENDING ENTITIES FOR DEBUGGING
+                // LOG PENDING ENTITIES FOR DEBUGGING
                 // -------------------------------------------------
 
                 foreach (var entry in _context.ChangeTracker.Entries())
@@ -398,14 +400,14 @@ namespace FabricDevelopmentHub.Controllers
 
 
                 // -------------------------------------------------
-                // 14. SAVE ALL CHILD RECORDS
+                // SAVE ALL CHILD RECORDS
                 // -------------------------------------------------
 
                 await _context.SaveChangesAsync();
 
 
                 // -------------------------------------------------
-                // 15. COMMIT TRANSACTION
+                // COMMIT TRANSACTION
                 // -------------------------------------------------
 
                 await transaction.CommitAsync();
@@ -418,7 +420,7 @@ namespace FabricDevelopmentHub.Controllers
             catch (Exception ex)
             {
                 // -------------------------------------------------
-                // 16. LOG ERROR DETAILS
+                // LOG ERROR DETAILS
                 // -------------------------------------------------
 
                 _logger.LogError(
@@ -458,7 +460,7 @@ namespace FabricDevelopmentHub.Controllers
 
 
                 // -------------------------------------------------
-                // 18. RETURN ERROR TO VIEW
+                // RETURN ERROR TO VIEW
                 // -------------------------------------------------
 
                 ModelState.AddModelError(
@@ -500,13 +502,13 @@ namespace FabricDevelopmentHub.Controllers
                     .Where(x => x.Ftdid == id)
                     .ToListAsync(),
 
-                //TblFtdDyeingBasic = await _context.TblFtdDyeingBasics
-                //    .Where(x => x.Ftdid == id)
-                //    .ToListAsync(),
+                TblFtdDyeingBasic = await _context.TblFtdDyeingBasics
+                    .Where(x => x.Ftdid == id)
+                    .ToListAsync(),
 
-                //TblFtdDyeingRecipe = await _context.TblFtdDyeingRecipes
-                //    .Where(x => x.Ftdid == id)
-                //    .ToListAsync(),
+                TblFtdDyeingRecipe = await _context.TblFtdDyeingRecipes
+                    .Where(x => x.Ftdid == id)
+                    .ToListAsync(),
 
                 TblFinishProcessHeatset =
                     await _context.TblFinishProcessHeatset
@@ -1458,6 +1460,97 @@ namespace FabricDevelopmentHub.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            // Step 1: Load FTD Master
+            var master = await _context.TblFtdMasters
+                .FirstOrDefaultAsync(x => x.Ftdid == id);
 
+            if (master == null)
+            {
+                return NotFound();
+            }
+
+            // Step 2: Load Fabric Details
+            var fabricList = await _context.TblFtdFabrics
+                .Where(x => x.Ftdid == master.Ftdid)
+                .ToListAsync();
+
+            // Step 3: Load Yarn Details
+            var yarnList = await _context.TblFtdYarns
+                .Where(x => x.Ftdid == master.Ftdid)
+                .ToListAsync();
+
+            // Step 4: Load Knit Details
+            var knitList = await _context.TblFtdKnits
+                .Where(x => x.Ftdid == master.Ftdid)
+                .ToListAsync();
+
+            // Step 5: Load Dyeing Basic Details
+            var dyeingBasicList = await _context.TblFtdDyeingBasics
+                .Where(x => x.Ftdid == master.Ftdid)
+                .ToListAsync();
+
+            // Step 6: Load Dyeing Recipe Details
+            var dyeingRecipeList = await _context.TblFtdDyeingRecipes
+                .Where(x => x.Ftdid == master.Ftdid)
+                .ToListAsync();
+
+            // Step 7: Load Heatset Details
+            var heatset = await _context.TblFinishProcessHeatset
+                .FirstOrDefaultAsync(x => x.Ftdid == master.Ftdid);
+
+            // Step 8: Load Stentering A/B Details
+            var stenteringAb = await _context.TblFinishProcessStenteringAb
+                .FirstOrDefaultAsync(x => x.Ftdid == master.Ftdid);
+
+            // Step 9: Load Stentering B/B Details
+            var stenteringBb = await _context.TblFinishProcessStenteringBb
+                .FirstOrDefaultAsync(x => x.Ftdid == master.Ftdid);
+
+            // Step 10: Load Singeing Details
+            var singeing = await _context.TblSingeing
+                .FirstOrDefaultAsync(x => x.Ftdid == master.Ftdid);
+
+            // Step 11: Load Squeezing Details
+            var squeezing = await _context.TblSqueezing
+                .FirstOrDefaultAsync(x => x.Ftdid == master.Ftdid);
+
+            // Step 12: Load Brush Details
+            var brush = await _context.TblBrushe
+                .FirstOrDefaultAsync(x => x.Ftdid == master.Ftdid);
+
+            // Step 13: Load Compacting Details
+            var compacting = await _context.TblCompacting
+                .FirstOrDefaultAsync(x => x.Ftdid == master.Ftdid);
+
+            // Step 14: Load Other Process Details
+            var otherProcess = await _context.TblOtherProcess
+                .FirstOrDefaultAsync(x => x.Ftdid == master.Ftdid);
+
+            // Step 15: Prepare ViewModel
+            var model = new FTDViewModel
+            {
+                TblFtdMaster = master,
+                TblFtdFabric = fabricList,
+                TblFtdYarn = yarnList,
+                TblFtdKnit = knitList,
+                TblFtdDyeingBasic = dyeingBasicList,
+                TblFtdDyeingRecipe = dyeingRecipeList,
+
+                TblFinishProcessHeatset = heatset,
+                TblFinishProcessStenteringAb = stenteringAb,
+                TblFinishProcessStenteringBb = stenteringBb,
+
+                TblSingeing = singeing,
+                TblSqueezing = squeezing,
+                TblBrush = brush,
+                TblCompacting = compacting,
+                TblOtherProcess = otherProcess
+            };
+
+            return View(model);
+        }
     }
 }

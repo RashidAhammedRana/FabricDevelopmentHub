@@ -894,9 +894,7 @@
                     <div class="ftd-section">
 
                         <div class="ftd-section-header">
-                            <h6 class="ftd-section-title">
-                                Lab Details
-                            </h6>
+                            <h6 class="ftd-section-title">Lab Details</h6>
                         </div>
 
                         <hr class="ftd-section-line" />
@@ -904,57 +902,49 @@
                         <div class="row g-3 mb-3">
 
                             <div class="col-lg-4 col-md-6 col-sm-12">
-
                                 <label for="LabDipNo" class="form-label">
                                     Lab Dip No.
                                     <span class="text-danger">*</span>
                                 </label>
 
                                 <select id="LabDipNo"
-                                        name="LabDipNo"
-                                        class="form-select">
-
+                                        name="TblLabDetails.LabDipNo"
+                                        class="form-select"
+                                        required>
                                     <option value="">
                                         -- Search / Select Lab Dip No. --
                                     </option>
-
                                 </select>
-
                             </div>
 
                             <div class="col-lg-4 col-md-6 col-sm-12">
-
                                 <label for="LabProductName" class="form-label">
                                     Lab Product Name
                                 </label>
 
                                 <input type="text"
                                        id="LabProductName"
-                                       name="LabProductName"
+                                       name="TblLabDetails.LabProductName"
                                        class="form-control readonly-field"
                                        placeholder="Lab Product Name"
                                        readonly />
-
                             </div>
 
                             <div class="col-lg-4 col-md-6 col-sm-12">
-
                                 <label for="LabRatio" class="form-label">
                                     Ratio
                                 </label>
 
                                 <input type="number"
                                        id="LabRatio"
-                                       name="LabRatio"
+                                       name="TblLabDetails.Ratio"
                                        class="form-control readonly-field"
                                        placeholder="Ratio"
                                        step="0.01"
                                        readonly />
-
                             </div>
 
                         </div>
-
                     </div>
 
 

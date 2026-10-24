@@ -1,0 +1,866 @@
+﻿@model FabricDevelopmentHub.ViewModels.FTDViewModel
+
+@{
+    ViewData["Title"] = "FTD Details";
+}
+
+<style>
+    .ftd-details-page {
+        padding: 10px;
+        background: #f4f7fa;
+        border-radius: 14px;
+    }
+
+    .ftd-details-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 16px 20px;
+        margin-bottom: 12px;
+        border-radius: 10px;
+        color: #fff;
+        background: linear-gradient(135deg, #087f8c, #0f8996);
+        box-shadow: 0 5px 16px rgba(8, 127, 140, .16);
+    }
+
+        .ftd-details-header h4 {
+            margin: 0 0 5px;
+            font-weight: 700;
+        }
+
+        .ftd-details-header p {
+            margin: 0;
+            color: rgba(255,255,255,.85);
+            font-size: 13px;
+        }
+
+    .ftd-number-label {
+        font-size: 11px;
+        letter-spacing: 1px;
+        opacity: .85;
+    }
+
+    .ftd-number-value {
+        font-size: 22px;
+        font-weight: 700;
+    }
+
+    .ftd-section {
+        background: #fff;
+        border: 1px solid #e3eaf0;
+        border-radius: 9px;
+        margin-bottom: 12px;
+        padding: 10px;
+        box-shadow: 0 2px 7px rgba(31,45,61,.035);
+    }
+
+    .ftd-section-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+        .ftd-section-header::before {
+            content: "";
+            display: block;
+            width: 3px;
+            height: 18px;
+            border-radius: 4px;
+            background: #0f8996;
+        }
+
+    .ftd-section-title {
+        margin: 0;
+        color: #087f8c;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .ftd-section-line {
+        border-color: #e8edf1;
+        opacity: 1;
+        margin: 0 0 10px;
+    }
+
+    .detail-item {
+        height: 100%;
+        min-height: 42px;
+        padding: 5px 7px;
+        background: #f7f9fb;
+        border: 1px solid #e8edf2;
+        border-radius: 6px;
+        transition: background-color .15s ease, border-color .15s ease;
+    }
+
+        .detail-item:hover {
+            background: #f0fafb;
+            border-color: #b8dfe2;
+        }
+
+    .detail-label {
+        display: block;
+        margin-bottom: 2px;
+        color: #718096;
+        font-size: 9px;
+        line-height: 1.25;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .3px;
+    }
+
+    .detail-value {
+        display: block;
+        min-height: 16px;
+        color: #243447;
+        font-size: 12px;
+        line-height: 1.35;
+        font-weight: 600;
+        overflow-wrap: anywhere;
+        /* Collapse Razor source indentation so displayed values start flush-left. */
+        white-space: normal;
+        text-align: left;
+        text-indent: 0;
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+        .detail-value.empty {
+            color: #9aa6b2;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+    .ftd-table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .ftd-table {
+        margin-bottom: 0;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+        .ftd-table thead th {
+            padding: 12px 14px;
+            background: #eaf5f6;
+            color: #176b74;
+            font-size: 12px;
+            font-weight: 700;
+            border-bottom: 2px solid #cde6e8;
+        }
+
+        .ftd-table tbody td {
+            padding: 11px 14px;
+            color: #334155;
+            font-size: 13px;
+            border-color: #edf1f5;
+        }
+
+        .ftd-table tbody tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        .ftd-table tbody tr:hover {
+            background: #eff9fa;
+        }
+
+    .ftd-empty {
+        padding: 24px !important;
+        color: #8492a6 !important;
+        text-align: center;
+        font-style: italic;
+    }
+
+    .ftd-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        padding: 14px 0 5px;
+    }
+
+    .btn-fabric {
+        color: #fff;
+        background: #0f8996;
+        border: 1px solid #0f8996;
+    }
+
+        .btn-fabric:hover {
+            color: #fff;
+            background: #0c727d;
+            border-color: #0c727d;
+        }
+
+    .btn-fabric-light {
+        color: #087f8c;
+        background: #eaf5f6;
+        border: 1px solid #cde6e8;
+    }
+
+        .btn-fabric-light:hover {
+            color: #fff;
+            background: #087f8c;
+        }
+
+    @@media (max-width: 576px) {
+        .ftd-details-page {
+            padding: 10px;
+        }
+
+        .ftd-section {
+            padding: 8px;
+        }
+
+        .ftd-details-header {
+            padding: 17px;
+        }
+    }
+</style>
+
+<div class="container-fluid py-3">
+    <div class="ftd-details-page">
+
+        <!-- PAGE HEADER -->
+        <div class="ftd-details-header">
+            <div>
+                <h4>
+                    <i class="fas fa-file-alt me-2"></i>
+                    Fabric Technical Data
+                </h4>
+                <p>FTD Details &amp; Finishing Process Information</p>
+            </div>
+
+            <div class="text-end">
+                <div class="ftd-number-label">FTD NUMBER</div>
+                <div class="ftd-number-value">
+                    @(Model.TblFtdMaster?.FtdNo)
+                </div>
+            </div>
+        </div>
+
+
+        <!-- MASTER INFORMATION -->
+        <div class="ftd-section">
+
+            <div class="ftd-section-header">
+                <h6 class="ftd-section-title">Master Information</h6>
+            </div>
+
+            <hr class="ftd-section-line" />
+
+            <div class="row g-2 align-items-stretch">
+
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                    <div class="detail-item">
+                        <span class="detail-label">FTD No.</span>
+                        <span class="detail-value">
+                            @(Model.TblFtdMaster?.FtdNo)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                    <div class="detail-item">
+                        <span class="detail-label">Control / Batch</span>
+                        <span class="detail-value">
+                            @(Model.TblFtdMaster?.Control)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                    <div class="detail-item">
+                        <span class="detail-label">LC Company</span>
+                        <span class="detail-value">
+                            @(Model.TblFtdMaster?.Company)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                    <div class="detail-item">
+                        <span class="detail-label">Batch No.</span>
+                        <span class="detail-value">
+                            @(Model.TblFtdMaster?.BatchNo)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                    <div class="detail-item">
+                        <span class="detail-label">System Requirement</span>
+                        <span class="detail-value">
+                            @(Model.TblFtdMaster?.SysReq)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                    <div class="detail-item">
+                        <span class="detail-label">Buyer</span>
+                        <span class="detail-value">
+                            @(Model.TblFtdMaster?.Buyer)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-lg-6 col-md-8 col-sm-12">
+                    <div class="detail-item">
+                        <span class="detail-label">Style Reference</span>
+                        <span class="detail-value">
+                            @(Model.TblFtdMaster?.StyleRef)
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- FABRIC DETAILS -->
+        <div class="ftd-section">
+
+            <div class="ftd-section-header">
+                <h6 class="ftd-section-title">Fabric Details</h6>
+            </div>
+
+            <hr class="ftd-section-line" />
+
+            <div class="ftd-table-wrapper">
+                <table class="table table-bordered ftd-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Color</th>
+                            <th>Color Type</th>
+                            <th>Fabrication</th>
+                            <th>Req. Dia</th>
+                            <th>Dia Type</th>
+                            <th>Req. GSM</th>
+                            <th>Fin. Dia</th>
+                            <th>Fin. Dia Type</th>
+                            <th>Fin. GSM</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (Model.TblFtdFabric != null && Model.TblFtdFabric.Count > 0)
+                        {
+                            for (int i = 0; i < Model.TblFtdFabric.Count; i++)
+                            {
+                                <tr>
+                                    <td class="text-center">@(i + 1)</td>
+                                    <td>@(Model.TblFtdFabric[i].Color)</td>
+                                    <td>@(Model.TblFtdFabric[i].ColorType)</td>
+                                    <td>@(Model.TblFtdFabric[i].Fabrication)</td>
+                                    <td>@(Model.TblFtdFabric[i].ReqDia)</td>
+                                    <td>@(Model.TblFtdFabric[i].DiaType)</td>
+                                    <td>@(Model.TblFtdFabric[i].ReqGsm)</td>
+                                    <td>@(Model.TblFtdFabric[i].FinDia)</td>
+                                    <td>@(Model.TblFtdFabric[i].FinDiaType)</td>
+                                    <td>@(Model.TblFtdFabric[i].FinGsm)</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="10" class="ftd-empty">
+                                    No fabric details available.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- YARN DETAILS -->
+        <div class="ftd-section">
+
+            <div class="ftd-section-header">
+                <h6 class="ftd-section-title">Yarn Details</h6>
+            </div>
+
+            <hr class="ftd-section-line" />
+
+            <div class="ftd-table-wrapper">
+                <table class="table table-bordered ftd-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Count</th>
+                            <th>Lot No.</th>
+                            <th>Brand</th>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (Model.TblFtdYarn != null && Model.TblFtdYarn.Count > 0)
+                        {
+                            for (int i = 0; i < Model.TblFtdYarn.Count; i++)
+                            {
+                                <tr>
+                                    <td class="text-center">@(i + 1)</td>
+                                    <td>@(Model.TblFtdYarn[i].Count)</td>
+                                    <td>@(Model.TblFtdYarn[i].LotNo)</td>
+                                    <td>@(Model.TblFtdYarn[i].Brand)</td>
+                                    <td>@(Model.TblFtdYarn[i].Remarks)</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="ftd-empty">
+                                    No yarn details available.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- KNITTING DETAILS -->
+        <div class="ftd-section">
+
+            <div class="ftd-section-header">
+                <h6 class="ftd-section-title">Knitting Details</h6>
+            </div>
+
+            <hr class="ftd-section-line" />
+
+            <div class="ftd-table-wrapper">
+                <table class="table table-bordered ftd-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Program No.</th>
+                            <th>Source</th>
+                            <th>Knit Company</th>
+                            <th>Machine</th>
+                            <th>Dia</th>
+                            <th>Gauge</th>
+                            <th>S.L</th>
+                            <th>RPM</th>
+                            <th>Color</th>
+                            <th>Measurement</th>
+                            <th>UOM</th>
+                            <th>No. of Feeder</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (Model.TblFtdKnit != null && Model.TblFtdKnit.Count > 0)
+                        {
+                            for (int i = 0; i < Model.TblFtdKnit.Count; i++)
+                            {
+                                <tr>
+                                    <td class="text-center">@(i + 1)</td>
+                                    <td>@(Model.TblFtdKnit[i].ProgramNo)</td>
+                                    <td>@(Model.TblFtdKnit[i].Source)</td>
+                                    <td>@(Model.TblFtdKnit[i].KnitCom)</td>
+                                    <td>@(Model.TblFtdKnit[i].McNo)</td>
+                                    <td>@(Model.TblFtdKnit[i].McDia)</td>
+                                    <td>@(Model.TblFtdKnit[i].McGauge)</td>
+                                    <td>@(Model.TblFtdKnit[i].Sl)</td>
+                                    <td>@(Model.TblFtdKnit[i].Rpm)</td>
+                                    <td>@(Model.TblFtdKnit[i].ColorName)</td>
+                                    <td>@(Model.TblFtdKnit[i].Measurement)</td>
+                                    <td>@(Model.TblFtdKnit[i].Uom)</td>
+                                    <td>@(Model.TblFtdKnit[i].FeederNo)</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="13" class="ftd-empty">
+                                    No knitting details available.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- DYEING BASIC DETAILS -->
+        <div class="ftd-section">
+
+            <div class="ftd-section-header">
+                <h6 class="ftd-section-title">Dyeing Basic Details</h6>
+            </div>
+
+            <hr class="ftd-section-line" />
+
+            <div class="ftd-table-wrapper">
+                <table class="table table-bordered ftd-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Machine</th>
+                            <th>Inhouse Dyeing</th>
+                            <th>Shade %</th>
+                            <th>Shade</th>
+                            <th>Dyeing Part</th>
+                            <th>Non RFT</th>
+                            <th>Product Name</th>
+                            <th>Enzyme %</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (Model.TblFtdDyeingBasic != null && Model.TblFtdDyeingBasic.Count > 0)
+                        {
+                            for (int i = 0; i < Model.TblFtdDyeingBasic.Count; i++)
+                            {
+                                <tr>
+                                    <td class="text-center">@(i + 1)</td>
+                                    <td>@(Model.TblFtdDyeingBasic[i].MachineNo)</td>
+                                    <td>@(Model.TblFtdDyeingBasic[i].InhouseDyeing)</td>
+                                    <td>@(Model.TblFtdDyeingBasic[i].ShadeP)</td>
+                                    <td>@(Model.TblFtdDyeingBasic[i].Shade)</td>
+                                    <td>@(Model.TblFtdDyeingBasic[i].DyeingPart)</td>
+                                    <td>@(Model.TblFtdDyeingBasic[i].IsNonRft)</td>
+                                    <td>@(Model.TblFtdDyeingBasic[i].ProductName)</td>
+                                    <td>@(Model.TblFtdDyeingBasic[i].EnzayemPer)</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="9" class="ftd-empty">
+                                    No dyeing basic details available.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- LAB DETAILS -->
+        <div class="ftd-section">
+
+            <div class="ftd-section-header">
+                <h6 class="ftd-section-title">Lab Details</h6>
+            </div>
+
+            <hr class="ftd-section-line" />
+
+            <div class="row g-3">
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="detail-item">
+                        <span class="detail-label">Lab Dip No.</span>
+                        <span class="detail-value">
+                            @(ViewBag.LabDipNo)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="detail-item">
+                        <span class="detail-label">Lab Product Name</span>
+                        <span class="detail-value">
+                            @(ViewBag.LabProductName)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="detail-item">
+                        <span class="detail-label">Ratio</span>
+                        <span class="detail-value">
+                            @(ViewBag.LabRatio)
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- DYEING RECIPE DETAILS -->
+        <div class="ftd-section">
+
+            <div class="ftd-section-header">
+                <h6 class="ftd-section-title">Dyeing Recipe Details</h6>
+            </div>
+
+            <hr class="ftd-section-line" />
+
+            <div class="ftd-table-wrapper">
+                <table class="table table-bordered ftd-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Recipe Details</th>
+                            <th>Ratio</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (Model.TblFtdDyeingRecipe != null && Model.TblFtdDyeingRecipe.Count > 0)
+                        {
+                            for (int i = 0; i < Model.TblFtdDyeingRecipe.Count; i++)
+                            {
+                                <tr>
+                                    <td class="text-center">@(i + 1)</td>
+                                    <td>@(Model.TblFtdDyeingRecipe[i].RecipeDetails)</td>
+                                    <td>@(Model.TblFtdDyeingRecipe[i].Ratio)</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="3" class="ftd-empty">
+                                    No dyeing recipe details available.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- HEATSET PROCESS -->
+
+        <div class="ftd-section">
+
+            <div class="ftd-section-header">
+                <h6 class="ftd-section-title">Finish Process - Heatset</h6>
+            </div>
+
+            <hr class="ftd-section-line" />
+
+            <div class="row g-2 align-items-stretch">
+
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                    <div class="detail-item">
+                        <span class="detail-label">FTD ID</span>
+                        <span class="detail-value">
+                            @(Model.TblFinishProcessHeatset?.Ftdid)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                    <div class="detail-item">
+                        <span class="detail-label">NOC</span>
+                        <span class="detail-value">
+                            @(Model.TblFinishProcessHeatset?.Noc)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                    <div class="detail-item">
+                        <span class="detail-label">NOP</span>
+                        <span class="detail-value">
+                            @(Model.TblFinishProcessHeatset?.Nop)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                    <div class="detail-item">
+                        <span class="detail-label">Dwell Time</span>
+                        <span class="detail-value">
+                            @(Model.TblFinishProcessHeatset?.DweelTime)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                    <div class="detail-item">
+                        <span class="detail-label">Grey Dia</span>
+                        <span class="detail-value">
+                            @(Model.TblFinishProcessHeatset?.GreyDia)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                    <div class="detail-item">
+                        <span class="detail-label">Grey GSM</span>
+                        <span class="detail-value">
+                            @(Model.TblFinishProcessHeatset?.GreyGsm)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                    <div class="detail-item">
+                        <span class="detail-label">Temperature</span>
+                        <span class="detail-value">
+                            @(Model.TblFinishProcessHeatset?.Temp)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                    <div class="detail-item">
+                        <span class="detail-label">Speed</span>
+                        <span class="detail-value">
+                            @(Model.TblFinishProcessHeatset?.Speed)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                    <div class="detail-item">
+                        <span class="detail-label">Over Feed</span>
+                        <span class="detail-value">
+                            @(Model.TblFinishProcessHeatset?.OFeed)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                    <div class="detail-item">
+                        <span class="detail-label">Under Feed</span>
+                        <span class="detail-value">
+                            @(Model.TblFinishProcessHeatset?.UFeed)
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- FINISH PROCESS - STENTERING -->
+        <div class="ftd-section">
+            <div class="ftd-section-header"><h6 class="ftd-section-title">Finish Process - Stentering</h6></div>
+            <hr class="ftd-section-line" />
+            <h6 class="text-secondary mb-3">Stentering A/B</h6>
+            <div class="row g-2 mb-4">
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Temperature</span><span class="detail-value">@(Model.TblFinishProcessStenteringAb?.Temp)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Speed</span><span class="detail-value">@(Model.TblFinishProcessStenteringAb?.Speed)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Over Feed</span><span class="detail-value">@(Model.TblFinishProcessStenteringAb?.OFeed)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Stretch %</span><span class="detail-value">@(Model.TblFinishProcessStenteringAb?.StretchPer)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">P. Pressure 1</span><span class="detail-value">@(Model.TblFinishProcessStenteringAb?.PPressure1)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">P. Pressure 2</span><span class="detail-value">@(Model.TblFinishProcessStenteringAb?.PPressure2)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Chemical</span><span class="detail-value">@(Model.TblFinishProcessStenteringAb?.Chemical)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Blower Speed</span><span class="detail-value">@(Model.TblFinishProcessStenteringAb?.BlowerSpeed)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">NOC</span><span class="detail-value">@(Model.TblFinishProcessStenteringAb?.Noc)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Actual Dia</span><span class="detail-value">@(Model.TblFinishProcessStenteringAb?.ADia)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Actual GSM</span><span class="detail-value">@(Model.TblFinishProcessStenteringAb?.AGsm)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Actual Shrinkage</span><span class="detail-value">@(Model.TblFinishProcessStenteringAb?.AShrinkage)</span></div></div>
+                <div class="col-12"><div class="detail-item"><span class="detail-label">Comments</span><span class="detail-value">@(Model.TblFinishProcessStenteringAb?.Comments)</span></div></div>
+            </div>
+            <h6 class="text-secondary mb-3">Stentering B/B</h6>
+            <div class="row g-2">
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Temperature</span><span class="detail-value">@(Model.TblFinishProcessStenteringBb?.Temp)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Speed</span><span class="detail-value">@(Model.TblFinishProcessStenteringBb?.Speed)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Over Feed</span><span class="detail-value">@(Model.TblFinishProcessStenteringBb?.OFeed)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Stretch %</span><span class="detail-value">@(Model.TblFinishProcessStenteringBb?.StretchPer)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">P. Pressure 1</span><span class="detail-value">@(Model.TblFinishProcessStenteringBb?.PPressure1)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">P. Pressure 2</span><span class="detail-value">@(Model.TblFinishProcessStenteringBb?.PPressure2)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Chemical</span><span class="detail-value">@(Model.TblFinishProcessStenteringBb?.Chemical)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Blower Speed</span><span class="detail-value">@(Model.TblFinishProcessStenteringBb?.BlowerSpeed)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">NOC</span><span class="detail-value">@(Model.TblFinishProcessStenteringBb?.Noc)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Actual Dia</span><span class="detail-value">@(Model.TblFinishProcessStenteringBb?.ADia)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Actual GSM</span><span class="detail-value">@(Model.TblFinishProcessStenteringBb?.AGsm)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Actual Shrinkage</span><span class="detail-value">@(Model.TblFinishProcessStenteringBb?.AShrinkage)</span></div></div>
+                <div class="col-12"><div class="detail-item"><span class="detail-label">Comments</span><span class="detail-value">@(Model.TblFinishProcessStenteringBb?.Comments)</span></div></div>
+            </div>
+        </div>
+
+        <!-- SINGEING AND SQUEEZING -->
+        <div class="ftd-section">
+            <div class="ftd-section-header"><h6 class="ftd-section-title">Singeing &amp; Squeezing</h6></div>
+            <hr class="ftd-section-line" />
+            <div class="row g-2">
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Burner Temperature</span><span class="detail-value">@(Model.TblSingeing?.BurnerTemp)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Flame Height</span><span class="detail-value">@(Model.TblSingeing?.FlameHeight)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Singeing Speed</span><span class="detail-value">@(Model.TblSingeing?.Speed)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Singeing GSM</span><span class="detail-value">@(Model.TblSingeing?.ASingeingGsm)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Singeing Dia</span><span class="detail-value">@(Model.TblSingeing?.ASingeingDia)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Squeezing PP</span><span class="detail-value">@(Model.TblSqueezing?.Pp)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Squeezing Dia Type</span><span class="detail-value">@(Model.TblSqueezing?.DiaType)</span></div></div>
+            </div>
+        </div>
+
+        <!-- BRUSH PROCESS -->
+        <div class="ftd-section">
+            <div class="ftd-section-header"><h6 class="ftd-section-title">Brush Process</h6></div>
+            <hr class="ftd-section-line" />
+            <div class="row g-2">
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Upper Pile</span><span class="detail-value">@(Model.TblBrush?.UPile)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Lower Pile</span><span class="detail-value">@(Model.TblBrush?.LPile)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Upper CP</span><span class="detail-value">@(Model.TblBrush?.UCp)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Lower CP</span><span class="detail-value">@(Model.TblBrush?.LCp)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Upper Drum Speed</span><span class="detail-value">@(Model.TblBrush?.UDrumSpeed)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Lower Drum Speed</span><span class="detail-value">@(Model.TblBrush?.LDrumSpeed)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Upper Tension</span><span class="detail-value">@(Model.TblBrush?.UTension)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Lower Tension</span><span class="detail-value">@(Model.TblBrush?.LTension)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Machine Speed</span><span class="detail-value">@(Model.TblBrush?.McSpeed)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Actual Dia</span><span class="detail-value">@(Model.TblBrush?.ADia)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Actual GSM</span><span class="detail-value">@(Model.TblBrush?.AGsm)</span></div></div>
+            </div>
+        </div>
+
+        <!-- COMPACTING PROCESS -->
+        <div class="ftd-section">
+            <div class="ftd-section-header"><h6 class="ftd-section-title">Compacting Process</h6></div>
+            <hr class="ftd-section-line" />
+            <div class="row g-2">
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Temperature</span><span class="detail-value">@(Model.TblCompacting?.Temp)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Speed</span><span class="detail-value">@(Model.TblCompacting?.Speed)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Over Feed</span><span class="detail-value">@(Model.TblCompacting?.OFeed)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Compaction %</span><span class="detail-value">@(Model.TblCompacting?.CompactionPer)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Steam</span><span class="detail-value">@(Model.TblCompacting?.Steam)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Actual Dia</span><span class="detail-value">@(Model.TblCompacting?.ADia)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Actual GSM</span><span class="detail-value">@(Model.TblCompacting?.AGsm)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Finished GSM</span><span class="detail-value">@(Model.TblCompacting?.FGsm)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Required Dia</span><span class="detail-value">@(Model.TblCompacting?.RDia)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Required GSM</span><span class="detail-value">@(Model.TblCompacting?.RGsm)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Shrinkage</span><span class="detail-value">@(Model.TblCompacting?.Shrinkage)</span></div></div>
+            </div>
+        </div>
+
+        <!-- OTHER PROCESS -->
+        <div class="ftd-section">
+            <div class="ftd-section-header"><h6 class="ftd-section-title">Other Process</h6></div>
+            <hr class="ftd-section-line" />
+            <div class="row g-2">
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">AOP Type</span><span class="detail-value">@(Model.TblOtherProcess?.AopType)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">No. of Colors (Wash)</span><span class="detail-value">@(Model.TblOtherProcess?.NoOfColorW)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Repeat Size (Wash)</span><span class="detail-value">@(Model.TblOtherProcess?.RepeatSizeW)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">AOP Remarks</span><span class="detail-value">@(Model.TblOtherProcess?.AopRemarks)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Wash Type</span><span class="detail-value">@(Model.TblOtherProcess?.WashType)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">GMT Color Before Wash</span><span class="detail-value">@(Model.TblOtherProcess?.GmtColorBw)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">GMT Color After Wash</span><span class="detail-value">@(Model.TblOtherProcess?.GmtColorAw)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Wash Remarks</span><span class="detail-value">@(Model.TblOtherProcess?.WashRemarks)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Print Type</span><span class="detail-value">@(Model.TblOtherProcess?.PrintType)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">No. of Colors (Print)</span><span class="detail-value">@(Model.TblOtherProcess?.NoOfColorP)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Repeat Size (Print)</span><span class="detail-value">@(Model.TblOtherProcess?.RepeatSizeP)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Print Remarks</span><span class="detail-value">@(Model.TblOtherProcess?.PrintRemarks)</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Print Image</span><span class="detail-value">@((Model.TblOtherProcess?.ImageP?.Length ?? 0) > 0 ? "Available" : "Not available")</span></div></div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6"><div class="detail-item"><span class="detail-label">Wash Image</span><span class="detail-value">@((Model.TblOtherProcess?.ImageW?.Length ?? 0) > 0 ? "Available" : "Not available")</span></div></div>
+            </div>
+        </div>
+
+        <!-- FOOTER BUTTONS -->
+        <div class="ftd-footer">
+
+            <a asp-action="FTDList" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-1"></i>
+                Back to List
+            </a>
+
+
+        </div>
+
+    </div>
+</div>
+
