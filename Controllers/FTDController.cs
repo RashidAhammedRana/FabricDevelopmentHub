@@ -126,11 +126,22 @@ namespace FabricDevelopmentHub.Controllers
 
             string companyCode = userCompany.Company;
 
-            // Generate FTD No
-            string datePart = DateTime.Now.ToString("yyyyMMdd");
-            string ftdID = $"{companyCode}-FTD{datePart}";
+            string year = DateTime.Now.ToString("yy");
+            string prefix = $"{companyCode}-FTD-{year}-";
 
-            model.TblFtdMaster.FtdNo = ftdID;
+            var lastNumber = _context.TblFtdMasters
+                .AsNoTracking()
+                .Where(x => x.FtdNo.StartsWith(prefix))
+                .Select(x => (int?)Convert.ToInt32(x.FtdNo.Substring(x.FtdNo.Length - 5)))
+                .Max() ?? 0;
+
+            string ftdNumber = $"{prefix}{(lastNumber + 1):D5}";
+
+            // Generate FTD No
+            //string datePart = DateTime.Now.ToString("yyyyMMdd");
+            //string ftdNumber = $"{companyCode}-FTD{datePart}";
+
+            model.TblFtdMaster.FtdNo = ftdNumber;
 
             // Initialize collections
             model.TblFtdFabric = new List<TblFtdFabric>();
@@ -258,10 +269,13 @@ namespace FabricDevelopmentHub.Controllers
                 // SAVE LAB DETAILS
                 if (model.TblLabDetails != null)
                 {
-                    model.TblLabDetails.Ftdid = ftdId;
+                    foreach (var item in model.TblLabDetails)
+                    {
+                        // Set Ftdid here if this entity has that property.
+                        item.Ftdid = ftdId;
 
-                    _context.TblLabDetails.Add(
-                        model.TblLabDetails);
+                        _context.TblLabDetails.Add(item);
+                    }
                 }
 
                 // -------------------------------------------------
@@ -986,7 +1000,8 @@ namespace FabricDevelopmentHub.Controllers
                     {
                         count = x.Count,
                         lot = x.Lot,
-                        brand = x.Brand
+                        brand = x.Brand,
+                        construction = x.Construction
                     }).ToList()
                 });
             }
@@ -1323,6 +1338,7 @@ namespace FabricDevelopmentHub.Controllers
             public string? Count { get; set; }
             public string? Lot { get; set; }
             public string? Brand { get; set; }
+            public string? Construction { get; set; }
         }
 
         public class FTDKnitDto

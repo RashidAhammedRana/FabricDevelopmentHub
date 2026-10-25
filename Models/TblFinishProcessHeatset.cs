@@ -37,5 +37,5 @@ public partial class TblFinishProcessHeatset
 
     public double? AHeatsetDia { get; set; }
 
-    public double? Comments { get; set; }
+    public string? Comments { get; set; }
 }

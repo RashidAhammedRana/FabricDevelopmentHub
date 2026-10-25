@@ -330,9 +330,8 @@ namespace FabricDevelopmentHub.Data
                 entity.Property(e => e.LotNo)
                     .HasMaxLength(50)
                     .HasColumnName("LOT_NO");
-                entity.Property(e => e.Remarks)
-                    .HasMaxLength(50)
-                    .HasColumnName("REMARKS");
+                entity.Property(e => e.Remarks).HasMaxLength(50).HasColumnName("REMARKS");
+                entity.Property(e => e.Construction).HasMaxLength(50).HasColumnName("CONSTRUCTION");
                 entity.Property(e => e.Std)
                     .HasMaxLength(50)
                     .HasColumnName("STD");
@@ -433,7 +432,7 @@ namespace FabricDevelopmentHub.Data
                 entity.Property(e => e.AHeatsetDia).HasColumnName("A_HEATSET_DIA");
                 entity.Property(e => e.AHeatsetGsm).HasColumnName("A_HEATSET_GSM");
                 entity.Property(e => e.Blower).HasColumnName("BLOWER");
-                entity.Property(e => e.Comments).HasColumnName("COMMENTS");
+                entity.Property(e => e.Comments).HasMaxLength(500).HasColumnName("COMMENTS");
                 entity.Property(e => e.DweelTime).HasColumnName("DWEEL_TIME"); 
                 entity.Property(e => e.Ftdid).HasColumnName("FTDID");
                 entity.Property(e => e.GreyDia).HasColumnName("GREY_DIA");
@@ -547,7 +546,7 @@ namespace FabricDevelopmentHub.Data
                 entity.Property(e => e.Trid).HasColumnName("TRID");
                 entity.Property(e => e.ADia).HasColumnName("A_DIA");
                 entity.Property(e => e.AGsm).HasColumnName("A_GSM");
-                entity.Property(e => e.Comments).HasColumnName("COMMENTS");
+                entity.Property(e => e.Comments).HasMaxLength(500).HasColumnName("COMMENTS");
                 entity.Property(e => e.CompactionPer).HasColumnName("COMPACTION_PER");
                 entity.Property(e => e.FGsm).HasColumnName("F_GSM");
                 entity.Property(e => e.Ftdid).HasColumnName("FTDID");
@@ -566,20 +565,20 @@ namespace FabricDevelopmentHub.Data
                 entity.ToTable("TBL_OTHER_PROCESS");
                 entity.Property(e => e.Trid).HasColumnName("TRID");
                 entity.Property(e => e.AopRemarks).HasMaxLength(50).HasColumnName("AOP_REMARKS");
-                entity.Property(e => e.AopType).HasColumnName("AOP_TYPE");
+                entity.Property(e => e.AopType).HasMaxLength(50).HasColumnName("AOP_TYPE");
                 entity.Property(e => e.Ftdid).HasColumnName("FTDID");
-                entity.Property(e => e.GmtColorAw).HasColumnName("GMT_COLOR_AW");
-                entity.Property(e => e.GmtColorBw).HasColumnName("GMT_COLOR_BW");
+                entity.Property(e => e.GmtColorAw).HasMaxLength(50).HasColumnName("GMT_COLOR_AW");
+                entity.Property(e => e.GmtColorBw).HasMaxLength(50).HasColumnName("GMT_COLOR_BW");
                 entity.Property(e => e.ImageP).HasMaxLength(50).HasColumnName("IMAGE_P");
                 entity.Property(e => e.ImageW).HasMaxLength(50).HasColumnName("IMAGE_W");
                 entity.Property(e => e.NoOfColorP).HasColumnName("NO_OF_COLOR_P");
                 entity.Property(e => e.NoOfColorW).HasColumnName("NO_OF_COLOR_W");
                 entity.Property(e => e.PrintRemarks).HasMaxLength(50).HasColumnName("PRINT_REMARKS");
-                entity.Property(e => e.PrintType).HasColumnName("PRINT_TYPE");
-                entity.Property(e => e.RepeatSizeP).HasColumnName("REPEAT_SIZE_P");
-                entity.Property(e => e.RepeatSizeW).HasColumnName("REPEAT_SIZE_W");
-                entity.Property(e => e.WashRemarks).HasColumnName("WASH_REMARKS");
-                entity.Property(e => e.WashType).HasColumnName("WASH_TYPE");
+                entity.Property(e => e.PrintType).HasMaxLength(50).HasColumnName("PRINT_TYPE");
+                entity.Property(e => e.RepeatSizeP).HasMaxLength(50).HasColumnName("REPEAT_SIZE_P");
+                entity.Property(e => e.RepeatSizeW).HasMaxLength(50).HasColumnName("REPEAT_SIZE_W");
+                entity.Property(e => e.WashRemarks).HasMaxLength(500).HasColumnName("WASH_REMARKS");
+                entity.Property(e => e.WashType).HasMaxLength(50).HasColumnName("WASH_TYPE");
             });
 
             modelBuilder.Entity<TblLabDetails>(entity =>

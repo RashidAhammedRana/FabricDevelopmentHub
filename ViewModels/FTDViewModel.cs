@@ -13,7 +13,7 @@ namespace FabricDevelopmentHub.ViewModels
         public TblBrush TblBrush { get; set; } = new();
         public TblCompacting TblCompacting { get; set; } = new();
         public TblOtherProcess TblOtherProcess { get; set; } = new();
-        public TblLabDetails TblLabDetails { get; set; } = new();
+        //public TblLabDetails TblLabDetails { get; set; } = new();
         public DateTime Date { get; set; } = DateTime.Today;
 
 
@@ -23,6 +23,7 @@ namespace FabricDevelopmentHub.ViewModels
         public List<TblFtdYarn> TblFtdYarn { get; set; } = new();
         public List<TblFtdDyeingBasic> TblFtdDyeingBasic { get; set; } = new();
         public List<TblFtdDyeingRecipe> TblFtdDyeingRecipe { get; set; } = new();
+        public List<TblLabDetails> TblLabDetails { get; set; } = new();
 
     }
 }

@@ -11,8 +11,8 @@
 <style>
 
     /* =========================================
-               FTD STEPPER
-               ========================================= */
+                       FTD STEPPER
+                       ========================================= */
 
     .stepper-wrapper {
         display: flex;
@@ -107,8 +107,8 @@
     }
 
     /* =========================================
-               STEP CONTENT
-               ========================================= */
+                       STEP CONTENT
+                       ========================================= */
 
     .step-content {
         display: none;
@@ -132,8 +132,8 @@
     }
 
     /* =========================================
-               STEPPER ACTION BUTTONS
-               ========================================= */
+                       STEPPER ACTION BUTTONS
+                       ========================================= */
 
     .ftd-actions {
         display: flex;
@@ -169,8 +169,8 @@
         }
 
     /* =========================================
-               RESPONSIVE
-               ========================================= */
+                       RESPONSIVE
+                       ========================================= */
 
     @@media (max-width: 576px) {
         .stepper-wrapper {
@@ -364,7 +364,7 @@
                                       class="text-danger"></span>
                             </div>
 
-                            <div class="col-lg-1 col-md-4 col-sm-6">
+                            <div class="col-lg-2 col-md-4 col-sm-6">
                                 <label asp-for="TblFtdMaster.SysReq"
                                        class="form-label">
                                     Sys. Req.
@@ -560,6 +560,7 @@
                                 <thead>
                                     <tr>
                                         <th style="width:50px;">#</th>
+                                        <th>Construction</th>
                                         <th>Count</th>
                                         <th>Lot No.</th>
                                         <th>Brand</th>
@@ -581,7 +582,11 @@
                                                 <td class="text-center row-number">
                                                     @(i + 1)
                                                 </td>
-
+                                                <td>
+                                                    <input asp-for="TblFtdYarn[i].Construction"
+                                                           class="form-control yarn-construction readonly-field"
+                                                           readonly />
+                                                </td>
                                                 <td>
                                                     <input asp-for="TblFtdYarn[i].Count"
                                                            class="form-control yarn-count readonly-field"
@@ -799,7 +804,7 @@
                                         <th>Shade %</th>
                                         <th>Shade</th>
                                         <th>Dyeing Part</th>
-                                        <th>Non RFT</th>
+                                        <th>RFT/Non RFT</th>
                                         <th>Product Name</th>
                                         <th>Enzyme %</th>
                                     </tr>
@@ -890,18 +895,22 @@
                     <!-- =================================================
                     LAB DETAILS
                     ================================================= -->
+                    <!-- =================================================
+                         LAB DIP DETAILS
+                         ================================================= -->
 
                     <div class="ftd-section">
 
                         <div class="ftd-section-header">
-                            <h6 class="ftd-section-title">Lab Details</h6>
+                            <h6 class="ftd-section-title">Lab Dip Details</h6>
                         </div>
 
                         <hr class="ftd-section-line" />
 
+                        <!-- Lab Dip Information: Top Section -->
                         <div class="row g-3 mb-3">
 
-                            <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="col-lg-3 col-md-6 col-sm-12">
                                 <label for="LabDipNo" class="form-label">
                                     Lab Dip No.
                                     <span class="text-danger">*</span>
@@ -917,7 +926,7 @@
                                 </select>
                             </div>
 
-                            <div class="col-lg-4 col-md-6 col-sm-12">
+                            @* <div class="col-lg-6 col-md-6 col-sm-12">
                                 <label for="LabProductName" class="form-label">
                                     Lab Product Name
                                 </label>
@@ -928,24 +937,51 @@
                                        class="form-control readonly-field"
                                        placeholder="Lab Product Name"
                                        readonly />
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <label for="LabRatio" class="form-label">
-                                    Ratio
-                                </label>
-
-                                <input type="number"
-                                       id="LabRatio"
-                                       name="TblLabDetails.Ratio"
-                                       class="form-control readonly-field"
-                                       placeholder="Ratio"
-                                       step="0.01"
-                                       readonly />
-                            </div>
+                            </div> *@
 
                         </div>
+
+                        <!-- =================================================
+                             LAB DIP RECIPE DETAILS
+                             ================================================= -->
+
+                        <div class="ftd-section-header">
+                            <h6 class="ftd-section-title">
+                                Lab Dip Recipe Details
+                            </h6>
+                        </div>
+
+                        <hr class="ftd-section-line" />
+
+                        <div class="ftd-table-wrapper">
+
+                            <table class="table table-bordered ftd-table"
+                                   id="labDipRecipeTable">
+
+                                <thead>
+                                    <tr>
+                                        <th style="width:50px;">#</th>
+                                        <th>Recipe Details</th>
+                                        <th style="width:180px;">Ratio</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="labDipRecipeTableBody">
+
+                                    <tr id="labDipRecipeEmptyRow">
+                                        <td colspan="3" class="ftd-empty text-center">
+                                            Please select a Lab Dip No. to view recipe details.
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
                     </div>
+
 
 
                     <!-- =================================================
@@ -971,7 +1007,7 @@
                                     <tr>
                                         <th style="width:50px;">#</th>
                                         <th>Recipe Details</th>
-                                        <th>Ratio</th>
+                                        <th style="width:180px;">Ratio</th>
                                     </tr>
                                 </thead>
 
@@ -1065,7 +1101,7 @@
                             <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblFinishProcessHeatset.Noc"
                                        class="form-label">
-                                    NOC
+                                    No. of Chamber
                                 </label>
 
                                 <input asp-for="TblFinishProcessHeatset.Noc"
@@ -1082,7 +1118,7 @@
                             <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblFinishProcessHeatset.Nop"
                                        class="form-label">
-                                    NOP
+                                    No. of Padder
                                 </label>
 
                                 <input asp-for="TblFinishProcessHeatset.Nop"
@@ -1235,7 +1271,7 @@
                             <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblFinishProcessHeatset.Pp"
                                        class="form-label">
-                                    PP
+                                    Padder Pressure
                                 </label>
 
                                 <input asp-for="TblFinishProcessHeatset.Pp"
@@ -1269,7 +1305,7 @@
                             <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblFinishProcessHeatset.AHeatsetGsm"
                                        class="form-label">
-                                    Actual Heatset GSM
+                                    After GSM
                                 </label>
 
                                 <input asp-for="TblFinishProcessHeatset.AHeatsetGsm"
@@ -1286,7 +1322,7 @@
                             <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblFinishProcessHeatset.AHeatsetDia"
                                        class="form-label">
-                                    Actual Heatset Dia
+                                    After Dia
                                 </label>
 
                                 <input asp-for="TblFinishProcessHeatset.AHeatsetDia"
@@ -1308,7 +1344,7 @@
 
                                 <input asp-for="TblFinishProcessHeatset.Comments"
                                        class="form-control"
-                                       type="number"
+                                       type="text"
                                        step="any" />
 
                                 <span asp-validation-for="TblFinishProcessHeatset.Comments"
@@ -1501,7 +1537,7 @@
                             <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblFinishProcessStenteringAb.Noc"
                                        class="form-label">
-                                    NOC
+                                    No. of Chamber
                                 </label>
 
                                 <input asp-for="TblFinishProcessStenteringAb.Noc"
@@ -1574,7 +1610,7 @@
 
                                 <input asp-for="TblFinishProcessHeatset.Comments"
                                        class="form-control"
-                                       type="number"
+                                       type="text"
                                        step="any" />
 
                                 <span asp-validation-for="TblFinishProcessHeatset.Comments"
@@ -1599,8 +1635,7 @@
                         <div class="row g-3">
 
                             <!-- FTD ID -->
-
-                           @*  <div class="col-lg-2 col-md-3 col-sm-6">
+                            @*  <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblFinishProcessStenteringBb.Ftdid"
                                        class="form-label">
                                     FTD ID
@@ -1755,7 +1790,7 @@
                             <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblFinishProcessStenteringBb.Noc"
                                        class="form-label">
-                                    NOC
+                                    No. of Chamber
                                 </label>
 
                                 <input asp-for="TblFinishProcessStenteringBb.Noc"
@@ -1828,7 +1863,7 @@
 
                                 <input asp-for="TblFinishProcessHeatset.Comments"
                                        class="form-control"
-                                       type="number"
+                                       type="text"
                                        step="any" />
 
                                 <span asp-validation-for="TblFinishProcessHeatset.Comments"
@@ -1981,7 +2016,6 @@
                         <div class="row g-3">
 
                             <!-- FTD ID -->
-
                             @* <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblSqueezing.Ftdid"
                                        class="form-label">
@@ -2001,7 +2035,7 @@
                             <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblSqueezing.Pp"
                                        class="form-label">
-                                    PP
+                                    Padder Pressure
                                 </label>
 
                                 <input asp-for="TblSqueezing.Pp"
@@ -2023,7 +2057,7 @@
 
                                 <input asp-for="TblSqueezing.DiaType"
                                        class="form-control"
-                                       type="number"
+                                       type="text"
                                        step="any" />
 
                                 <span asp-validation-for="TblSqueezing.DiaType"
@@ -2246,7 +2280,7 @@
                             <!-- Comments -->
                             <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblFinishProcessStenteringAb.Comments" class="form-label"> Comments </label>
-                                <input asp-for="TblFinishProcessStenteringAb.Comments" class="form-control" type="number" step="any" />
+                                <input asp-for="TblFinishProcessStenteringAb.Comments" class="form-control" type="text" step="any" />
                                 <span asp-validation-for="TblFinishProcessStenteringAb.Comments" class="text-danger"></span>
                             </div>
                         </div>
@@ -2275,7 +2309,7 @@
                             <!-- Temp -->
                             <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblOtherProcess.AopType" class="form-label"> AOP Type </label>
-                                <input asp-for="TblOtherProcess.AopType" class="form-control" type="number" step="any" />
+                                <input asp-for="TblOtherProcess.AopType" class="form-control" type="text" step="any" />
                                 <span asp-validation-for="TblOtherProcess.AopType" class="text-danger"></span>
                             </div>
                             <!-- NoOfColorW -->
@@ -2287,43 +2321,43 @@
                             <!-- RepeatSizeW -->
                             <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblOtherProcess.RepeatSizeW" class="form-label"> Repeat Size (W)</label>
-                                <input asp-for="TblOtherProcess.RepeatSizeW" class="form-control" type="number" step="any" />
+                                <input asp-for="TblOtherProcess.RepeatSizeW" class="form-control" type="text" step="any" />
                                 <span asp-validation-for="TblOtherProcess.RepeatSizeW" class="text-danger"></span>
                             </div>
                             <!-- AopRemarks -->
                             <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblOtherProcess.AopRemarks" class="form-label"> AOP Remarks</label>
-                                <input asp-for="TblOtherProcess.AopRemarks" class="form-control" type="number" step="any" />
+                                <input asp-for="TblOtherProcess.AopRemarks" class="form-control" type="text" step="any" />
                                 <span asp-validation-for="TblOtherProcess.AopRemarks" class="text-danger"></span>
                             </div>
                             <!-- WashType -->
                             <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblOtherProcess.WashType" class="form-label"> Wash Type</label>
-                                <input asp-for="TblOtherProcess.WashType" class="form-control" type="number" step="any" />
+                                <input asp-for="TblOtherProcess.WashType" class="form-control" type="text" step="any" />
                                 <span asp-validation-for="TblOtherProcess.WashType" class="text-danger"></span>
                             </div>
                             <!-- GmtColorBw -->
                             <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblOtherProcess.GmtColorBw" class="form-label"> Gmt.Color(Bw)</label>
-                                <input asp-for="TblOtherProcess.GmtColorBw" class="form-control" type="number" step="any" />
+                                <input asp-for="TblOtherProcess.GmtColorBw" class="form-control" type="text" step="any" />
                                 <span asp-validation-for="TblOtherProcess.GmtColorBw" class="text-danger"></span>
                             </div>
                             <!-- GmtColorAw -->
                             <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblOtherProcess.GmtColorAw" class="form-label"> Gmt.Color (Aw)</label>
-                                <input asp-for="TblOtherProcess.GmtColorAw" class="form-control" type="number" step="any" />
+                                <input asp-for="TblOtherProcess.GmtColorAw" class="form-control" type="text" step="any" />
                                 <span asp-validation-for="TblOtherProcess.GmtColorAw" class="text-danger"></span>
                             </div>
                             <!-- WashRemarks -->
                             <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblOtherProcess.WashRemarks" class="form-label"> Wash Remarks</label>
-                                <input asp-for="TblOtherProcess.WashRemarks" class="form-control" type="number" step="any" />
+                                <input asp-for="TblOtherProcess.WashRemarks" class="form-control" type="text" step="any" />
                                 <span asp-validation-for="TblOtherProcess.WashRemarks" class="text-danger"></span>
                             </div>
                             <!-- PrintType -->
                             <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblOtherProcess.PrintType" class="form-label"> Print Type</label>
-                                <input asp-for="TblOtherProcess.PrintType" class="form-control" type="number" step="any" />
+                                <input asp-for="TblOtherProcess.PrintType" class="form-control" type="text" step="any" />
                                 <span asp-validation-for="TblOtherProcess.PrintType" class="text-danger"></span>
                             </div>
                             <!-- NoOfColorP -->
@@ -2335,13 +2369,13 @@
                             <!-- RepeatSizeP -->
                             <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblOtherProcess.RepeatSizeP" class="form-label"> Repeat Size (P)</label>
-                                <input asp-for="TblOtherProcess.RepeatSizeP" class="form-control" type="number" step="any" />
+                                <input asp-for="TblOtherProcess.RepeatSizeP" class="form-control" type="text" step="any" />
                                 <span asp-validation-for="TblOtherProcess.RepeatSizeP" class="text-danger"></span>
                             </div>
                             <!-- PrintRemarks -->
                             <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblOtherProcess.PrintRemarks" class="form-label"> Print Remarks</label>
-                                <input asp-for="TblOtherProcess.PrintRemarks" class="form-control" type="number" step="any" />
+                                <input asp-for="TblOtherProcess.PrintRemarks" class="form-control" type="text" step="any" />
                                 <span asp-validation-for="TblOtherProcess.PrintRemarks" class="text-danger"></span>
                             </div>
                         </div>
@@ -2599,78 +2633,64 @@
         // PAGE LOAD
         // =========================================================
 
-        function loadLabDipList() {
 
-            console.log("Loading Lab Dip List...");
+    function loadLabDipList() {
 
-            $("#LabDipNo").html(`
-                <option value="">
-                    Loading Lab Dip No...
-                </option>
-            `);
+        console.log("Loading Lab Dip List...");
 
-            $.ajax({
-                url: '@Url.Action("GetLabDipList", "FTD")',
-                type: "GET",
+        $("#LabDipNo").html(`
+            <option value="">Loading Lab Dip No...</option>
+        `);
 
-                success: function (response) {
+        $.ajax({
+            url: '@Url.Action("GetLabDipList", "FTD")',
+            type: "GET",
 
-                    console.log("Lab Dip List Response:", response);
+            success: function (response) {
 
-                    $("#LabDipNo").empty();
+                console.log("Lab Dip List Response:", response);
 
-                    $("#LabDipNo").append(`
-                        <option value="">
-                            -- Select Lab Dip No. --
-                        </option>
-                    `);
+                $("#LabDipNo").empty();
 
-                    if (!response || !response.success || !response.data) {
+                $("#LabDipNo").append(`
+                    <option value="">-- Select Lab Dip No. --</option>
+                `);
 
-                        console.warn(
-                            response?.message ||
-                            "No Lab Dip data found."
-                        );
-
-                        return;
-                    }
-
-                    let labDips = response.data || [];
-
-                    labDips.forEach(function (item) {
-
-                        $("#LabDipNo").append(`
-                            <option
-                                value="${escapeHtml(item.labDipNo)}"
-                                data-product-name="${escapeHtml(item.productName)}"
-                                data-ratio="${item.ratio ?? ''}">
-                                ${escapeHtml(item.labDipNo)}
-                            </option>
-                        `);
-
-                    });
-
-                },
-
-                error: function (xhr) {
-
-                    console.error("Lab Dip List AJAX Error:", xhr);
-
-                    $("#LabDipNo").empty();
-
-                    $("#LabDipNo").append(`
-                        <option value="">
-                            -- Select Lab Dip No. --
-                        </option>
-                    `);
-
-                    alert(
-                        xhr.responseJSON?.message ||
-                        "Unable to load Lab Dip list."
+                if (!response || !response.success || !response.data) {
+                    console.warn(
+                        response?.message || "No Lab Dip data found."
                     );
+                    return;
                 }
-            });
-        }
+
+                response.data.forEach(function (item) {
+
+                    $("#LabDipNo").append(
+                        $("<option>", {
+                            value: item.labDipNo,
+                            text: item.labDipNo
+                        })
+                    );
+
+                });
+            },
+
+            error: function (xhr) {
+
+                console.error("Lab Dip List AJAX Error:", xhr);
+
+                $("#LabDipNo").html(`
+                    <option value="">-- Select Lab Dip No. --</option>
+                `);
+
+                alert(
+                    xhr.responseJSON?.message ||
+                    "Unable to load Lab Dip list."
+                );
+            }
+        });
+    }
+
 
 
         // =========================================================
@@ -3410,6 +3430,14 @@
                                 <td class="text-center row-number">
                                     ${index + 1}
                                 </td>
+                                <td>
+                                    <input
+                                        type="text"
+                                        name="TblFtdYarn[${index}].Construction"
+                                        value="${escapeHtml(item.construction)}"
+                                        class="form-control construction readonly-field"
+                                        readonly />
+                                </td>
 
                                 <td>
                                     <input
@@ -4059,145 +4087,229 @@
         // LAB DIP CHANGE
         // =========================================================
 
-        $("#LabDipNo").on("change", function () {
 
-            let labDipNo =
-                $(this).val();
+    // =========================================================
+    // LAB DIP CHANGE
+    // ONE LAB DIP -> MULTIPLE RECIPE NAMES AND RATIOS
+    // =========================================================
 
-            console.log(
-                "Selected Lab Dip No:",
-                labDipNo
-            );
+    let labDipRequest = null;
 
+    $("#LabDipNo").on("change", function () {
 
-            // =====================================================
-            // CLEAR PREVIOUS DATA
-            // =====================================================
+        const labDipNo = $(this).val();
 
-            $("#LabProductName")
-                .val("");
+        console.log("Selected Lab Dip No:", labDipNo);
 
-            $("#LabRatio")
-                .val("");
+        // =====================================================
+        // CLEAR PREVIOUS DATA
+        // =====================================================
 
+        $("#LabProductName").val("");
 
-            if (!labDipNo) {
-                return;
+        $("#labDipRecipeTableBody").empty();
+
+        if (!labDipNo) {
+
+            $("#labDipRecipeTableBody").html(`
+                <tr id="labDipRecipeEmptyRow">
+                    <td colspan="3" class="ftd-empty text-center">
+                        Please select a Lab Dip No. to view recipe details.
+                    </td>
+                </tr>
+            `);
+
+            if (labDipRequest) {
+                labDipRequest.abort();
+                labDipRequest = null;
             }
 
+            return;
+        }
 
-            // =====================================================
-            // LOADING
-            // =====================================================
+        // =====================================================
+        // LOADING
+        // =====================================================
 
-            $("#LabProductName")
-                .val("Loading...");
+        $("#labDipRecipeTableBody").html(`
+            <tr>
+                <td colspan="3" class="ftd-empty text-center">
+                    Loading Lab Dip recipe details...
+                </td>
+            </tr>
+        `);
 
+        // Cancel previous request if still running
+        if (labDipRequest) {
+            labDipRequest.abort();
+        }
 
-            $.ajax({
+        // =====================================================
+        // LOAD LAB DIP RECIPE DETAILS
+        // =====================================================
 
-                url:
-                    '@Url.Action("GetLabDipDetails", "FTD")',
+        labDipRequest = $.ajax({
 
-                type: "GET",
+            url: '@Url.Action("GetLabDipDetails", "FTD")',
 
-                data: {
+            type: "GET",
 
-                    labDipNo:
-                        labDipNo
-                },
+            dataType: "json",
 
-                success: function (response) {
+            data: {
+                labDipNo: labDipNo
+            },
 
-                    console.log(
-                        "Lab Dip Details Response:",
-                        response
-                    );
+            success: function (response) {
 
+                console.log("Lab Dip Details Response:", response);
 
-                    if (
-                        !response ||
-                        !response.success
-                    ) {
+                if (!response || !response.success) {
 
-                        $("#LabProductName")
-                            .val("");
+                    $("#LabProductName").val("");
 
-                        $("#LabRatio")
-                            .val("");
+                    $("#labDipRecipeTableBody").html(`
+                        <tr>
+                            <td colspan="3" class="ftd-empty text-center">
+                                ${escapeHtml(
+                                    response?.message ||
+                                    "No Lab Dip details found."
+                                )}
+                            </td>
+                        </tr>
+                    `);
 
-                        alert(
-                            response?.message ||
-                            "No Lab Dip details found."
-                        );
-
-                        return;
-                    }
-
-
-                    let data =
-                        response.data || [];
-
-
-                    if (data.length === 0) {
-
-                        $("#LabProductName")
-                            .val("");
-
-                        $("#LabRatio")
-                            .val("");
-
-                        return;
-                    }
-
-
-                    // =================================================
-                    // FIRST LAB DIP DATA
-                    // =================================================
-
-                    let item =
-                        data[0];
-
-
-                    $("#LabProductName")
-                        .val(
-                            item.labProductName || ""
-                        );
-
-
-                    $("#LabRatio")
-                        .val(
-                            item.labRatio ?? ""
-                        );
-                },
-
-                error: function (xhr) {
-
-                    console.error(
-                        "Lab Dip Details AJAX Error:",
-                        xhr
-                    );
-
-                    $("#LabProductName")
-                        .val("");
-
-                    $("#LabRatio")
-                        .val("");
-
-                    let message =
-                        "Unable to load Lab Dip details.";
-
-                    if (xhr.responseJSON?.message) {
-
-                        message =
-                            xhr.responseJSON.message;
-                    }
-
-                    alert(message);
+                    return;
                 }
-            });
 
+                // Support either an array response or an object
+                // containing a details array.
+                const result = response.data;
+
+                let details = [];
+                let labProductName = "";
+
+                if (Array.isArray(result)) {
+
+                    details = result;
+
+                    labProductName =
+                        result.length > 0
+                            ? (result[0].labProductName || "")
+                            : "";
+
+                } else if (result && typeof result === "object") {
+
+                    details = Array.isArray(result.details)
+                        ? result.details
+                        : [];
+
+                    labProductName = result.labProductName || "";
+                }
+
+                $("#LabProductName").val(labProductName);
+
+                $("#labDipRecipeTableBody").empty();
+
+                if (details.length === 0) {
+
+                    $("#labDipRecipeTableBody").html(`
+                        <tr id="labDipRecipeEmptyRow">
+                            <td colspan="3" class="ftd-empty text-center">
+                                No Lab Dip recipe details available.
+                            </td>
+                        </tr>
+                    `);
+
+                    return;
+                }
+
+                // =================================================
+                // APPEND ALL RECIPE NAMES AND RATIOS
+                // =================================================
+
+                details.forEach(function (item, index) {
+
+                    const row = $("<tr>", {
+                        class: "lab-dip-recipe-row"
+                    });
+
+                    $("<td>", {
+                        class: "text-center row-number",
+                        text: index + 1
+                    }).appendTo(row);
+
+                    const recipeName =
+                        item.recipeDetails ??
+                        item.labProductName ??
+                        item.productName ??
+                        "";
+
+                    const ratio =
+                        item.ratio ??
+                        item.labRatio ??
+                        "";
+
+                    const nameInput = $("<input>", {
+                        type: "text",
+                        class: "form-control readonly-field",
+                        readonly: true,
+                        value: recipeName
+                    }).attr(
+                        "name",
+                        `TblLabDetailsList[${index}].RecipeDetails`
+                    );
+
+                    $("<td>")
+                        .append(nameInput)
+                        .appendTo(row);
+
+                    const ratioInput = $("<input>", {
+                        type: "number",
+                        class: "form-control",
+                        step: "0.01",
+                        readonly: true,
+                        value: ratio
+                    }).attr(
+                        "name",
+                        `TblLabDetailsList[${index}].Ratio`
+                    );
+
+                    $("<td>")
+                        .append(ratioInput)
+                        .appendTo(row);
+
+                    $("#labDipRecipeTableBody").append(row);
+                });
+
+            },
+
+            error: function (xhr, status) {
+
+                if (status === "abort") {
+                    return;
+                }
+
+                console.error("Lab Dip Details AJAX Error:", xhr);
+
+                $("#LabProductName").val("");
+
+                $("#labDipRecipeTableBody").html(`
+                    <tr>
+                        <td colspan="3" class="ftd-empty text-center">
+                            Unable to load Lab Dip recipe details.
+                        </td>
+                    </tr>
+                `);
+            },
+
+            complete: function () {
+                labDipRequest = null;
+            }
         });
+
+    });
+
 
 
         // =========================================================

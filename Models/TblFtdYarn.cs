@@ -11,6 +11,7 @@ public partial class TblFtdYarn
 
     public int? Ftdid { get; set; }
 
+    public string? Construction { get; set; }
     public string? Count { get; set; }
 
     public string? LotNo { get; set; }
