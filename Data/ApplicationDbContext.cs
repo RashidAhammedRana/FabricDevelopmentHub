@@ -39,6 +39,9 @@ namespace FabricDevelopmentHub.Data
         public virtual DbSet<TblLabTestMethod> TblLabTestMethods { get; set; }
         public virtual DbSet<TblLabTestName> TblLabTestNames { get; set; }
 
+        public virtual DbSet<TblLabTestParameter> TblLabTestParameters { get; set; }
+        public virtual DbSet<TblLabTestResult> TblLabTestResults { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -648,7 +651,7 @@ namespace FabricDevelopmentHub.Data
                     .HasMaxLength(50)
                     .HasColumnName("STATUS");
                 entity.Property(e => e.TestName)
-                    .HasMaxLength(50)
+                    .HasMaxLength(150)
                     .HasColumnName("TEST_NAME");
 
                 entity.HasOne(d => d.Ltg).WithMany(p => p.TblLabTestNames)
@@ -656,6 +659,41 @@ namespace FabricDevelopmentHub.Data
                     .HasConstraintName("FK_TBL_LAB_TEST_NAME_TBL_LAB_TEST_GROUP");
             });
             OnModelCreatingPartial(modelBuilder);
+
+            modelBuilder.Entity<TblLabTestParameter>(entity =>
+            {
+                entity.HasKey(e => e.ParameterId).HasName("PK__TBL_LAB___F80C627775753EAC");
+
+                entity.ToTable("TBL_LAB_TEST_PARAMETER");
+
+                entity.Property(e => e.DataType)
+                    .HasMaxLength(20)
+                    .HasDefaultValue("Numeric");
+                entity.Property(e => e.DisplayOrder).HasDefaultValue(1);
+                entity.Property(e => e.NormalRange).HasMaxLength(100);
+                entity.Property(e => e.ParameterGroup).HasMaxLength(100);
+                entity.Property(e => e.ParameterName).HasMaxLength(100);
+                entity.Property(e => e.Status)
+                    .HasMaxLength(20)
+                    .HasDefaultValue("Active");
+                entity.Property(e => e.Unit).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<TblLabTestResult>(entity =>
+            {
+                entity.HasKey(e => e.ResultId).HasName("PK__TBL_LAB___9769020880FD54D7");
+
+                entity.ToTable("TBL_LAB_TEST_RESULT");
+
+                entity.Property(e => e.EntryDate).HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.Remarks).HasMaxLength(500);
+                entity.Property(e => e.ResultValue).HasMaxLength(500);
+
+                entity.HasOne(d => d.Parameter).WithMany(p => p.TblLabTestResults)
+                    .HasForeignKey(d => d.ParameterId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_LabTestResult_Parameter");
+            });
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
