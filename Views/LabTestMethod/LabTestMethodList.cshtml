@@ -1,0 +1,192 @@
+﻿@model IEnumerable<FabricDevelopmentHub.Models.TblLabTestMethod>
+
+@{
+    ViewData["Title"] = "Lab Test Method List";
+
+    int currentPage = ViewBag.CurrentPage;
+    int totalPages = ViewBag.TotalPages;
+
+    int pageSize = 15;
+    int sl = (currentPage - 1) * pageSize;
+
+    int startPage = Math.Max(1, currentPage - 2);
+    int endPage = Math.Min(totalPages, currentPage + 2);
+
+    bool canCreate = ViewBag.CanCreate ?? false;
+    bool canEdit = ViewBag.CanEdit ?? false;
+    bool canDelete = ViewBag.CanDelete ?? false;
+}
+
+<h2 class="text-center">Lab Test Method List</h2>
+
+<p class="text-muted text-center">
+    Total Names: <strong>@ViewBag.totalMethods</strong>
+</p>
+
+<!-- ================= HEADER ================= -->
+<div class="d-flex justify-content-between align-items-center mb-3">
+
+    <!-- SEARCH -->
+    <form method="get"
+          asp-action="LabTestNameList"
+          class="d-flex gap-2 align-items-center flex-grow-1">
+
+        <input type="text"
+               name="searchString"
+               id="searchBox"
+               value="@ViewBag.SearchString"
+               class="form-control"
+               placeholder="Search here..."
+               style="max-width: 350px;" />
+
+    </form>
+
+    <!-- ACTION BUTTONS -->
+    <div class="d-flex gap-2">
+
+        @if (canCreate)
+        {
+            <a asp-action="Create" class="btn btn-primary">
+                + Create
+            </a>
+        }
+
+        <button type="button"
+                class="btn btn-secondary"
+                onclick="window.history.back();">
+            Back
+        </button>
+
+    </div>
+
+</div>
+
+<!-- ================= TABLE ================= -->
+<div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle">
+
+        <thead class="table-dark text-center">
+            <tr>
+                <th>SL</th>
+                <th>Test Name</th>
+                <th>Method Name</th>
+                <th>Remarks</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                sl++;
+
+                <tr class="text-center">
+                    <td>@sl</td>
+                    <td>@item.Ltn.TestName</td>
+                    <td>@item.MethodName</td>
+                    <td>@item.Remarks</td>
+                    <td>@item.Status</td>
+                    <!-- ACTIONS -->
+                    <td>
+                        <div class="btn-group btn-group-sm gap-2">
+
+                            @if (canEdit)
+                            {
+                                <a asp-action="Edit"
+                                   asp-route-id="@item.Ltmid"
+                                   class="btn btn-success">
+                                    Edit
+                                </a>
+                            }
+
+                            @if (canDelete)
+                            {
+                                <a asp-action="Delete"
+                                   asp-route-id="@item.Ltmid"
+                                   class="btn btn-danger">
+                                    Delete
+                                </a>
+                            }
+
+                        </div>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
+
+<!-- ================= PAGINATION ================= -->
+<nav>
+    <ul class="pagination justify-content-center flex-wrap">
+
+        <!-- Prev -->
+        <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+            <a class="page-link"
+               href="@Url.Action("LabTestMethodList", new { page = currentPage - 1, searchString = ViewBag.SearchString })">
+                Previous
+            </a>
+        </li>
+
+        <!-- Pages -->
+        @for (int i = startPage; i <= endPage; i++)
+        {
+            <li class="page-item @(i == currentPage ? "active" : "")">
+                <a class="page-link"
+                   href="@Url.Action("LabTestMethodList", new { page = i, searchString = ViewBag.SearchString })">
+                    @i
+                </a>
+            </li>
+        }
+
+        <!-- Next -->
+        <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+            <a class="page-link"
+               href="@Url.Action("LabTestMethodList", new { page = currentPage + 1, searchString = ViewBag.SearchString })">
+                Next
+            </a>
+        </li>
+
+    </ul>
+</nav>
+
+<!-- ================= AUTO SEARCH ================= -->
+<script>
+    let timer;
+
+    const searchBox = document.getElementById("searchBox");
+
+    searchBox.addEventListener("input", function () {
+
+        clearTimeout(timer);
+
+        timer = setTimeout(() => {
+
+            let url = new URL(window.location.href);
+
+            if (this.value) {
+                url.searchParams.set("searchString", this.value);
+            } else {
+                url.searchParams.delete("searchString");
+            }
+
+            url.searchParams.set("page", 1);
+
+            window.location.href = url.toString();
+
+        }, 500);
+    });
+
+    // focus + cursor end
+    window.onload = function () {
+        if (searchBox) {
+            searchBox.focus();
+            let val = searchBox.value;
+            searchBox.value = "";
+            searchBox.value = val;
+        }
+    };
+</script>

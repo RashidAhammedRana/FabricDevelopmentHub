@@ -1,0 +1,105 @@
+﻿@model FabricDevelopmentHub.Models.TblLabTestMethod
+
+@{
+    ViewData["Title"] = "Create Lab Test Method";
+}
+
+<div class="container mt-4">
+
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+
+            <div class="card shadow-lg border-0">
+
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Add New Lab Test Method</h5>
+                </div>
+
+                <div class="card-body p-4">
+
+                    <form asp-action="Create" method="post">
+
+                        <div asp-validation-summary="ModelOnly"
+                             class="text-danger mb-3">
+                        </div>
+
+                        <div class="row g-3">
+
+                            <!-- Test Name -->
+                            <div class="col-md-6">
+                                <label asp-for="Ltnid" class="form-label">
+                                    Test Name <span class="text-danger">*</span>
+                                </label>
+
+                                <select asp-for="Ltnid"
+                                        asp-items="ViewBag.TestNameList"
+                                        class="form-select">
+                                    <option value="">-- Select Test Name --</option>
+                                </select>
+
+                                <span asp-validation-for="Ltnid"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- Method Name -->
+                            <div class="col-md-6">
+                                <label asp-for="MethodName" class="form-label">
+                                    Method Name <span class="text-danger">*</span>
+                                </label>
+                                <input asp-for="MethodName" class="form-control" />
+                                <span asp-validation-for="MethodName" class="text-danger"></span>
+                            </div>
+
+                            <!-- Contact -->
+                            <div class="col-md-6">
+                                <label asp-for="Remarks" class="form-label">
+                                    Remarks
+                                </label>
+                                <input asp-for="Remarks" class="form-control" />
+                            </div>
+                            <!-- Status -->
+                            <div class="col-md-6">
+                                <label asp-for="Status" class="form-label">
+                                    Status <span class="text-danger">*</span>
+                                </label>
+
+                                <select asp-for="Status" class="form-select">
+                                    <option value="">-- Select Status --</option>
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                </select>
+
+                                <span asp-validation-for="Status" class="text-danger"></span>
+                            </div>
+
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-4">
+
+                            <a asp-action="LabTestMethodList"
+                               class="btn btn-outline-secondary">
+                                ← Back
+                            </a>
+
+                            <button type="submit"
+                                    class="btn btn-primary px-4">
+                                Save
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

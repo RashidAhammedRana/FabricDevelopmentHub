@@ -1,10 +1,4 @@
-﻿//namespace FabricDevelopmentHub.Data
-//{
-//    public class ApplicationDbContext
-//    {
-//    }
-//}
-using FabricDevelopmentHub.Models;
+﻿using FabricDevelopmentHub.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,6 +35,9 @@ namespace FabricDevelopmentHub.Data
         public virtual DbSet<TblCompacting> TblCompacting { get; set; }
         public virtual DbSet<TblOtherProcess> TblOtherProcess { get; set; }
         public virtual DbSet<TblLabDetails> TblLabDetails { get; set; }
+        public virtual DbSet<TblLabTestGroup> TblLabTestGroups { get; set; }
+        public virtual DbSet<TblLabTestMethod> TblLabTestMethods { get; set; }
+        public virtual DbSet<TblLabTestName> TblLabTestNames { get; set; }
 
 
 
@@ -590,6 +587,73 @@ namespace FabricDevelopmentHub.Data
                 entity.Property(e => e.LabDipNo).HasMaxLength(50).HasColumnName("LAB_DIP_NO");
                 entity.Property(e => e.LabProductName).HasMaxLength(50).HasColumnName("LAB_PRODUCT_NAME");
                 entity.Property(e => e.Ratio).HasColumnName("RATIO");
+            });
+
+            modelBuilder.Entity<TblLabTestGroup>(entity =>
+            {
+                entity.HasKey(e => e.Ltgid);
+
+                entity.ToTable("TBL_LAB_TEST_GROUP");
+
+                entity.Property(e => e.Ltgid).HasColumnName("LTGID");
+                entity.Property(e => e.Date).HasColumnName("DATE");
+                entity.Property(e => e.GroupName)
+                    .HasMaxLength(50)
+                    .HasColumnName("GROUP_NAME");
+                entity.Property(e => e.Remarks)
+                    .HasMaxLength(50)
+                    .HasColumnName("REMARKS");
+                entity.Property(e => e.Status)
+                    .HasMaxLength(50)
+                    .HasColumnName("STATUS");
+            });
+
+            modelBuilder.Entity<TblLabTestMethod>(entity =>
+            {
+                entity.HasKey(e => e.Ltmid);
+
+                entity.ToTable("TBL_LAB_TEST_METHOD");
+
+                entity.Property(e => e.Ltmid).HasColumnName("LTMID");
+                entity.Property(e => e.Date).HasColumnName("DATE");
+                entity.Property(e => e.Ltnid).HasColumnName("LTNID");
+                entity.Property(e => e.MethodName)
+                    .HasMaxLength(50)
+                    .HasColumnName("METHOD_NAME");
+                entity.Property(e => e.Remarks)
+                    .HasMaxLength(50)
+                    .HasColumnName("REMARKS");
+                entity.Property(e => e.Status)
+                    .HasMaxLength(50)
+                    .HasColumnName("STATUS");
+
+                entity.HasOne(d => d.Ltn).WithMany(p => p.TblLabTestMethods)
+                    .HasForeignKey(d => d.Ltnid)
+                    .HasConstraintName("FK_TBL_LAB_TEST_METHOD_TBL_LAB_TEST_METHOD");
+            });
+
+            modelBuilder.Entity<TblLabTestName>(entity =>
+            {
+                entity.HasKey(e => e.Ltnid);
+
+                entity.ToTable("TBL_LAB_TEST_NAME");
+
+                entity.Property(e => e.Ltnid).HasColumnName("LTNID");
+                entity.Property(e => e.Date).HasColumnName("DATE");
+                entity.Property(e => e.Ltgid).HasColumnName("LTGID");
+                entity.Property(e => e.Remarks)
+                    .HasMaxLength(50)
+                    .HasColumnName("REMARKS");
+                entity.Property(e => e.Status)
+                    .HasMaxLength(50)
+                    .HasColumnName("STATUS");
+                entity.Property(e => e.TestName)
+                    .HasMaxLength(50)
+                    .HasColumnName("TEST_NAME");
+
+                entity.HasOne(d => d.Ltg).WithMany(p => p.TblLabTestNames)
+                    .HasForeignKey(d => d.Ltgid)
+                    .HasConstraintName("FK_TBL_LAB_TEST_NAME_TBL_LAB_TEST_GROUP");
             });
             OnModelCreatingPartial(modelBuilder);
         }
