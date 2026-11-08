@@ -2479,10 +2479,53 @@
 
                             </div>
 
-                            @* <div class="mb-3">
-                                <label class="form-label">Remarks</label>
-                                <textarea name="Remarks" class="form-control" rows="2"></textarea>
+                            @* <div class="row mt-3">
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold">
+                                        Overall Result <span class="text-danger">*</span>
+                                    </label>
+
+                                    <select name="Remarks"
+                                            id="Remarks"
+                                            class="form-select"
+                                            required>
+                                        <option value="">-- Select Result --</option>
+                                        <option value="Pass">Pass</option>
+                                        <option value="Fail">Fail</option>
+                                    </select>
+                                </div>
                             </div> *@
+
+                            <div class="row mt-2">
+                                <div class="col-md-5">
+
+                                    <div class="px-3 py-2 rounded-3"
+                                         style="background:#f1f5f9; border:1px solid #dbe3ec;">
+
+                                        <label class="form-label fw-bold mb-1">
+                                            Overall Lab Test Status
+                                            <span class="text-danger">*</span>
+                                        </label>
+
+                                        <select name="Remarks"
+                                                id="Remarks"
+                                                class="form-select"
+                                                required>
+
+                                            <option value="">-- Select Test Status --</option>
+                                            <option value="Pass">Pass - All Parameters Satisfactory</option>
+                                            <option value="Fail">Fail - One or More Parameters Failed</option>
+
+                                        </select>
+
+                                        <small class="text-muted d-block mt-1">
+                                            Select the final status after reviewing all test parameters.
+                                        </small>
+
+                                    </div>
+
+                                </div>
+                            </div>
 
                             @* <div class="text-end">
 
