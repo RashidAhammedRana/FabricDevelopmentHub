@@ -113,7 +113,7 @@ namespace FabricDevelopmentHub.Controllers
         public async Task<IActionResult> Create()
         {
             var model = new FTDViewModel();
-
+            await LoadGroupList();
             // Get logged-in user's company
             var userCompany = await _userManager
                 .GetUserAsync(User);
@@ -181,13 +181,34 @@ namespace FabricDevelopmentHub.Controllers
         }
 
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(FTDViewModel model)
         {
+            // -------------------------------------------------
+            // MODEL VALIDATION
+            // -------------------------------------------------
+
             if (!ModelState.IsValid)
             {
+                foreach (var state in ModelState)
+                {
+                    foreach (var error in state.Value.Errors)
+                    {
+                        _logger.LogError(
+                            "ModelState Error: Field={Field}, Error={Error}",
+                            state.Key,
+                            error.ErrorMessage);
+                    }
+                }
+
+                TempData["ErrorMessage"] =
+                    "Please check the form. Some required fields are missing or invalid.";
+
                 await ReloadCreateDropdowns();
+                await LoadGroupList();
+
                 return View(model);
             }
 
@@ -201,8 +222,11 @@ namespace FabricDevelopmentHub.Controllers
                 // -------------------------------------------------
 
                 var master = model.TblFtdMaster;
+
                 master.Trdate = DateOnly.FromDateTime(DateTime.Now);
+
                 _context.TblFtdMasters.Add(master);
+
                 await _context.SaveChangesAsync();
 
                 // Database-generated FTDID
@@ -259,24 +283,25 @@ namespace FabricDevelopmentHub.Controllers
                 {
                     foreach (var item in model.TblFtdDyeingBasic)
                     {
-                        // Set Ftdid here if this entity has that property.
                         item.Ftdid = ftdId;
-
                         _context.TblFtdDyeingBasics.Add(item);
                     }
                 }
 
+
+                // -------------------------------------------------
                 // SAVE LAB DETAILS
+                // -------------------------------------------------
+
                 if (model.TblLabDetails != null)
                 {
                     foreach (var item in model.TblLabDetails)
                     {
-                        // Set Ftdid here if this entity has that property.
                         item.Ftdid = ftdId;
-
                         _context.TblLabDetails.Add(item);
                     }
                 }
+
 
                 // -------------------------------------------------
                 // SAVE DYEING RECIPE DETAILS
@@ -286,9 +311,7 @@ namespace FabricDevelopmentHub.Controllers
                 {
                     foreach (var item in model.TblFtdDyeingRecipe)
                     {
-                        // Set Ftdid here if this entity has that property.
                         item.Ftdid = ftdId;
-
                         _context.TblFtdDyeingRecipes.Add(item);
                     }
                 }
@@ -371,25 +394,134 @@ namespace FabricDevelopmentHub.Controllers
                         model.TblBrush);
                 }
 
+
                 // -------------------------------------------------
-                // SAVE Compacting Data
+                // SAVE COMPACTING DATA
                 // -------------------------------------------------
 
                 if (model.TblCompacting != null)
                 {
                     model.TblCompacting.Ftdid = ftdId;
-                    _context.TblCompacting.Add(model.TblCompacting);
+
+                    _context.TblCompacting.Add(
+                        model.TblCompacting);
                 }
 
+
                 // -------------------------------------------------
-                // SAVE Compacting Data
+                // SAVE OTHER PROCESS DATA
                 // -------------------------------------------------
 
                 if (model.TblOtherProcess != null)
                 {
                     model.TblOtherProcess.Ftdid = ftdId;
-                    _context.TblOtherProcess.Add(model.TblOtherProcess);
+
+                    _context.TblOtherProcess.Add(
+                        model.TblOtherProcess);
                 }
+
+
+                // -------------------------------------------------
+                // SAVE LAB TEST RESULTS
+                // -------------------------------------------------
+
+                if (model.Results != null && model.Results.Any())
+                {
+                    // VALIDATE GROUP AND TEST NAME
+
+                    var validTest = await _context.TblLabTestNames
+                        .AnyAsync(x =>
+                            x.Ltnid == model.Ltnid &&
+                            x.Ltgid == model.Ltgid &&
+                            x.Status == "Active");
+
+                    if (!validTest)
+                    {
+                        throw new InvalidOperationException(
+                            "Invalid Group or Test Name.");
+                    }
+
+
+                    // VALIDATE METHOD
+
+                    var validMethod = await _context.TblLabTestMethods
+                        .AnyAsync(x =>
+                            x.Ltmid == model.Ltmid &&
+                            x.Ltnid == model.Ltnid &&
+                            x.Status == "Active");
+
+                    if (!validMethod)
+                    {
+                        throw new InvalidOperationException(
+                            "Invalid Method selected.");
+                    }
+
+
+                    // CHECK DUPLICATE PARAMETER IDs
+
+                    var parameterIds = model.Results
+                        .Select(x => x.ParameterId)
+                        .ToList();
+
+                    if (parameterIds.Distinct().Count() != parameterIds.Count)
+                    {
+                        throw new InvalidOperationException(
+                            "Duplicate parameters found.");
+                    }
+
+
+                    // VERIFY PARAMETERS
+
+                    var validParameters = await _context.TblLabTestParameters
+                        .Where(x =>
+                            x.Ltnid == model.Ltnid &&
+                            x.Status == "Active" &&
+                            parameterIds.Contains(x.ParameterId))
+                        .Select(x => x.ParameterId)
+                        .ToListAsync();
+
+                    if (validParameters.Count != parameterIds.Count)
+                    {
+                        throw new InvalidOperationException(
+                            "Invalid Test Parameters.");
+                    }
+
+
+                    // FILTER ENTERED RESULTS
+
+                    var enteredResults = model.Results
+                        .Where(x =>
+                            !string.IsNullOrWhiteSpace(x.ResultValue))
+                        .ToList();
+
+                    if (!enteredResults.Any())
+                    {
+                        throw new InvalidOperationException(
+                            "Please enter at least one result.");
+                    }
+
+
+                    // PREPARE RESULT LIST
+
+                    var resultList = enteredResults.Select(x =>
+                        new TblLabTestResult
+                        {
+                            Ftdid = ftdId,
+                            Ltnid = model.Ltnid,
+                            ParameterId = x.ParameterId,
+                            ResultValue = x.ResultValue!.Trim(),
+                            EntryDate = DateTime.Now,
+                            Remarks = model.Remarks
+                        })
+                        .ToList();
+
+
+                    // SAVE RESULTS
+
+                    _context.TblLabTestResults.AddRange(resultList);
+                }
+
+
                 // -------------------------------------------------
                 // LOG PENDING ENTITIES FOR DEBUGGING
                 // -------------------------------------------------
@@ -455,7 +587,7 @@ namespace FabricDevelopmentHub.Controllers
 
 
                 // -------------------------------------------------
-                // 17. ROLLBACK IF TRANSACTION IS ACTIVE
+                // ROLLBACK TRANSACTION
                 // -------------------------------------------------
 
                 try
@@ -474,18 +606,34 @@ namespace FabricDevelopmentHub.Controllers
 
 
                 // -------------------------------------------------
-                // RETURN ERROR TO VIEW
+                // ERROR MESSAGE
                 // -------------------------------------------------
+
+                TempData["ErrorMessage"] =
+                    "Failed to save FTD data. Please check your input and try again.";
 
                 ModelState.AddModelError(
                     string.Empty,
-                    "Failed to save FTD data. Check the application logs for details.");
+                    "Failed to save FTD data. Check application logs for details.");
+
+
+                // -------------------------------------------------
+                // RELOAD DROPDOWNS
+                // -------------------------------------------------
 
                 await ReloadCreateDropdowns();
+
+                await LoadGroupList();
+
+
+                // -------------------------------------------------
+                // RETURN VIEW
+                // -------------------------------------------------
 
                 return View(model);
             }
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
@@ -1567,6 +1715,18 @@ namespace FabricDevelopmentHub.Controllers
             };
 
             return View(model);
+        }
+
+        private async Task LoadGroupList()
+        {
+            ViewBag.GroupList = new SelectList(
+                await _context.TblLabTestGroups
+                    .Where(x => x.Status == "Active")
+                    .OrderBy(x => x.GroupName)
+                    .ToListAsync(),
+                "Ltgid",
+                "GroupName"
+            );
         }
     }
 }

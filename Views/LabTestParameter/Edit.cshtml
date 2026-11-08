@@ -1,0 +1,307 @@
+﻿@model FabricDevelopmentHub.Models.TblLabTestParameter
+
+@{
+    ViewData["Title"] = "Edit Lab Test Parameter";
+}
+
+<div class="container mt-4">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-10">
+
+            <div class="card shadow border-0">
+
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Edit Lab Test Parameter</h5>
+                </div>
+
+                <div class="card-body p-4">
+
+                    <form asp-controller="LabTestParameter"
+                          asp-action="Edit"
+                          asp-route-id="@Model.ParameterId"
+                          method="post">
+
+                        @Html.AntiForgeryToken()
+
+                        <input type="hidden" asp-for="ParameterId" />
+
+                        <div asp-validation-summary="All"
+                             class="text-danger mb-3">
+                        </div>
+
+                        <div class="row g-3">
+
+                            <!-- GROUP -->
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Test Group <span class="text-danger">*</span>
+                                </label>
+
+                                <select id="Ltgid"
+                                        name="Ltgid"
+                                        asp-items="ViewBag.GroupList"
+                                        class="form-select"
+                                        required>
+
+                                    <option value="">
+                                        -- Select Group --
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- TEST NAME -->
+                            <div class="col-md-6">
+
+                                <label asp-for="Ltnid"
+                                       class="form-label">
+                                    Test Name <span class="text-danger">*</span>
+                                </label>
+
+                                <select asp-for="Ltnid"
+                                        id="Ltnid"
+                                        class="form-select"
+                                        required>
+
+                                    <option value="">
+                                        -- Select Test Name --
+                                    </option>
+
+                                </select>
+
+                                <span asp-validation-for="Ltnid"
+                                      class="text-danger"></span>
+
+                            </div>
+
+
+                            <!-- PARAMETER GROUP -->
+                            <div class="col-md-6">
+
+                                <label asp-for="ParameterGroup"
+                                       class="form-label">
+                                    Parameter Group <span class="text-danger">*</span>
+                                </label>
+
+                                <input asp-for="ParameterGroup"
+                                       class="form-control"
+                                       placeholder="Example: Color Change" />
+
+                                <span asp-validation-for="ParameterGroup"
+                                      class="text-danger"></span>
+
+                            </div>
+
+
+                            <!-- PARAMETER NAME -->
+                            <div class="col-md-6">
+
+                                <label asp-for="ParameterName"
+                                       class="form-label">
+                                    Parameter Name <span class="text-danger">*</span>
+                                </label>
+
+                                <input asp-for="ParameterName"
+                                       class="form-control"
+                                       placeholder="Example: Acid / Alkaline" />
+
+                                <span asp-validation-for="ParameterName"
+                                      class="text-danger"></span>
+
+                            </div>
+
+
+                            <!-- DISPLAY ORDER -->
+                            <div class="col-md-6">
+
+                                <label asp-for="DisplayOrder"
+                                       class="form-label">
+                                    Display Order <span class="text-danger">*</span>
+                                </label>
+
+                                <input asp-for="DisplayOrder"
+                                       type="number"
+                                       min="1"
+                                       class="form-control"
+                                       id="DisplayOrder"
+                                       readonly />
+
+                                <span asp-validation-for="DisplayOrder"
+                                      class="text-danger"></span>
+
+                            </div>
+
+
+                            <!-- STATUS -->
+                            <div class="col-md-6">
+
+                                <label asp-for="Status"
+                                       class="form-label">
+                                    Status
+                                </label>
+
+                                <select asp-for="Status"
+                                        class="form-select">
+
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- BUTTONS -->
+                        <div class="d-flex justify-content-between mt-4">
+
+                            <a asp-controller="LabTestParameter"
+                               asp-action="LabTestParameterList"
+                               class="btn btn-outline-secondary">
+
+                                ← Back
+
+                            </a>
+
+                            <button type="submit"
+                                    class="btn btn-success px-4">
+
+                                Update Parameter
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+
+        $(document).ready(function () {
+
+            // EXISTING VALUES
+            var selectedGroupId = '@ViewBag.SelectedGroupId';
+            var selectedTestName = '@Model.Ltnid';
+
+
+            // LOAD TEST NAMES
+            function loadTestNames(groupId, testId) {
+
+                if (!groupId) {
+
+                    $("#Ltnid")
+                        .empty()
+                        .append('<option value="">-- Select Test Name --</option>')
+                        .prop("disabled", true);
+
+                    return;
+                }
+
+                $("#Ltnid")
+                    .empty()
+                    .append('<option value="">Loading...</option>')
+                    .prop("disabled", true);
+
+
+                $.ajax({
+
+                    url: '@Url.Action("GetTestNamesByGroup", "LabTestParameter")',
+
+                    type: 'GET',
+
+                    data: {
+                        lTgid: groupId
+                    },
+
+                    success: function (data) {
+
+                        $("#Ltnid").empty();
+
+                        $("#Ltnid").append(
+                            $('<option>', {
+                                value: '',
+                                text: '-- Select Test Name --'
+                            })
+                        );
+
+
+                        $.each(data, function (i, item) {
+
+                            $("#Ltnid").append(
+                                $('<option>', {
+                                    value: item.ltnid,
+                                    text: item.testName
+                                })
+                            );
+
+                        });
+
+
+                        // SELECT EXISTING TEST NAME
+                        $("#Ltnid").val(testId);
+
+                        $("#Ltnid").prop("disabled", false);
+
+                    },
+
+                    error: function () {
+
+                        alert("Failed to load Test Names.");
+
+                        $("#Ltnid")
+                            .empty()
+                            .append('<option value="">-- Select Test Name --</option>')
+                            .prop("disabled", true);
+
+                    }
+
+                });
+
+            }
+
+
+            // INITIAL PAGE LOAD
+            $("#Ltgid").val(selectedGroupId);
+
+            loadTestNames(
+                selectedGroupId,
+                selectedTestName
+            );
+
+
+            // GROUP CHANGE
+            $("#Ltgid").change(function () {
+
+                var groupId = $(this).val();
+
+                loadTestNames(groupId, null);
+
+            });
+
+        });
+
+    </script>
+
+}

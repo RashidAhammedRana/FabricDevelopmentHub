@@ -684,7 +684,7 @@ namespace FabricDevelopmentHub.Data
                 entity.HasKey(e => e.ResultId).HasName("PK__TBL_LAB___9769020880FD54D7");
 
                 entity.ToTable("TBL_LAB_TEST_RESULT");
-
+                entity.Property(e => e.Ftdid).HasColumnName("FTDID");
                 entity.Property(e => e.EntryDate).HasDefaultValueSql("(getdate())");
                 entity.Property(e => e.Remarks).HasMaxLength(500);
                 entity.Property(e => e.ResultValue).HasMaxLength(500);

@@ -260,6 +260,10 @@
                         <div class="step-counter">6</div>
                         <div class="step-name">Compacting & Other Process</div>
                     </div>
+                    <div class="stepper-item" data-step="7">
+                        <div class="step-counter">7</div>
+                        <div class="step-name">Lab Test Result</div>
+                    </div>
 
                 </div>
 
@@ -1065,7 +1069,7 @@
                 <!-- ==========================================
                 STEP 2: HEATSET PROCESS
                 ========================================== -->
-
+                <!-- STEP 2 START -->
                 <div class="step-content" id="step-2">
 
                     <div class="ftd-section mt-0">
@@ -2068,6 +2072,7 @@
                     </div>
 
                 </div>
+                <!-- STEP 4 END -->
                 <!-- STEP 5 START -->
                 <div class="step-content" id="step-5">
 
@@ -2172,7 +2177,7 @@
                 </div>
                 <!-- STEP 5 END -->
                 <!-- STEP 6 START -->
-                <div class="step-content" id="step-3">
+                <div class="step-content" id="step-6">
                     <div class="ftd-section mt-0">
                         <div class="ftd-section-header">
                             <h6 class="ftd-section-title">
@@ -2384,6 +2389,115 @@
 
                 </div>
                 <!-- STEP 6 END -->
+                <!-- STEP 7 START -->
+                <div class="step-content" id="step-7">
+                    <div class="ftd-section mt-0">
+                        <div class="ftd-section-header">
+                            <h6 class="ftd-section-title">
+                                Lab Test Result
+                            </h6>
+                        </div>
+
+                        <hr class="ftd-section-line" />
+                        <div class="row g-3">
+
+                            <!-- GROUP -->
+                            <div class="col-md-4">
+                                <label class="form-label">
+                                    Test Group <span class="text-danger">*</span>
+                                </label>
+
+                                <select id="Ltgid"
+                                        name="Ltgid"
+                                        asp-items="ViewBag.GroupList"
+                                        class="form-select"
+                                        required>
+                                    <option value="">-- Select Group --</option>
+                                </select>
+                            </div>
+
+                            <!-- TEST NAME -->
+                            <div class="col-md-4">
+                                <label class="form-label">
+                                    Test Name <span class="text-danger">*</span>
+                                </label>
+
+                                <select id="Ltnid"
+                                        name="Ltnid"
+                                        class="form-select"
+                                        required
+                                        disabled>
+                                    <option value="">-- Select Test Name --</option>
+                                </select>
+                            </div>
+
+                            <!-- METHOD -->
+                            <div class="col-md-4">
+                                <label class="form-label">
+                                    Method Name <span class="text-danger">*</span>
+                                </label>
+
+                                <select id="Ltmid"
+                                        name="Ltmid"
+                                        class="form-select"
+                                        required
+                                        disabled>
+                                    <option value="">-- Select Method --</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <hr class="my-4" />
+
+                        <!-- RESULT SECTION -->
+                        <div id="resultSection" style="display:none;">
+
+                            <h6 class="text-primary mb-3">
+                                Test Parameters & Results
+                            </h6>
+
+                            <div class="table-responsive">
+
+                                <table class="table table-bordered table-hover">
+
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th style="width:7%">SL</th>
+                                            <th>Parameter Group</th>
+                                            <th>Parameter Name</th>
+                                            <th>Unit</th>
+                                            <th>Normal Range</th>
+                                            <th style="width:25%">Result</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody id="parameterBody">
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                            @* <div class="mb-3">
+                                <label class="form-label">Remarks</label>
+                                <textarea name="Remarks" class="form-control" rows="2"></textarea>
+                            </div> *@
+
+                            @* <div class="text-end">
+
+                                <button type="submit"
+                                        class="btn btn-primary px-4">
+                                    <i class="bi bi-save"></i> Save Results
+                                </button>
+
+                            </div> *@
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- STEP 7 END -->
                 <!-- ==========================================
                      STEPPER ACTIONS
                      ========================================== -->
@@ -4394,5 +4508,240 @@
 
 
     });
+
+</script>
+@* Lab Test Result *@
+<script>
+
+    // 1. GROUP CHANGE
+    $("#Ltgid").change(function () {
+
+        var lTgid = $(this).val();
+
+        resetTestName();
+        resetMethod();
+        resetResults();
+
+        if (!lTgid) return;
+
+        $.ajax({
+            url: '@Url.Action("GetTestNamesByGroup", "LabTestResult")',
+            type: 'GET',
+            data: { lTgid: lTgid },
+
+            success: function (data) {
+
+                $.each(data, function (i, item) {
+
+                    $("#Ltnid").append(
+                        $("<option>", {
+                            value: item.ltnid,
+                            text: item.testName
+                        })
+                    );
+
+                });
+
+                $("#Ltnid").prop("disabled", false);
+            },
+
+            error: function () {
+                alert("Failed to load Test Names.");
+            }
+        });
+
+    });
+
+
+    // 2. TEST NAME CHANGE
+    $("#Ltnid").change(function () {
+
+        var ltnid = $(this).val();
+
+        resetMethod();
+        resetResults();
+
+        if (!ltnid) return;
+
+        $.ajax({
+            url: '@Url.Action("GetMethodsByTestName", "LabTestResult")',
+            type: 'GET',
+            data: { ltnid: ltnid },
+
+            success: function (data) {
+
+                $.each(data, function (i, item) {
+
+                    $("#Ltmid").append(
+                        $("<option>", {
+                            value: item.methodId,
+                            text: item.methodName
+                        })
+                    );
+
+                });
+
+                $("#Ltmid").prop("disabled", false);
+            },
+
+            error: function () {
+                alert("Failed to load Methods.");
+            }
+        });
+
+    });
+
+
+    // 3. METHOD CHANGE - LOAD PARAMETERS
+    $("#Ltmid").change(function () {
+
+        var ltnid = $("#Ltnid").val();
+        var ltmid = $(this).val();
+
+        resetResults();
+
+        if (!ltnid || !ltmid) return;
+
+        $.ajax({
+            url: '@Url.Action("GetParameters", "LabTestResult")',
+            type: 'GET',
+            data: {
+                ltnid: ltnid,
+                ltmid: ltmid
+            },
+
+            success: function (data) {
+
+                if (!data || data.length === 0) {
+                    alert("No Parameters found for this Method.");
+                    return;
+                }
+
+                // GROUP PARAMETERS USING DATABASE ParameterGroup
+                var groups = {};
+
+                $.each(data, function (index, item) {
+
+                    var groupName =
+                        (item.parameterGroup || "General").trim();
+
+                    item.parameterName =
+                        (item.parameterName || "").trim();
+
+                    if (!groups[groupName]) {
+                        groups[groupName] = [];
+                    }
+
+                    groups[groupName].push(item);
+
+                });
+
+                var index = 0;
+                var serial = 1;
+
+                // GENERATE TABLE ROWS
+                $.each(groups, function (groupName, items) {
+
+                    $.each(items, function (i, item) {
+
+                        var row = $("<tr>");
+
+                        // GROUP NAME WITH ROWSPAN
+                        if (i === 0) {
+
+                            row.append(
+                                $("<td>", {
+                                    rowspan: items.length,
+                                    class: "fw-bold align-middle text-center bg-light"
+                                }).text(serial++)
+                            );
+
+                            row.append(
+                                $("<td>", {
+                                    rowspan: items.length,
+                                    class: "fw-bold align-middle bg-light"
+                                }).text(groupName)
+                            );
+
+                        }
+
+                        // PARAMETER NAME
+                        row.append(
+                            $("<td>").text(item.parameterName)
+                        );
+
+                        // UNIT
+                        row.append(
+                            $("<td>").text(item.unit || "-")
+                        );
+
+                        // NORMAL RANGE
+                        row.append(
+                            $("<td>").text(item.normalRange || "-")
+                        );
+
+                        // HIDDEN PARAMETER ID
+                        var hidden = $("<input>", {
+                            type: "hidden",
+                            name: "Results[" + index + "].ParameterId",
+                            value: item.parameterId
+                        });
+
+                        // RESULT INPUT
+                        var input = $("<input>", {
+                            type: "text",
+                            name: "Results[" + index + "].ResultValue",
+                            class: "form-control",
+                            placeholder: ""
+                        });
+
+                        row.append(
+                            $("<td>").append(hidden, input)
+                        );
+
+                        $("#parameterBody").append(row);
+
+                        index++;
+
+                    });
+
+                });
+
+                $("#resultSection").show();
+
+            },
+
+            error: function () {
+                alert("Failed to load Parameters.");
+            }
+        });
+
+    });
+
+
+    // RESET FUNCTIONS
+
+    function resetTestName() {
+
+        $("#Ltnid")
+            .html('<option value="">-- Select Test Name --</option>')
+            .prop("disabled", true);
+
+    }
+
+    function resetMethod() {
+
+        $("#Ltmid")
+            .html('<option value="">-- Select Method --</option>')
+            .prop("disabled", true);
+
+    }
+
+    function resetResults() {
+
+        $("#parameterBody").empty();
+        $("#resultSection").hide();
+
+    }
 
 </script>

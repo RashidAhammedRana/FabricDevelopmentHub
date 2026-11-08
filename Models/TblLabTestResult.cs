@@ -8,6 +8,7 @@ public partial class TblLabTestResult
     public int ResultId { get; set; }
 
     public int Ltnid { get; set; }
+    public int Ftdid { get; set; }
 
     public int ParameterId { get; set; }
 
