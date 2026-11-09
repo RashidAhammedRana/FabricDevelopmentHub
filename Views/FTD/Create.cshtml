@@ -214,7 +214,7 @@
     <div class="card ftd-card">
 
         <div class="card-header bg-fabric text-white text-center ftd-header">
-            <h5 class="mb-0">Fabric Technical Data</h5>
+            <h5 class="mb-0">Fabric Technical Datasheet</h5>
         </div>
 
         <div class="ftd-body">
@@ -233,37 +233,37 @@
 
                     <div class="stepper-item active" data-step="1">
                         <div class="step-counter">1</div>
-                        <div class="step-name">FTD Details</div>
+                        @* <div class="step-name">Booking Details</div> *@
                     </div>
+
+                    @* <div class="stepper-item" data-step="2">
+                        <div class="step-counter">2</div>
+                        <div class="step-name">Heatset Process</div>
+                    </div> *@
 
                     <div class="stepper-item" data-step="2">
                         <div class="step-counter">2</div>
-                        <div class="step-name">Heatset Process</div>
+                        @* <div class="step-name">Finish Process Stentering</div> *@
                     </div>
+
+                    @* <div class="stepper-item" data-step="4">
+                        <div class="step-counter">4</div>
+                        <div class="step-name">Singeing & Squeezing</div>
+                    </div> *@
 
                     <div class="stepper-item" data-step="3">
                         <div class="step-counter">3</div>
-                        <div class="step-name">Finish Process Stentering</div>
+                        @* <div class="step-name">Brush</div> *@
                     </div>
 
                     <div class="stepper-item" data-step="4">
                         <div class="step-counter">4</div>
-                        <div class="step-name">Singeing & Squeezing</div>
+                        @* <div class="step-name">Compacting & Other Process</div> *@
                     </div>
-
-                    <div class="stepper-item" data-step="5">
+                    @* <div class="stepper-item" data-step="5">
                         <div class="step-counter">5</div>
-                        <div class="step-name">Brush</div>
-                    </div>
-
-                    <div class="stepper-item" data-step="6">
-                        <div class="step-counter">6</div>
-                        <div class="step-name">Compacting & Other Process</div>
-                    </div>
-                    <div class="stepper-item" data-step="7">
-                        <div class="step-counter">7</div>
-                        <div class="step-name">Lab Test Result</div>
-                    </div>
+                        <div class="step-name">Lab Test Result</div> 
+                    </div> *@
 
                 </div>
 
@@ -279,7 +279,7 @@
 
                         <div class="ftd-section-header">
                             <h6 class="ftd-section-title">
-                                Master Information
+                                Booking Details
                             </h6>
                         </div>
 
@@ -414,6 +414,21 @@
                                        readonly />
 
                                 <span asp-validation-for="TblFtdMaster.StyleRef"
+                                      class="text-danger"></span>
+                            </div>
+                            <div class="col-lg-2 col-md-4 col-sm-6">
+                                <label asp-for="TblFtdMaster.Fso"
+                                       class="form-label">
+                                    FSO
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <input asp-for="TblFtdMaster.Fso"
+                                       id="TblFtdMaster_Fso"
+                                       class="form-control readonly-field"
+                                       readonly />
+
+                                <span asp-validation-for="TblFtdMaster.Fso"
                                       class="text-danger"></span>
                             </div>
 
@@ -566,8 +581,8 @@
                                         <th style="width:50px;">#</th>
                                         <th>Construction</th>
                                         <th>Count</th>
-                                        <th>Lot No.</th>
                                         <th>Brand</th>
+                                        <th>Lot No.</th>
                                         <th>Remarks</th>
                                     </tr>
                                 </thead>
@@ -658,6 +673,7 @@
                                     <tr>
                                         <th style="width:50px;">#</th>
                                         <th>Program No.</th>
+                                        <th>Construction</th>
                                         <th>Source</th>
                                         <th>Knit Company</th>
                                         <th>Machine</th>
@@ -692,7 +708,11 @@
                                                            class="form-control readonly-field"
                                                            readonly />
                                                 </td>
-
+                                                <td>
+                                                    <input asp-for="TblFtdKnit[i].Construction"
+                                                           class="form-control readonly-field"
+                                                           readonly />
+                                                </td>
                                                 <td>
                                                     <input asp-for="TblFtdKnit[i].Source"
                                                            class="form-control readonly-field"
@@ -780,303 +800,12 @@
 
                     </div>
 
-
-                    <!-- =================================================
-                         DYEING BASIC DATA
-                         ================================================= -->
-
+                    <!--Heatset -->
                     <div class="ftd-section">
 
                         <div class="ftd-section-header">
                             <h6 class="ftd-section-title">
-                                Dyeing Basic Data
-                            </h6>
-                        </div>
-
-                        <hr class="ftd-section-line" />
-
-                        <div class="ftd-table-wrapper">
-
-                            <table class="table table-bordered ftd-table"
-                                   id="dyeingBasicTable">
-
-                                <thead>
-                                    <tr>
-                                        <th style="width:50px;">#</th>
-                                        <th>Machine</th>
-                                        <th>Inhouse Dyeing</th>
-                                        <th>Shade %</th>
-                                        <th>Shade</th>
-                                        <th>Dyeing Part</th>
-                                        <th>RFT/Non RFT</th>
-                                        <th>Product Name</th>
-                                        <th>Enzyme %</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody id="dyeingBasicTableBody">
-
-                                    @if (Model.TblFtdDyeingBasic != null &&
-                                                                        Model.TblFtdDyeingBasic.Count > 0)
-                                    {
-                                        for (int i = 0;
-                                        i < Model.TblFtdDyeingBasic.Count;
-                                        i++)
-                                        {
-                                            <tr class="dyeing-basic-row">
-
-                                                <td class="text-center row-number">
-                                                    @(i + 1)
-                                                </td>
-
-                                                <td>
-                                                    <input asp-for="TblFtdDyeingBasic[i].MachineNo"
-                                                           class="form-control readonly-field"
-                                                           readonly />
-                                                </td>
-
-                                                <td>
-                                                    <input asp-for="TblFtdDyeingBasic[i].InhouseDyeing"
-                                                           class="form-control readonly-field"
-                                                           readonly />
-                                                </td>
-
-                                                <td>
-                                                    <input asp-for="TblFtdDyeingBasic[i].ShadeP"
-                                                           class="form-control readonly-field"
-                                                           readonly />
-                                                </td>
-
-                                                <td>
-                                                    <input asp-for="TblFtdDyeingBasic[i].Shade"
-                                                           class="form-control readonly-field"
-                                                           readonly />
-                                                </td>
-
-                                                <td>
-                                                    <input asp-for="TblFtdDyeingBasic[i].DyeingPart"
-                                                           class="form-control readonly-field"
-                                                           readonly />
-                                                </td>
-
-                                                <td>
-                                                    <input asp-for="TblFtdDyeingBasic[i].IsNonRft"
-                                                           class="form-control readonly-field"
-                                                           readonly />
-                                                </td>
-
-                                                <td>
-                                                    <input asp-for="TblFtdDyeingBasic[i].ProductName"
-                                                           class="form-control readonly-field"
-                                                           readonly />
-                                                </td>
-
-                                                <td>
-                                                    <input asp-for="TblFtdDyeingBasic[i].EnzayemPer"
-                                                           class="form-control readonly-field"
-                                                           readonly />
-                                                </td>
-
-                                            </tr>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <tr id="dyeingBasicEmptyRow">
-                                            <td colspan="9" class="ftd-empty">
-                                                No Dyeing Basic Data available.
-                                            </td>
-                                        </tr>
-                                    }
-
-                                </tbody>
-
-                            </table>
-
-                        </div>
-
-                    </div>
-                    <!-- =================================================
-                    LAB DETAILS
-                    ================================================= -->
-                    <!-- =================================================
-                         LAB DIP DETAILS
-                         ================================================= -->
-
-                    <div class="ftd-section">
-
-                        <div class="ftd-section-header">
-                            <h6 class="ftd-section-title">Lab Dip Details</h6>
-                        </div>
-
-                        <hr class="ftd-section-line" />
-
-                        <!-- Lab Dip Information: Top Section -->
-                        <div class="row g-3 mb-3">
-
-                            <div class="col-lg-3 col-md-6 col-sm-12">
-                                <label for="LabDipNo" class="form-label">
-                                    Lab Dip No.
-                                    <span class="text-danger">*</span>
-                                </label>
-
-                                <select id="LabDipNo"
-                                        name="TblLabDetails.LabDipNo"
-                                        class="form-select"
-                                        required>
-                                    <option value="">
-                                        -- Search / Select Lab Dip No. --
-                                    </option>
-                                </select>
-                            </div>
-
-                            @* <div class="col-lg-6 col-md-6 col-sm-12">
-                                <label for="LabProductName" class="form-label">
-                                    Lab Product Name
-                                </label>
-
-                                <input type="text"
-                                       id="LabProductName"
-                                       name="TblLabDetails.LabProductName"
-                                       class="form-control readonly-field"
-                                       placeholder="Lab Product Name"
-                                       readonly />
-                            </div> *@
-
-                        </div>
-
-                        <!-- =================================================
-                             LAB DIP RECIPE DETAILS
-                             ================================================= -->
-
-                        <div class="ftd-section-header">
-                            <h6 class="ftd-section-title">
-                                Lab Dip Recipe Details
-                            </h6>
-                        </div>
-
-                        <hr class="ftd-section-line" />
-
-                        <div class="ftd-table-wrapper">
-
-                            <table class="table table-bordered ftd-table"
-                                   id="labDipRecipeTable">
-
-                                <thead>
-                                    <tr>
-                                        <th style="width:50px;">#</th>
-                                        <th>Recipe Details</th>
-                                        <th style="width:180px;">Ratio</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody id="labDipRecipeTableBody">
-
-                                    <tr id="labDipRecipeEmptyRow">
-                                        <td colspan="3" class="ftd-empty text-center">
-                                            Please select a Lab Dip No. to view recipe details.
-                                        </td>
-                                    </tr>
-
-                                </tbody>
-
-                            </table>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- =================================================
-                         DYEING RECIPE DETAILS
-                         ================================================= -->
-
-                    <div class="ftd-section">
-
-                        <div class="ftd-section-header">
-                            <h6 class="ftd-section-title">
-                                Dyeing Recipe Details
-                            </h6>
-                        </div>
-
-                        <hr class="ftd-section-line" />
-
-                        <div class="ftd-table-wrapper">
-
-                            <table class="table table-bordered ftd-table"
-                                   id="dyeingRecipeTable">
-
-                                <thead>
-                                    <tr>
-                                        <th style="width:50px;">#</th>
-                                        <th>Recipe Details</th>
-                                        <th style="width:180px;">Ratio</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody id="dyeingRecipeTableBody">
-
-                                    @if (Model.TblFtdDyeingRecipe != null &&
-                                                                        Model.TblFtdDyeingRecipe.Count > 0)
-                                    {
-                                        for (int i = 0;
-                                        i < Model.TblFtdDyeingRecipe.Count;
-                                        i++)
-                                        {
-                                            <tr class="dyeing-recipe-row">
-
-                                                <td class="text-center row-number">
-                                                    @(i + 1)
-                                                </td>
-
-                                                <td>
-                                                    <input asp-for="TblFtdDyeingRecipe[i].RecipeDetails"
-                                                           class="form-control readonly-field"
-                                                           readonly />
-                                                </td>
-
-                                                <td>
-                                                    <input asp-for="TblFtdDyeingRecipe[i].Ratio"
-                                                           class="form-control"
-                                                           type="number"
-                                                           step="0.01"
-                                                           readonly />
-                                                </td>
-
-                                            </tr>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <tr id="dyeingRecipeEmptyRow">
-                                            <td colspan="3" class="ftd-empty">
-                                                No Dyeing Recipe details available.
-                                            </td>
-                                        </tr>
-                                    }
-
-                                </tbody>
-
-                            </table>
-
-                        </div>
-
-                    </div>
-
-                </div>
-                <!-- STEP 1 END -->
-                <!-- ==========================================
-                STEP 2: HEATSET PROCESS
-                ========================================== -->
-                <!-- STEP 2 START -->
-                <div class="step-content" id="step-2">
-
-                    <div class="ftd-section mt-0">
-
-                        <div class="ftd-section-header">
-                            <h6 class="ftd-section-title">
-                                Finish Process - Heatset
+                              Heatset
                             </h6>
                         </div>
 
@@ -1358,17 +1087,1110 @@
                         </div>
 
                     </div>
+                    <!--Singeing -->
+                    <div class="ftd-section">
+
+                        <div class="ftd-section-header">
+                            <h6 class="ftd-section-title">
+                                Singeing
+                            </h6>
+                        </div>
+
+                        <hr class="ftd-section-line" />
+
+                        <div class="row g-3">
+                            <!-- Show Only FTD No.--!>
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label class="form-label">FTD No.</label>
+                                <div class="form-control bg-light">
+                                    <span class="text-dark">
+                                        @Model.TblFtdMaster.FtdNo
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- FTD ID -->
+                            @* <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblSingeing.Ftdid"
+                                       class="form-label">
+                                    FTD ID
+                                </label>
+
+                                <input asp-for="TblSingeing.Ftdid"
+                                       class="form-control"
+                                       type="number" readonly />
+
+                                <span asp-validation-for="TblSingeing.Ftdid"
+                                      class="text-danger"></span>
+                            </div> *@
+
+                            <!-- BurnerTemp -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblSingeing.BurnerTemp"
+                                       class="form-label">
+                                    Burner Temp.
+                                </label>
+
+                                <input asp-for="TblSingeing.BurnerTemp"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblSingeing.BurnerTemp"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- FlameHeight -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblSingeing.FlameHeight"
+                                       class="form-label">
+                                    Flame Height
+                                </label>
+
+                                <input asp-for="TblSingeing.FlameHeight"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblSingeing.FlameHeight"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- Speed-->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblSingeing.Speed"
+                                       class="form-label">
+                                    Speed
+                                </label>
+
+                                <input asp-for="TblSingeing.Speed"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblSingeing.Speed"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- ASingeingGsm -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblSingeing.ASingeingGsm"
+                                       class="form-label">
+                                    A Singeing Gsm
+                                </label>
+
+                                <input asp-for="TblSingeing.ASingeingGsm"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblSingeing.ASingeingGsm"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- ASingeingDia -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblSingeing.ASingeingDia"
+                                       class="form-label">
+                                    A Singeing Dia
+                                </label>
+
+                                <input asp-for="TblSingeing.ASingeingDia"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblSingeing.ASingeingDia"
+                                      class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- =================================================
+                         DYEING BASIC DATA
+                         ================================================= -->
+
+                    <div class="ftd-section">
+
+                        <div class="ftd-section-header">
+                            <h6 class="ftd-section-title">
+                                Dyeing Details
+                            </h6>
+                        </div>
+
+                        <hr class="ftd-section-line" />
+
+                        <div class="ftd-table-wrapper">
+
+                            <table class="table table-bordered ftd-table"
+                                   id="dyeingBasicTable">
+
+                                <thead>
+                                    <tr>
+                                        <th style="width:50px;">#</th>
+                                        <th>Machine</th>
+                                        <th>Inhouse Dyeing</th>
+                                        <th>Shade %</th>
+                                        <th>Shade</th>
+                                        <th>Dyeing Part</th>
+                                        <th>RFT/Non RFT</th>
+                                        <th>Enzyme Name</th>
+                                        <th>Enzyme %</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="dyeingBasicTableBody">
+
+                                    @if (Model.TblFtdDyeingBasic != null &&
+                                                                        Model.TblFtdDyeingBasic.Count > 0)
+                                    {
+                                        for (int i = 0;
+                                        i < Model.TblFtdDyeingBasic.Count;
+                                        i++)
+                                        {
+                                            <tr class="dyeing-basic-row">
+
+                                                <td class="text-center row-number">
+                                                    @(i + 1)
+                                                </td>
+
+                                                <td>
+                                                    <input asp-for="TblFtdDyeingBasic[i].MachineNo"
+                                                           class="form-control readonly-field"
+                                                           readonly />
+                                                </td>
+
+                                                <td>
+                                                    <input asp-for="TblFtdDyeingBasic[i].InhouseDyeing"
+                                                           class="form-control readonly-field"
+                                                           readonly />
+                                                </td>
+
+                                                <td>
+                                                    <input asp-for="TblFtdDyeingBasic[i].ShadeP"
+                                                           class="form-control readonly-field"
+                                                           readonly />
+                                                </td>
+
+                                                <td>
+                                                    <input asp-for="TblFtdDyeingBasic[i].Shade"
+                                                           class="form-control readonly-field"
+                                                           readonly />
+                                                </td>
+
+                                                <td>
+                                                    <input asp-for="TblFtdDyeingBasic[i].DyeingPart"
+                                                           class="form-control readonly-field"
+                                                           readonly />
+                                                </td>
+
+                                                <td>
+                                                    <input asp-for="TblFtdDyeingBasic[i].IsNonRft"
+                                                           class="form-control readonly-field"
+                                                           readonly />
+                                                </td>
+
+                                                <td>
+                                                    <input asp-for="TblFtdDyeingBasic[i].ProductName"
+                                                           class="form-control readonly-field"
+                                                           readonly />
+                                                </td>
+
+                                                <td>
+                                                    <input asp-for="TblFtdDyeingBasic[i].EnzayemPer"
+                                                           class="form-control readonly-field"
+                                                           readonly />
+                                                </td>
+
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr id="dyeingBasicEmptyRow">
+                                            <td colspan="9" class="ftd-empty">
+                                                No Dyeing Basic Data available.
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+                    <!-- =================================================
+                    LAB DETAILS
+                    ================================================= -->
+                    <!-- =================================================
+                         LAB DIP DETAILS
+                         ================================================= -->
+
+                    <div class="ftd-section">
+
+                        <div class="ftd-section-header">
+                            <h6 class="ftd-section-title">Lab Dip Details</h6>
+                        </div>
+
+                        <hr class="ftd-section-line" />
+
+                        <!-- Lab Dip Information: Top Section -->
+                        <div class="row g-3 mb-3">
+
+                            <div class="col-lg-3 col-md-6 col-sm-12">
+                                <label for="LabDipNo" class="form-label">
+                                    Lab Dip No.
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <select id="LabDipNo"
+                                        name="TblLabDetails.LabDipNo"
+                                        class="form-select"
+                                        required>
+                                    <option value="">
+                                        -- Search / Select Lab Dip No. --
+                                    </option>
+                                </select>
+                            </div>
+
+                            @* <div class="col-lg-6 col-md-6 col-sm-12">
+                                <label for="LabProductName" class="form-label">
+                                    Lab Product Name
+                                </label>
+
+                                <input type="text"
+                                       id="LabProductName"
+                                       name="TblLabDetails.LabProductName"
+                                       class="form-control readonly-field"
+                                       placeholder="Lab Product Name"
+                                       readonly />
+                            </div> *@
+
+                        </div>
+
+                        <!-- =================================================
+                             LAB DIP RECIPE DETAILS
+                             ================================================= -->
+
+                        <div class="ftd-section-header">
+                            <h6 class="ftd-section-title">
+                                Lab Dip Recipe Details
+                            </h6>
+                        </div>
+
+                        <hr class="ftd-section-line" />
+
+                        <div class="ftd-table-wrapper">
+
+                            <table class="table table-bordered ftd-table"
+                                   id="labDipRecipeTable">
+
+                                <thead>
+                                    <tr>
+                                        <th style="width:50px;">#</th>
+                                        <th>Recipe Details</th>
+                                        <th style="width:180px;">Ratio</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="labDipRecipeTableBody">
+
+                                    <tr id="labDipRecipeEmptyRow">
+                                        <td colspan="3" class="ftd-empty text-center">
+                                            Please select a Lab Dip No. to view recipe details.
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                    <!-- =================================================
+                         DYEING RECIPE DETAILS
+                         ================================================= -->
+
+                    <div class="ftd-section">
+
+                        <div class="ftd-section-header">
+                            <h6 class="ftd-section-title">
+                                Dyeing Recipe Details
+                            </h6>
+                        </div>
+
+                        <hr class="ftd-section-line" />
+
+                        <div class="ftd-table-wrapper">
+
+                            <table class="table table-bordered ftd-table"
+                                   id="dyeingRecipeTable">
+
+                                <thead>
+                                    <tr>
+                                        <th style="width:50px;">#</th>
+                                        <th>Recipe Details</th>
+                                        <th style="width:180px;">Ratio</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="dyeingRecipeTableBody">
+
+                                    @if (Model.TblFtdDyeingRecipe != null &&
+                                                                        Model.TblFtdDyeingRecipe.Count > 0)
+                                    {
+                                        for (int i = 0;
+                                        i < Model.TblFtdDyeingRecipe.Count;
+                                        i++)
+                                        {
+                                            <tr class="dyeing-recipe-row">
+
+                                                <td class="text-center row-number">
+                                                    @(i + 1)
+                                                </td>
+
+                                                <td>
+                                                    <input asp-for="TblFtdDyeingRecipe[i].RecipeDetails"
+                                                           class="form-control readonly-field"
+                                                           readonly />
+                                                </td>
+
+                                                <td>
+                                                    <input asp-for="TblFtdDyeingRecipe[i].Ratio"
+                                                           class="form-control"
+                                                           type="number"
+                                                           step="0.01"
+                                                           readonly />
+                                                </td>
+
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr id="dyeingRecipeEmptyRow">
+                                            <td colspan="3" class="ftd-empty">
+                                                No Dyeing Recipe details available.
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                    <!--Squazing -->
+                    <div class="ftd-section mt-5">
+                        <div class="ftd-section-header">
+                            <h6 class="ftd-section-title">
+                                Squeezing
+                            </h6>
+                        </div>
+                        <hr class="ftd-section-line" />
+                        <div class="row g-3">
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblSqueezing.Pp"
+                                       class="form-label">
+                                    Padder Pressure
+                                </label>
+
+                                <input asp-for="TblSqueezing.Pp"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblSqueezing.Pp"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- DiaType -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblSqueezing.DiaType"
+                                       class="form-label">
+                                    Dia Type
+                                </label>
+
+                                <input asp-for="TblSqueezing.DiaType"
+                                       class="form-control"
+                                       type="text"
+                                       step="any" />
+
+                                <span asp-validation-for="TblSqueezing.DiaType"
+                                      class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
 
                 </div>
-                <!-- STEP 2 END -->
-                <!-- STEP 3 START -->
-                <div class="step-content" id="step-3">
+                <!-- STEP 1 END -->
+                <!-- ==========================================
+                STEP 2: HEATSET PROCESS
+                ========================================== -->
+                <!-- STEP 2 START -->
+                @* <div class="step-content" id="step-2">
 
                     <div class="ftd-section mt-0">
 
                         <div class="ftd-section-header">
                             <h6 class="ftd-section-title">
-                                Finish Process Stentering - AB
+                                Finish Process - Heatset
+                            </h6>
+                        </div>
+
+                        <hr class="ftd-section-line" />
+
+                        <div class="row g-3">
+                            <!-- Show Only FTD No.--!>
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label class="form-label">FTD No.</label>
+                                <div class="form-control bg-light">
+                                    <span class="text-dark">
+                                        @Model.TblFtdMaster.FtdNo
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- NOC -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessHeatset.Noc"
+                                       class="form-label">
+                                    No. of Chamber
+                                </label>
+
+                                <input asp-for="TblFinishProcessHeatset.Noc"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessHeatset.Noc"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- NOP -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessHeatset.Nop"
+                                       class="form-label">
+                                    No. of Padder
+                                </label>
+
+                                <input asp-for="TblFinishProcessHeatset.Nop"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessHeatset.Nop"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- DWELL TIME -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessHeatset.DweelTime"
+                                       class="form-label">
+                                    Dwell Time
+                                </label>
+
+                                <input asp-for="TblFinishProcessHeatset.DweelTime"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessHeatset.DweelTime"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- GREY DIA -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessHeatset.GreyDia"
+                                       class="form-label">
+                                    Grey Dia
+                                </label>
+
+                                <input asp-for="TblFinishProcessHeatset.GreyDia"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessHeatset.GreyDia"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- GREY GSM -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessHeatset.GreyGsm"
+                                       class="form-label">
+                                    Grey GSM
+                                </label>
+
+                                <input asp-for="TblFinishProcessHeatset.GreyGsm"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessHeatset.GreyGsm"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- TEMPERATURE -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessHeatset.Temp"
+                                       class="form-label">
+                                    Temperature
+                                </label>
+
+                                <input asp-for="TblFinishProcessHeatset.Temp"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessHeatset.Temp"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- SPEED -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessHeatset.Speed"
+                                       class="form-label">
+                                    Speed
+                                </label>
+
+                                <input asp-for="TblFinishProcessHeatset.Speed"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessHeatset.Speed"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- OVER FEED -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessHeatset.OFeed"
+                                       class="form-label">
+                                    Over Feed
+                                </label>
+
+                                <input asp-for="TblFinishProcessHeatset.OFeed"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessHeatset.OFeed"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- UNDER FEED -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessHeatset.UFeed"
+                                       class="form-label">
+                                    Under Feed
+                                </label>
+
+                                <input asp-for="TblFinishProcessHeatset.UFeed"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessHeatset.UFeed"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- BLOWER -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessHeatset.Blower"
+                                       class="form-label">
+                                    Blower
+                                </label>
+
+                                <input asp-for="TblFinishProcessHeatset.Blower"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessHeatset.Blower"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- PP -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessHeatset.Pp"
+                                       class="form-label">
+                                    Padder Pressure
+                                </label>
+
+                                <input asp-for="TblFinishProcessHeatset.Pp"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessHeatset.Pp"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- STRETCHING -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessHeatset.Stretching"
+                                       class="form-label">
+                                    Stretching
+                                </label>
+
+                                <input asp-for="TblFinishProcessHeatset.Stretching"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessHeatset.Stretching"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- ACTUAL HEATSET GSM -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessHeatset.AHeatsetGsm"
+                                       class="form-label">
+                                    After GSM
+                                </label>
+
+                                <input asp-for="TblFinishProcessHeatset.AHeatsetGsm"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessHeatset.AHeatsetGsm"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- ACTUAL HEATSET DIA -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessHeatset.AHeatsetDia"
+                                       class="form-label">
+                                    After Dia
+                                </label>
+
+                                <input asp-for="TblFinishProcessHeatset.AHeatsetDia"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessHeatset.AHeatsetDia"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- COMMENTS -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessHeatset.Comments"
+                                       class="form-label">
+                                    Comments
+                                </label>
+
+                                <input asp-for="TblFinishProcessHeatset.Comments"
+                                       class="form-control"
+                                       type="text"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessHeatset.Comments"
+                                      class="text-danger"></span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div> *@
+                <!-- STEP END -->
+                <!-- STEP 2 START -->
+                <div class="step-content" id="step-2">
+                    <!-- For BB-->
+                    <div class="ftd-section mt-5">
+
+                        <div class="ftd-section-header">
+                            <h6 class="ftd-section-title">
+                                Stentering - Before Brush/Before Peach/Before AOP
+                            </h6>
+                        </div>
+
+                        <hr class="ftd-section-line" />
+
+                        <div class="row g-3">
+
+                            <!-- FTD ID -->
+                            @*  <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessStenteringBb.Ftdid"
+                                       class="form-label">
+                                    FTD ID
+                                </label>
+
+                                <input asp-for="TblFinishProcessStenteringBb.Ftdid"
+                                       class="form-control"
+                                       type="number" readonly />
+
+                                <span asp-validation-for="TblFinishProcessStenteringBb.Ftdid"
+                                      class="text-danger"></span>
+                            </div> *@
+
+                            <!-- Show Only FTD No.--!>
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label class="form-label">FTD No.</label>
+                                <div class="form-control bg-light">
+                                    <span class="text-dark">
+                                        @Model.TblFtdMaster.FtdNo
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Temp -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessStenteringBb.Temp"
+                                       class="form-label">
+                                    Temp
+                                </label>
+
+                                <input asp-for="TblFinishProcessStenteringBb.Temp"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessStenteringBb.Temp"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- Speed -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessStenteringBb.Speed"
+                                       class="form-label">
+                                    Speed
+                                </label>
+
+                                <input asp-for="TblFinishProcessStenteringBb.Speed"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessStenteringBb.Speed"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- OFeed-->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessStenteringBb.OFeed"
+                                       class="form-label">
+                                    O-Feed
+                                </label>
+
+                                <input asp-for="TblFinishProcessStenteringBb.OFeed"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessStenteringBb.OFeed"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- StretchPer -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessStenteringBb.StretchPer"
+                                       class="form-label">
+                                    Stretch Percent
+                                </label>
+
+                                <input asp-for="TblFinishProcessStenteringBb.StretchPer"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessStenteringBb.StretchPer"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- PPressure1 -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessStenteringBb.PPressure1"
+                                       class="form-label">
+                                    P.Pressure-1
+                                </label>
+
+                                <input asp-for="TblFinishProcessStenteringBb.PPressure1"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessStenteringBb.PPressure1"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- PPressure2 -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessStenteringBb.PPressure2"
+                                       class="form-label">
+                                    P.Pressure-2
+                                </label>
+
+                                <input asp-for="TblFinishProcessStenteringBb.PPressure2"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessStenteringBb.PPressure2"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- Chemical -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessStenteringBb.Chemical"
+                                       class="form-label">
+                                    Chemical
+                                </label>
+
+                                <input asp-for="TblFinishProcessStenteringBb.Chemical"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessStenteringBb.Chemical"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- BlowerSpeed -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessStenteringBb.BlowerSpeed"
+                                       class="form-label">
+                                    Blower Speed
+                                </label>
+
+                                <input asp-for="TblFinishProcessStenteringBb.BlowerSpeed"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessStenteringBb.BlowerSpeed"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- Noc -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessStenteringBb.Noc"
+                                       class="form-label">
+                                    No. of Chamber
+                                </label>
+
+                                <input asp-for="TblFinishProcessStenteringBb.Noc"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessStenteringBb.Noc"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- ADia -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessStenteringBb.ADia"
+                                       class="form-label">
+                                    A-Dia
+                                </label>
+
+                                <input asp-for="TblFinishProcessStenteringBb.ADia"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessStenteringBb.ADia"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- AGsm -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessStenteringBb.AGsm"
+                                       class="form-label">
+                                    A-Gsm
+                                </label>
+
+                                <input asp-for="TblFinishProcessStenteringBb.AGsm"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessStenteringBb.AGsm"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- AShrinkage -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessStenteringBb.AShrinkage"
+                                       class="form-label">
+                                    A-Shrinkage
+                                </label>
+
+                                <input asp-for="TblFinishProcessStenteringBb.AShrinkage"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessStenteringBb.AShrinkage"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- COMMENTS -->
+
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessHeatset.Comments"
+                                       class="form-label">
+                                    Comments
+                                </label>
+
+                                <input asp-for="TblFinishProcessHeatset.Comments"
+                                       class="form-control"
+                                       type="text"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessHeatset.Comments"
+                                      class="text-danger"></span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- For Brush-->
+                    <div class="ftd-section">
+
+                        <div class="ftd-section-header">
+                            <h6 class="ftd-section-title">
+                                Brush/Peach
+                            </h6>
+                        </div>
+
+                        <hr class="ftd-section-line" />
+
+                        <div class="row g-3">
+
+                            <!-- Show Only FTD No.--!>
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label class="form-label">FTD No.</label>
+                                <div class="form-control bg-light">
+                                    <span class="text-dark">
+                                        @Model.TblFtdMaster.FtdNo
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- FTD ID -->
+                            @* <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblBrush.Ftdid" class="form-label">FTD ID</label>
+                                <input asp-for="TblBrush.Ftdid"class="form-control"type="number" readonly />
+                                <span asp-validation-for="TblBrush.Ftdid" class="text-danger"></span>
+                            </div> *@
+
+                            <!-- UPile -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblBrush.UPile" class="form-label">U.Pile</label>
+                                <input asp-for="TblBrush.UPile" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblBrush.UPile" class="text-danger"></span>
+                            </div>
+                            <!-- LPile -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblBrush.LPile" class="form-label">L.Pile</label>
+                                <input asp-for="TblBrush.LPile" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblBrush.LPile" class="text-danger"></span>
+                            </div>
+                            <!-- UCp -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblBrush.UCp" class="form-label">U.CP</label>
+                                <input asp-for="TblBrush.UCp" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblBrush.UCp" class="text-danger"></span>
+                            </div>
+                            <!-- LCp -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblBrush.LCp" class="form-label">L.CP</label>
+                                <input asp-for="TblBrush.LCp" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblBrush.LCp" class="text-danger"></span>
+                            </div>
+                            <!-- UDrumSpeed -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblBrush.UDrumSpeed" class="form-label">U.Drum Speed</label>
+                                <input asp-for="TblBrush.UDrumSpeed" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblBrush.UDrumSpeed" class="text-danger"></span>
+                            </div>
+                            <!-- LDrumSpeed -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblBrush.LDrumSpeed" class="form-label">L.Drum Speed</label>
+                                <input asp-for="TblBrush.LDrumSpeed" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblBrush.LDrumSpeed" class="text-danger"></span>
+                            </div>
+                            <!-- UTension -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblBrush.UTension" class="form-label">U.Tension</label>
+                                <input asp-for="TblBrush.UTension" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblBrush.UTension" class="text-danger"></span>
+                            </div>
+                            <!-- LTension -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblBrush.LTension" class="form-label">L.Tension</label>
+                                <input asp-for="TblBrush.LTension" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblBrush.LTension" class="text-danger"></span>
+                            </div>
+                            <!-- McSpeed -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblBrush.McSpeed" class="form-label">Mc.Speed</label>
+                                <input asp-for="TblBrush.McSpeed" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblBrush.McSpeed" class="text-danger"></span>
+                            </div>
+                            <!-- ADia -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblBrush.ADia" class="form-label">A.Dia</label>
+                                <input asp-for="TblBrush.ADia" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblBrush.ADia" class="text-danger"></span>
+                            </div>
+                            <!-- AGsm -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblBrush.AGsm" class="form-label">A.Gsm</label>
+                                <input asp-for="TblBrush.AGsm" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblBrush.AGsm" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- For AB-->
+                    <div class="ftd-section">
+
+                        <div class="ftd-section-header">
+                            <h6 class="ftd-section-title">
+                                Stentering - After Brush/After Peach/After AOP
                             </h6>
                         </div>
 
@@ -1624,264 +2446,10 @@
                         </div>
 
                     </div>
-
-                    <!-- For BB-->
-                    <div class="ftd-section mt-5">
-
-                        <div class="ftd-section-header">
-                            <h6 class="ftd-section-title">
-                                Finish Process Stentering - BB
-                            </h6>
-                        </div>
-
-                        <hr class="ftd-section-line" />
-
-                        <div class="row g-3">
-
-                            <!-- FTD ID -->
-                            @*  <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessStenteringBb.Ftdid"
-                                       class="form-label">
-                                    FTD ID
-                                </label>
-
-                                <input asp-for="TblFinishProcessStenteringBb.Ftdid"
-                                       class="form-control"
-                                       type="number" readonly />
-
-                                <span asp-validation-for="TblFinishProcessStenteringBb.Ftdid"
-                                      class="text-danger"></span>
-                            </div> *@
-
-                            <!-- Temp -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessStenteringBb.Temp"
-                                       class="form-label">
-                                    Temp
-                                </label>
-
-                                <input asp-for="TblFinishProcessStenteringBb.Temp"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessStenteringBb.Temp"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- Speed -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessStenteringBb.Speed"
-                                       class="form-label">
-                                    Speed
-                                </label>
-
-                                <input asp-for="TblFinishProcessStenteringBb.Speed"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessStenteringBb.Speed"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- OFeed-->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessStenteringBb.OFeed"
-                                       class="form-label">
-                                    O-Feed
-                                </label>
-
-                                <input asp-for="TblFinishProcessStenteringBb.OFeed"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessStenteringBb.OFeed"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- StretchPer -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessStenteringBb.StretchPer"
-                                       class="form-label">
-                                    Stretch Percent
-                                </label>
-
-                                <input asp-for="TblFinishProcessStenteringBb.StretchPer"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessStenteringBb.StretchPer"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- PPressure1 -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessStenteringBb.PPressure1"
-                                       class="form-label">
-                                    P.Pressure-1
-                                </label>
-
-                                <input asp-for="TblFinishProcessStenteringBb.PPressure1"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessStenteringBb.PPressure1"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- PPressure2 -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessStenteringBb.PPressure2"
-                                       class="form-label">
-                                    P.Pressure-2
-                                </label>
-
-                                <input asp-for="TblFinishProcessStenteringBb.PPressure2"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessStenteringBb.PPressure2"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- Chemical -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessStenteringBb.Chemical"
-                                       class="form-label">
-                                    Chemical
-                                </label>
-
-                                <input asp-for="TblFinishProcessStenteringBb.Chemical"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessStenteringBb.Chemical"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- BlowerSpeed -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessStenteringBb.BlowerSpeed"
-                                       class="form-label">
-                                    Blower Speed
-                                </label>
-
-                                <input asp-for="TblFinishProcessStenteringBb.BlowerSpeed"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessStenteringBb.BlowerSpeed"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- Noc -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessStenteringBb.Noc"
-                                       class="form-label">
-                                    No. of Chamber
-                                </label>
-
-                                <input asp-for="TblFinishProcessStenteringBb.Noc"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessStenteringBb.Noc"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- ADia -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessStenteringBb.ADia"
-                                       class="form-label">
-                                    A-Dia
-                                </label>
-
-                                <input asp-for="TblFinishProcessStenteringBb.ADia"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessStenteringBb.ADia"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- AGsm -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessStenteringBb.AGsm"
-                                       class="form-label">
-                                    A-Gsm
-                                </label>
-
-                                <input asp-for="TblFinishProcessStenteringBb.AGsm"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessStenteringBb.AGsm"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- AShrinkage -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessStenteringBb.AShrinkage"
-                                       class="form-label">
-                                    A-Shrinkage
-                                </label>
-
-                                <input asp-for="TblFinishProcessStenteringBb.AShrinkage"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessStenteringBb.AShrinkage"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- COMMENTS -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessHeatset.Comments"
-                                       class="form-label">
-                                    Comments
-                                </label>
-
-                                <input asp-for="TblFinishProcessHeatset.Comments"
-                                       class="form-control"
-                                       type="text"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessHeatset.Comments"
-                                      class="text-danger"></span>
-                            </div>
-
-                        </div>
-
-                    </div>
-
                 </div>
-                <!-- STEP 3 END -->
-                <!-- STEP 4 START -->
-                <div class="step-content" id="step-4">
+                <!-- STEP 2 END -->
+                <!-- STEP START -->
+                @* <div class="step-content" id="step-4">
 
                     <div class="ftd-section mt-0">
 
@@ -1903,20 +2471,6 @@
                                     </span>
                                 </div>
                             </div>
-                            <!-- FTD ID -->
-                            @* <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblSingeing.Ftdid"
-                                       class="form-label">
-                                    FTD ID
-                                </label>
-
-                                <input asp-for="TblSingeing.Ftdid"
-                                       class="form-control"
-                                       type="number" readonly />
-
-                                <span asp-validation-for="TblSingeing.Ftdid"
-                                      class="text-danger"></span>
-                            </div> *@
 
                             <!-- BurnerTemp -->
 
@@ -2019,21 +2573,6 @@
 
                         <div class="row g-3">
 
-                            <!-- FTD ID -->
-                            @* <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblSqueezing.Ftdid"
-                                       class="form-label">
-                                    FTD ID
-                                </label>
-
-                                <input asp-for="TblSqueezing.Ftdid"
-                                       class="form-control"
-                                       type="number" readonly />
-
-                                <span asp-validation-for="TblSqueezing.Ftdid"
-                                      class="text-danger"></span>
-                            </div> *@
-
                             <!-- Pp -->
 
                             <div class="col-lg-2 col-md-3 col-sm-6">
@@ -2071,11 +2610,10 @@
 
                     </div>
 
-                </div>
-                <!-- STEP 4 END -->
-                <!-- STEP 5 START -->
-                <div class="step-content" id="step-5">
-
+                </div> *@
+                <!-- STEP  END -->
+                <!-- STEP  START -->
+                @* <div class="step-content" id="step-5">
                     <div class="ftd-section mt-0">
 
                         <div class="ftd-section-header">
@@ -2097,12 +2635,6 @@
                                     </span>
                                 </div>
                             </div>
-                            <!-- FTD ID -->
-                            @* <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblBrush.Ftdid" class="form-label">FTD ID</label>
-                                <input asp-for="TblBrush.Ftdid"class="form-control"type="number" readonly />
-                                <span asp-validation-for="TblBrush.Ftdid" class="text-danger"></span>
-                            </div> *@
 
                             <!-- UPile -->
                             <div class="col-lg-2 col-md-3 col-sm-6">
@@ -2173,11 +2705,10 @@
                         </div>
 
                     </div>
-
-                </div>
-                <!-- STEP 5 END -->
-                <!-- STEP 6 START -->
-                <div class="step-content" id="step-6">
+                </div> *@
+                <!-- STEP  END -->
+                <!-- STEP 3 START -->
+                <div class="step-content" id="step-3">
                     <div class="ftd-section mt-0">
                         <div class="ftd-section-header">
                             <h6 class="ftd-section-title">
@@ -2388,9 +2919,9 @@
                     </div>
 
                 </div>
-                <!-- STEP 6 END -->
-                <!-- STEP 7 START -->
-                <div class="step-content" id="step-7">
+                <!-- STEP 3  END -->
+                <!-- STEP 4 START -->
+                <div class="step-content" id="step-4">
                     <div class="ftd-section mt-0">
                         <div class="ftd-section-header">
                             <h6 class="ftd-section-title">
@@ -2401,8 +2932,17 @@
                         <hr class="ftd-section-line" />
                         <div class="row g-3">
 
+                            <!-- Show Only FTD No.--!>
+                            <div class="col-md-3">
+                                <label class="form-label">FTD No.</label>
+                                <div class="form-control bg-light">
+                                    <span class="text-dark">
+                                        @Model.TblFtdMaster.FtdNo
+                                    </span>
+                                </div>
+                            </div>
                             <!-- GROUP -->
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="form-label">
                                     Test Group <span class="text-danger">*</span>
                                 </label>
@@ -2417,7 +2957,7 @@
                             </div>
 
                             <!-- TEST NAME -->
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="form-label">
                                     Test Name <span class="text-danger">*</span>
                                 </label>
@@ -2432,7 +2972,7 @@
                             </div>
 
                             <!-- METHOD -->
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="form-label">
                                     Method Name <span class="text-danger">*</span>
                                 </label>
@@ -2503,7 +3043,7 @@
                                          style="background:#f1f5f9; border:1px solid #dbe3ec;">
 
                                         <label class="form-label fw-bold mb-1">
-                                            Overall Lab Test Status
+                                            Overall Lab Test Report
                                             <span class="text-danger">*</span>
                                         </label>
 
@@ -2964,6 +3504,7 @@
             $("#TblFtdMaster_SysReq").val("");
             $("#TblFtdMaster_Buyer").val("");
             $("#TblFtdMaster_StyleRef").val("");
+            $("#TblFtdMaster_Fso").val("");
             $("#TblFtdMaster_InternalRef").val("");
         }
 
@@ -3187,7 +3728,14 @@
                                         class="form-control knit-programNo readonly-field"
                                         readonly />
                                 </td>
-
+                                <td>
+                                    <input
+                                        type="text"
+                                        name="TblFtdKnit[${index}].Construction"
+                                        value="${escapeHtml(item.construction)}"
+                                        class="form-control knit-construction readonly-field"
+                                        readonly />
+                                </td>
                                 <td>
                                     <input
                                         type="text"
@@ -4167,6 +4715,10 @@
                     $("#TblFtdMaster_StyleRef")
                         .val(
                             data.styleRefNo || ""
+                        );
+                        $("#TblFtdMaster_Fso")
+                        .val(
+                            data.fso || ""
                         );
 
 

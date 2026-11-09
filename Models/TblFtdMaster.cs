@@ -22,6 +22,7 @@ public partial class TblFtdMaster
     public string? Buyer { get; set; }
 
     public string? StyleRef { get; set; }
+    public string? Fso { get; set; }
 
     public DateTime? CreatedAt { get; set; }
 

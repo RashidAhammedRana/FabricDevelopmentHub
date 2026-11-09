@@ -1021,7 +1021,8 @@ namespace FabricDevelopmentHub.Controllers
                         sysReq = master.SysReq,
                         buyerName = master.BuyerName,
                         bookingNo = master.BookingNo,
-                        batchNo = master.BatchNo
+                        batchNo = master.BatchNo,
+                        fso = master.Fso,
                     }
                 });
             }
@@ -1195,6 +1196,7 @@ namespace FabricDevelopmentHub.Controllers
                     data = result.Select(x => new
                     {
                         programNo = x.PROGRAM_NO,
+                        construction = x.CONSTRUCTION,
                         source = x.KNITTING_SOURCE,
                         knitCom = x.COMPANY_NAME,
                         mcNo = x.MACHINE_NO,
@@ -1453,6 +1455,7 @@ namespace FabricDevelopmentHub.Controllers
             public string? BookingNo { get; set; }
 
             public string? BatchNo { get; set; }
+            public string? Fso { get; set; }
         }
 
 
@@ -1468,7 +1471,7 @@ namespace FabricDevelopmentHub.Controllers
 
             public string? Construction { get; set; }
 
-            public decimal? ColorTypeId { get; set; }
+            public string? ColorTypeId { get; set; }
 
             public string? ColorName { get; set; }
 
@@ -1476,7 +1479,7 @@ namespace FabricDevelopmentHub.Controllers
 
             public string? Dia { get; set; }
 
-            public decimal? DiaWidth { get; set; }
+            public string? DiaWidth { get; set; }
 
             public decimal? DtlsId { get; set; }
         }
@@ -1493,6 +1496,7 @@ namespace FabricDevelopmentHub.Controllers
         {
             public string? PROGRAM_NO { get; set; }
 
+            public string? CONSTRUCTION { get; set; }
             public string? KNITTING_SOURCE { get; set; }
 
             public string? COMPANY_NAME { get; set; }

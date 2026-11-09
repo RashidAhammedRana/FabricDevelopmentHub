@@ -247,6 +247,9 @@ namespace FabricDevelopmentHub.Data
                 entity.Property(e => e.Source)
                     .HasMaxLength(50)
                     .HasColumnName("SOURCE");
+                entity.Property(e => e.Construction)
+                    .HasMaxLength(250)
+                    .HasColumnName("CONSTRUCTION");
                 entity.Property(e => e.StripeMeasure).HasMaxLength(50).HasColumnName("STRIPE_MEASURE");
                 entity.Property(e => e.ProgramNo).HasMaxLength(50).HasColumnName("PROGRAM_NO");
                 entity.Property(e => e.ColorName).HasMaxLength(50).HasColumnName("COLOR_NAME");
@@ -283,6 +286,7 @@ namespace FabricDevelopmentHub.Data
                 entity.Property(e => e.Buyer)
                     .HasMaxLength(50)
                     .HasColumnName("BUYER");
+                entity.Property(e => e.Fso).HasMaxLength(50).HasColumnName("FSO");
                 entity.Property(e => e.Company)
                     .HasMaxLength(50)
                     .HasColumnName("COMPANY");

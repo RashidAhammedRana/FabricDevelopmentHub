@@ -14,6 +14,7 @@ public partial class TblFtdKnit
     public string? KnitCom { get; set; }
 
     public string? Source { get; set; }
+    public string? Construction { get; set; }
 
     public string? McNo { get; set; }
 
