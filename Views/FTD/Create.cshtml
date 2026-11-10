@@ -207,6 +207,27 @@
                 gap: 8px;
             }
     }
+
+    #knitTable {
+        width: 100%;
+        min-width: 1400px;
+        table-layout: fixed;
+    }
+
+        #knitTable th,
+        #knitTable td {
+            vertical-align: middle;
+        }
+
+        #knitTable .knit-photo {
+            width: 100%;
+            min-width: 0;
+            font-size: 12px;
+        }
+
+        #knitTable td:last-child {
+            padding: 8px;
+        }
 </style>
 
 <div class="ftd-page">
@@ -219,9 +240,7 @@
 
         <div class="ftd-body">
 
-            <form asp-action="Create"
-                  method="post"
-                  id="ftdForm">
+            <form asp-action="Create" method="post" id="ftdForm" enctype="multipart/form-data">
 
                 <div asp-validation-summary="ModelOnly"
                      class="text-danger mb-3">
@@ -654,6 +673,7 @@
                     KNITTING DETAILS
                     ================================================= -->
 
+
                     <div class="ftd-section">
 
                         <div class="ftd-section-header">
@@ -669,9 +689,27 @@
                             <table class="table table-bordered ftd-table"
                                    id="knitTable">
 
+                                <colgroup>
+                                    <col style="width: 45px;" />
+                                    <col style="width: 110px;" />
+                                    <col style="width: 140px;" />
+                                    <col style="width: 90px;" />
+                                    <col style="width: 120px;" />
+                                    <col style="width: 80px;" />
+                                    <col style="width: 75px;" />
+                                    <col style="width: 75px;" />
+                                    <col style="width: 75px;" />
+                                    <col style="width: 75px;" />
+                                    <col style="width: 100px;" />
+                                    <col style="width: 100px;" />
+                                    <col style="width: 75px;" />
+                                    <col style="width: 75px;" />
+                                    <col style="width: 160px;" />
+                                </colgroup>
+
                                 <thead>
                                     <tr>
-                                        <th style="width:50px;">#</th>
+                                        <th>#</th>
                                         <th>Program No.</th>
                                         <th>Construction</th>
                                         <th>Source</th>
@@ -685,6 +723,7 @@
                                         <th>Measurement</th>
                                         <th>UOM</th>
                                         <th>No. of Feeder</th>
+                                        <th>Photo</th>
                                     </tr>
                                 </thead>
 
@@ -708,11 +747,13 @@
                                                            class="form-control readonly-field"
                                                            readonly />
                                                 </td>
+
                                                 <td>
                                                     <input asp-for="TblFtdKnit[i].Construction"
                                                            class="form-control readonly-field"
                                                            readonly />
                                                 </td>
+
                                                 <td>
                                                     <input asp-for="TblFtdKnit[i].Source"
                                                            class="form-control readonly-field"
@@ -780,13 +821,21 @@
                                                            readonly />
                                                 </td>
 
+                                                <td>
+                                                    <input type="file"
+                                                           name="FtdKnitPhotos[@i]"
+                                                           class="form-control knit-photo"
+                                                           accept="image/*" />
+                                                    <small class="text-success selected-file-name"></small>
+                                                </td>
+
                                             </tr>
                                         }
                                     }
                                     else
                                     {
                                         <tr id="knitEmptyRow">
-                                            <td colspan="13" class="ftd-empty">
+                                            <td colspan="15" class="ftd-empty">
                                                 No Knit details available.
                                             </td>
                                         </tr>
@@ -799,6 +848,7 @@
                         </div>
 
                     </div>
+
 
                     <!--Heatset -->
                     <div class="ftd-section">
@@ -3203,6 +3253,7 @@
         });
 
     });
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -3831,6 +3882,13 @@
                                         value="${escapeHtml(item.feederNo)}"
                                         class="form-control knit-feederNo readonly-field"
                                         readonly />
+                                </td>
+                                <td>
+                                    <input
+                                        type="file"
+                                        name="FtdKnitPhotos[${index}]"
+                                        class="form-control knit-photo"
+                                        accept="image/*" />
                                 </td>
 
                             </tr>

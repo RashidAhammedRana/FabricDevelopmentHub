@@ -31,6 +31,7 @@ namespace FabricDevelopmentHub.ViewModels
 
         //public TblLabDetails TblLabDetails { get; set; } = new();
         public DateTime Date { get; set; } = DateTime.Today;
+        public List<IFormFile?> FtdKnitPhotos { get; set; } = new();
 
 
         public List<TblFtdFabric> TblFtdFabric { get; set; } = new();
@@ -40,6 +41,8 @@ namespace FabricDevelopmentHub.ViewModels
         public List<TblFtdDyeingBasic> TblFtdDyeingBasic { get; set; } = new();
         public List<TblFtdDyeingRecipe> TblFtdDyeingRecipe { get; set; } = new();
         public List<TblLabDetails> TblLabDetails { get; set; } = new();
+
+
 
     }
 }

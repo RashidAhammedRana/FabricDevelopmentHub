@@ -35,13 +35,9 @@ public partial class TblFtdKnit
     public string? Uom { get; set; }
     public string? FeederNo { get; set; }
 
-    public byte[]? YarnPhoto { get; set; }
+    public byte[]? Photo { get; set; }
 
-    public string? YarnPhotoContentType { get; set; }
-
-    public byte[]? GsPhoto { get; set; }
-
-    public string? GsPhotoContentType { get; set; }
+    public string? PhotoContentType { get; set; }
 
     public DateTime? CreatedAt { get; set; }
 

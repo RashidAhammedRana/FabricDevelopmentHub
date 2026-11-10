@@ -214,42 +214,20 @@ namespace FabricDevelopmentHub.Data
             modelBuilder.Entity<TblFtdKnit>(entity =>
             {
                 entity.HasKey(e => e.Trid);
-
                 entity.ToTable("TBL_FTD_KNIT");
-
                 entity.Property(e => e.Trid).ValueGeneratedOnAdd().HasColumnName("TRID");
-                entity.Property(e => e.CreatedAt)
-                    .HasColumnType("datetime")
-                    .HasColumnName("CREATED_AT");
-                entity.Property(e => e.CreatedBy)
-                    .HasMaxLength(50)
-                    .HasColumnName("CREATED_BY");
+                entity.Property(e => e.CreatedAt).HasColumnType("datetime").HasColumnName("CREATED_AT");
+                entity.Property(e => e.CreatedBy).HasMaxLength(50).HasColumnName("CREATED_BY");
                 entity.Property(e => e.Ftdid).HasColumnName("FTDID");
-                entity.Property(e => e.GsPhoto).HasColumnName("GS_PHOTO");
-                entity.Property(e => e.GsPhotoContentType)
-                    .HasMaxLength(50)
-                    .HasColumnName("GS_PHOTO_CONTENT_TYPE");
-                entity.Property(e => e.KnitCom)
-                    .HasMaxLength(50)
-                    .HasColumnName("KNIT_COM");
-                entity.Property(e => e.McBrand)
-                    .HasMaxLength(50)
-                    .HasColumnName("MC_BRAND");
+                entity.Property(e => e.KnitCom).HasMaxLength(50).HasColumnName("KNIT_COM");
+                entity.Property(e => e.McBrand).HasMaxLength(50).HasColumnName("MC_BRAND");
                 entity.Property(e => e.McDia).HasMaxLength(50).HasColumnName("MC_DIA");
                 entity.Property(e => e.McGauge).HasMaxLength(50).HasColumnName("MC_GAUGE");
-                entity.Property(e => e.McNo)
-                    .HasMaxLength(50)
-                    .HasColumnName("MC_NO");
+                entity.Property(e => e.McNo).HasMaxLength(50).HasColumnName("MC_NO");
                 entity.Property(e => e.Rpm).HasColumnName("RPM");
-                entity.Property(e => e.Sl)
-                    .HasMaxLength(50)
-                    .HasColumnName("SL");
-                entity.Property(e => e.Source)
-                    .HasMaxLength(50)
-                    .HasColumnName("SOURCE");
-                entity.Property(e => e.Construction)
-                    .HasMaxLength(250)
-                    .HasColumnName("CONSTRUCTION");
+                entity.Property(e => e.Sl).HasMaxLength(50).HasColumnName("SL");
+                entity.Property(e => e.Source).HasMaxLength(50).HasColumnName("SOURCE");
+                entity.Property(e => e.Construction).HasMaxLength(250).HasColumnName("CONSTRUCTION");
                 entity.Property(e => e.StripeMeasure).HasMaxLength(50).HasColumnName("STRIPE_MEASURE");
                 entity.Property(e => e.ProgramNo).HasMaxLength(50).HasColumnName("PROGRAM_NO");
                 entity.Property(e => e.ColorName).HasMaxLength(50).HasColumnName("COLOR_NAME");
@@ -257,20 +235,11 @@ namespace FabricDevelopmentHub.Data
                 entity.Property(e => e.Uom).HasMaxLength(50).HasColumnName("UOM");
                 entity.Property(e => e.FeederNo).HasMaxLength(50).HasColumnName("FEEDER_NO");
                 entity.Property(e => e.Trdate).HasColumnName("TRDATE");
-                entity.Property(e => e.UpdatedAt)
-                    .HasColumnType("datetime")
-                    .HasColumnName("UPDATED_AT");
-                entity.Property(e => e.UpdatedBy)
-                    .HasMaxLength(50)
-                    .HasColumnName("UPDATED_BY");
-                entity.Property(e => e.YarnPhoto).HasColumnName("YARN_PHOTO");
-                entity.Property(e => e.YarnPhotoContentType)
-                    .HasMaxLength(50)
-                    .HasColumnName("YARN_PHOTO_CONTENT_TYPE");
-
-                entity.HasOne(d => d.Ftd).WithMany(p => p.TblFtdKnits)
-                    .HasForeignKey(d => d.Ftdid)
-                    .HasConstraintName("FK_TBL_FTD_KNIT_TBL_FTD_MASTER");
+                entity.Property(e => e.UpdatedAt).HasColumnType("datetime").HasColumnName("UPDATED_AT");
+                entity.Property(e => e.UpdatedBy).HasMaxLength(50).HasColumnName("UPDATED_BY");
+                entity.Property(e => e.Photo).HasColumnName("PHOTO");
+                entity.Property(e => e.PhotoContentType).HasMaxLength(50).HasColumnName("PHOTO_CONTENT_TYPE");
+                entity.HasOne(d => d.Ftd).WithMany(p => p.TblFtdKnits).HasForeignKey(d => d.Ftdid).HasConstraintName("FK_TBL_FTD_KNIT_TBL_FTD_MASTER");
             });
 
             modelBuilder.Entity<TblFtdMaster>(entity =>

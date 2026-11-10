@@ -253,9 +253,39 @@ namespace FabricDevelopmentHub.Controllers
 
                 if (model.TblFtdKnit != null)
                 {
-                    foreach (var item in model.TblFtdKnit)
+                    for (int i = 0; i < model.TblFtdKnit.Count; i++)
                     {
+                        var item = model.TblFtdKnit[i];
+
                         item.Ftdid = ftdId;
+
+                        // ---------------------------------------------
+                        // GET CORRESPONDING PHOTO
+                        // ---------------------------------------------
+
+                        var photo = Request.Form.Files.GetFile(
+                            $"FtdKnitPhotos[{i}]"
+                        );
+
+                        // ---------------------------------------------
+                        // SAVE PHOTO AS BYTE[]
+                        // ---------------------------------------------
+
+                        if (photo != null && photo.Length > 0)
+                        {
+                            using var memoryStream = new MemoryStream();
+
+                            await photo.CopyToAsync(memoryStream);
+
+                            item.Photo = memoryStream.ToArray();
+
+                            item.PhotoContentType = photo.ContentType;
+                        }
+
+                        // ---------------------------------------------
+                        // ADD KNIT RECORD
+                        // ---------------------------------------------
+
                         _context.TblFtdKnits.Add(item);
                     }
                 }
