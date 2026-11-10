@@ -15,7 +15,7 @@ public partial class TblFinishProcessStenteringBb
 
     public double? OFeed { get; set; }
 
-    public double? StretchPer { get; set; }
+    public double? SettingDia { get; set; }
 
     public double? PPressure1 { get; set; }
 
@@ -32,6 +32,7 @@ public partial class TblFinishProcessStenteringBb
     public double? AGsm { get; set; }
 
     public double? AShrinkage { get; set; }
+    public double? AnglePercent { get; set; }
 
     public string? Comments { get; set; }
 }

@@ -31,7 +31,9 @@ public partial class TblFinishProcessHeatset
 
     public double? Pp { get; set; }
 
-    public double? Stretching { get; set; }
+    public double? SettingDia { get; set; }
+    public string? ChemicalName { get; set; }
+    public double? Ratio { get; set; }
 
     public double? AHeatsetGsm { get; set; }
 

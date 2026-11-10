@@ -19,6 +19,7 @@ public partial class TblCompacting
 
     public double? Steam { get; set; }
 
+    public double? SettingDia { get; set; }
     public double? ADia { get; set; }
 
     public double? AGsm { get; set; }

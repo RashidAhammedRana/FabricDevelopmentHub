@@ -12,4 +12,10 @@ public partial class TblSqueezing
     public double? Pp { get; set; }
 
     public string? DiaType { get; set; }
+    public string? Speed { get; set; }
+    public string? Tension { get; set; }
+    public string? WetDia { get; set; }
+    public string? WetGsm { get; set; }
+    public string? ChemicalName { get; set; }
+    public double? Ratio { get; set; }
 }

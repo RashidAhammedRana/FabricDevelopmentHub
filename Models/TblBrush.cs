@@ -30,4 +30,6 @@ public partial class TblBrush
     public double? ADia { get; set; }
 
     public double? AGsm { get; set; }
+    public string? ShearingBladePosition { get; set; }
+    public string? ShearingSpeed { get; set; }
 }

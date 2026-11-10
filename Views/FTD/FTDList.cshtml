@@ -46,7 +46,7 @@
             @if (canCreate)
             {
                 <a asp-action="Create"
-                   class="btn btn-primary btn-sm"
+                   class="btn btn-primary"
                    id="createNewBtn"
                    onclick="showCreateLoader(this)">
 
@@ -191,7 +191,7 @@
                                             {
                                                 <a asp-action="Details"
                                                    asp-route-id="@item.Ftdid"
-                                                   class="btn btn-sm ">
+                                                   class="btn ">
                                                     <i class="bi bi-eye text-info"></i>
                                                 </a>
                                             }
@@ -199,7 +199,7 @@
                                             {
                                                 <a asp-action="Edit"
                                                    asp-route-id="@item.Ftdid"
-                                                   class="btn btn-sm ">
+                                                   class="btn">
                                                     <i class="bi bi-pencil-square text-success"></i>
                                                 </a>
                                             }
@@ -214,7 +214,7 @@
 
                                                     @Html.AntiForgeryToken()
 
-                                                    <button type="submit" class="btn btn-sm">
+                                                    <button type="submit" class="btn">
                                                         <i class="bi bi-trash text-danger"></i>
                                                     </button>
 

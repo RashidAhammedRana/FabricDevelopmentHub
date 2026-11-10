@@ -9,7 +9,7 @@ public partial class TblSingeing
 
     public int? Ftdid { get; set; }
 
-    public double? BurnerTemp { get; set; }
+    public string? BurnerPosition { get; set; }
 
     public double? FlameHeight { get; set; }
 

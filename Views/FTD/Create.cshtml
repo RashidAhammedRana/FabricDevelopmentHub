@@ -1184,20 +1184,20 @@
                                       class="text-danger"></span>
                             </div>
 
-                            <!-- STRETCHING -->
+                            <!-- SettingDia -->
 
                             <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessHeatset.Stretching"
+                                <label asp-for="TblFinishProcessHeatset.SettingDia"
                                        class="form-label">
-                                    Stretching
+                                    Setting Dia
                                 </label>
 
-                                <input asp-for="TblFinishProcessHeatset.Stretching"
+                                <input asp-for="TblFinishProcessHeatset.SettingDia"
                                        class="form-control"
                                        type="number"
                                        step="any" />
 
-                                <span asp-validation-for="TblFinishProcessHeatset.Stretching"
+                                <span asp-validation-for="TblFinishProcessHeatset.SettingDia"
                                       class="text-danger"></span>
                             </div>
 
@@ -1234,10 +1234,41 @@
                                 <span asp-validation-for="TblFinishProcessHeatset.AHeatsetDia"
                                       class="text-danger"></span>
                             </div>
+                            <!-- ChemicalName -->
+
+                            <div class="col-lg-2 col-md-4 col-sm-6">
+                                <label asp-for="TblFinishProcessHeatset.ChemicalName"
+                                       class="form-label">
+                                    Chemical Name
+                                </label>
+
+                                <input asp-for="TblFinishProcessHeatset.ChemicalName"
+                                       class="form-control"
+                                       type="text"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessHeatset.ChemicalName"
+                                      class="text-danger"></span>
+                            </div>
+                            <!-- Ratio -->
+                            <div class="col-lg-2 col-md-4 col-sm-6">
+                                <label asp-for="TblFinishProcessHeatset.Ratio"
+                                       class="form-label">
+                                    Ratio
+                                </label>
+
+                                <input asp-for="TblFinishProcessHeatset.Ratio"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessHeatset.Ratio"
+                                      class="text-danger"></span>
+                            </div>
 
                             <!-- COMMENTS -->
 
-                            <div class="col-lg-2 col-md-3 col-sm-6">
+                            <div class="col-lg-4 col-md-4 col-sm-6">
                                 <label asp-for="TblFinishProcessHeatset.Comments"
                                        class="form-label">
                                     Comments
@@ -1291,20 +1322,20 @@
                                       class="text-danger"></span>
                             </div> *@
 
-                            <!-- BurnerTemp -->
+                            <!-- BurnerPosition -->
 
                             <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblSingeing.BurnerTemp"
+                                <label asp-for="TblSingeing.BurnerPosition"
                                        class="form-label">
-                                    Burner Temp.
+                                    Burner Position
                                 </label>
 
-                                <input asp-for="TblSingeing.BurnerTemp"
+                                <input asp-for="TblSingeing.BurnerPosition"
                                        class="form-control"
-                                       type="number"
+                                       type="text"
                                        step="any" />
 
-                                <span asp-validation-for="TblSingeing.BurnerTemp"
+                                <span asp-validation-for="TblSingeing.BurnerPosition"
                                       class="text-danger"></span>
                             </div>
 
@@ -1654,6 +1685,18 @@
                             </table>
 
                         </div>
+                        <div class="row mt-3 mb-3">
+                            <div class="col-12">
+                                <label class="form-label fw-bold">
+                                    Special Instruction:
+                                </label>
+
+                                <textarea asp-for="TblFtdMaster.DrdSpecialComments"
+                                          class="form-control"
+                                          rows="3">
+                                </textarea>
+                            </div>
+                        </div>
                         <!-- =========================================
                              DRD PHOTO UPLOAD
                         ========================================= -->
@@ -1666,7 +1709,7 @@
                                         <i class="fas fa-camera me-2"></i>
                                         Photo Attachment
                                     </h6>
-                                    <small>Upload Dyeing Recipe Development Photo</small>
+                                    <small>Upload Dyeing Unload Shade Photo</small>
                                 </div>
 
                                 <span class="drd-photo-badge">
@@ -1711,7 +1754,7 @@
                     <div class="ftd-section mt-5">
                         <div class="ftd-section-header">
                             <h6 class="ftd-section-title">
-                                Squeezing
+                                Squeezing/Slitting
                             </h6>
                         </div>
                         <hr class="ftd-section-line" />
@@ -1747,6 +1790,47 @@
                                 <span asp-validation-for="TblSqueezing.DiaType"
                                       class="text-danger"></span>
                             </div>
+
+                            <!-- Speed -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblSqueezing.Speed" class="form-label"> Speed</label>
+                                <input asp-for="TblSqueezing.Speed" class="form-control" type="text" step="any" />
+                                <span asp-validation-for="TblSqueezing.Speed" class="text-danger"></span>
+                            </div>
+
+                            <!-- Tension -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblSqueezing.Tension" class="form-label"> Tension</label>
+                                <input asp-for="TblSqueezing.Tension" class="form-control" type="text" step="any" />
+                                <span asp-validation-for="TblSqueezing.Tension" class="text-danger"></span>
+                            </div>
+                            <!-- WetDia -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblSqueezing.WetDia" class="form-label"> Wet Dia</label>
+                                <input asp-for="TblSqueezing.WetDia" class="form-control" type="text" step="any" />
+                                <span asp-validation-for="TblSqueezing.WetDia" class="text-danger"></span>
+                            </div>
+                            <!-- WetGsm -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblSqueezing.WetGsm" class="form-label"> Wet GSM</label>
+                                <input asp-for="TblSqueezing.WetGsm" class="form-control" type="text" step="any" />
+                                <span asp-validation-for="TblSqueezing.WetGsm" class="text-danger"></span>
+                            </div>
+
+                            <!-- ChemicalName -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblSqueezing.ChemicalName" class="form-label"> Chemical Name</label>
+                                <input asp-for="TblSqueezing.ChemicalName" class="form-control" type="text" step="any" />
+                                <span asp-validation-for="TblSqueezing.ChemicalName" class="text-danger"></span>
+                            </div>
+
+                            <!-- Ratio -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblSqueezing.Ratio" class="form-label"> Ratio</label>
+                                <input asp-for="TblSqueezing.Ratio" class="form-control" type="text" step="any" />
+                                <span asp-validation-for="TblSqueezing.Ratio" class="text-danger"></span>
+                            </div>
+
                         </div>
 
                     </div>
@@ -2130,20 +2214,20 @@
                                       class="text-danger"></span>
                             </div>
 
-                            <!-- StretchPer -->
+                            <!-- SettingDia -->
 
                             <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessStenteringBb.StretchPer"
+                                <label asp-for="TblFinishProcessStenteringBb.SettingDia"
                                        class="form-label">
-                                    Stretch Percent
+                                    Setting Dia
                                 </label>
 
-                                <input asp-for="TblFinishProcessStenteringBb.StretchPer"
+                                <input asp-for="TblFinishProcessStenteringBb.SettingDia"
                                        class="form-control"
                                        type="number"
                                        step="any" />
 
-                                <span asp-validation-for="TblFinishProcessStenteringBb.StretchPer"
+                                <span asp-validation-for="TblFinishProcessStenteringBb.SettingDia"
                                       class="text-danger"></span>
                             </div>
 
@@ -2283,9 +2367,26 @@
                                       class="text-danger"></span>
                             </div>
 
-                            <!-- COMMENTS -->
+                            <!-- AnglePercent -->
 
                             <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblFinishProcessStenteringBb.AnglePercent"
+                                       class="form-label">
+                                    Angle Percent
+                                </label>
+
+                                <input asp-for="TblFinishProcessStenteringBb.AnglePercent"
+                                       class="form-control"
+                                       type="number"
+                                       step="any" />
+
+                                <span asp-validation-for="TblFinishProcessStenteringBb.AnglePercent"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <!-- COMMENTS -->
+
+                            <div class="col-lg-4 col-md-4 col-sm-6">
                                 <label asp-for="TblFinishProcessHeatset.Comments"
                                        class="form-label">
                                     Comments
@@ -2398,6 +2499,18 @@
                                 <input asp-for="TblBrush.AGsm" class="form-control" type="number" step="any" />
                                 <span asp-validation-for="TblBrush.AGsm" class="text-danger"></span>
                             </div>
+                            <!-- ShearingBladePosition -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblBrush.ShearingBladePosition" class="form-label">Shearing-Blade Position</label>
+                                <input asp-for="TblBrush.ShearingBladePosition" class="form-control" type="text" step="any" />
+                                <span asp-validation-for="TblBrush.ShearingBladePosition" class="text-danger"></span>
+                            </div>
+                            <!-- ShearingSpeed -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblBrush.ShearingSpeed" class="form-label">Shearing-Speed</label>
+                                <input asp-for="TblBrush.ShearingSpeed" class="form-control" type="text" step="any" />
+                                <span asp-validation-for="TblBrush.ShearingSpeed" class="text-danger"></span>
+                            </div>
                         </div>
 
                     </div>
@@ -2489,20 +2602,20 @@
                                       class="text-danger"></span>
                             </div>
 
-                            <!-- StretchPer -->
+                            <!-- SettingDia -->
 
                             <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessStenteringAb.StretchPer"
+                                <label asp-for="TblFinishProcessStenteringAb.SettingDia"
                                        class="form-label">
-                                    Stretch Percent
+                                    Setting Dia
                                 </label>
 
-                                <input asp-for="TblFinishProcessStenteringAb.StretchPer"
+                                <input asp-for="TblFinishProcessStenteringAb.SettingDia"
                                        class="form-control"
                                        type="number"
                                        step="any" />
 
-                                <span asp-validation-for="TblFinishProcessStenteringAb.StretchPer"
+                                <span asp-validation-for="TblFinishProcessStenteringAb.SettingDia"
                                       class="text-danger"></span>
                             </div>
 
@@ -2644,7 +2757,7 @@
 
                             <!-- COMMENTS -->
 
-                            <div class="col-lg-2 col-md-3 col-sm-6">
+                            <div class="col-lg-4 col-md-4 col-sm-6">
                                 <label asp-for="TblFinishProcessHeatset.Comments"
                                        class="form-label">
                                     Comments
@@ -2987,6 +3100,13 @@
                                 <span asp-validation-for="TblCompacting.Steam" class="text-danger"></span>
                             </div>
 
+                            <!-- SettingDia -->
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <label asp-for="TblCompacting.SettingDia" class="form-label"> Setting Dia</label>
+                                <input asp-for="TblCompacting.SettingDia" class="form-control" type="number" step="any" />
+                                <span asp-validation-for="TblCompacting.SettingDia" class="text-danger"></span>
+                            </div>
+
                             <!-- ADia -->
                             <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblCompacting.ADia" class="form-label"> A.Dia</label>
@@ -3030,7 +3150,7 @@
                             </div>
 
                             <!-- Comments -->
-                            <div class="col-lg-2 col-md-3 col-sm-6">
+                            <div class="col-lg-4 col-md-4 col-sm-6">
                                 <label asp-for="TblFinishProcessStenteringAb.Comments" class="form-label"> Comments </label>
                                 <input asp-for="TblFinishProcessStenteringAb.Comments" class="form-control" type="text" step="any" />
                                 <span asp-validation-for="TblFinishProcessStenteringAb.Comments" class="text-danger"></span>

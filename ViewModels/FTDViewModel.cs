@@ -4,9 +4,9 @@ namespace FabricDevelopmentHub.ViewModels
 {
     public class FTDViewModel
     {
-        public int Ltgid { get; set; }
-        public int Ltnid { get; set; }
-        public int Ltmid { get; set; }
+        public int? Ltgid { get; set; }
+        public int? Ltnid { get; set; }
+        public int? Ltmid { get; set; }
 
         public string? Remarks { get; set; }
 
