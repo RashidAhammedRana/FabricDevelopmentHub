@@ -12,6 +12,7 @@ public partial class TblFtdMaster
     public string? FtdNo { get; set; }
 
     public string? Company { get; set; }
+    public string? WorkingCompany { get; set; }
 
     public string? Control { get; set; }
 
@@ -23,7 +24,10 @@ public partial class TblFtdMaster
 
     public string? StyleRef { get; set; }
     public string? Fso { get; set; }
-
+    public string? Result { get; set; }
+    public string? Reason { get; set; }
+    public byte[]? DrdPhoto { get; set; }
+    public string? DrdPhotoContentType { get; set; }
     public DateTime? CreatedAt { get; set; }
 
     public string? CreatedBy { get; set; }

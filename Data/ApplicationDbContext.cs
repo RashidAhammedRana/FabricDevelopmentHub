@@ -256,12 +256,13 @@ namespace FabricDevelopmentHub.Data
                     .HasMaxLength(50)
                     .HasColumnName("BUYER");
                 entity.Property(e => e.Fso).HasMaxLength(50).HasColumnName("FSO");
-                entity.Property(e => e.Company)
-                    .HasMaxLength(50)
-                    .HasColumnName("COMPANY");
-                entity.Property(e => e.Control)
-                    .HasMaxLength(250)
-                    .HasColumnName("CONTROL");
+                entity.Property(e => e.Company).HasMaxLength(50).HasColumnName("COMPANY");
+                entity.Property(e => e.WorkingCompany).HasMaxLength(50).HasColumnName("WORKING_COMPANY");
+                entity.Property(e => e.Control).HasMaxLength(250).HasColumnName("CONTROL");
+                entity.Property(e => e.Result).HasMaxLength(50).HasColumnName("RESULT");
+                entity.Property(e => e.Reason).HasMaxLength(250).HasColumnName("REASON");
+                entity.Property(e => e.DrdPhoto).HasColumnName("DRD_PHOTO");
+                entity.Property(e => e.DrdPhotoContentType).HasMaxLength(50).HasColumnName("DRD_PHOTO_CONTENT_TYPE");
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("CREATED_AT");

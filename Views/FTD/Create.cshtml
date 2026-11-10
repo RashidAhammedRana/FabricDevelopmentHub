@@ -228,6 +228,111 @@
         #knitTable td:last-child {
             padding: 8px;
         }
+
+    /* =========================================
+       DRD PHOTO UPLOAD DESIGN
+    ========================================= */
+
+    .drd-photo-section {
+        margin-top: 22px;
+        padding: 18px;
+        background: #f8fafc;
+        border: 1px solid #dce5ef;
+        border-radius: 10px;
+    }
+
+    .drd-photo-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+
+        .drd-photo-header h6 {
+            margin: 0;
+            font-weight: 700;
+            color: #243b53;
+            font-size: 14px;
+        }
+
+        .drd-photo-header small {
+            color: #7b8794;
+            font-size: 12px;
+        }
+
+    .drd-photo-badge {
+        background: #e8f1ff;
+        color: #2463a6;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+    .drd-photo-upload-area {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        flex-wrap: wrap;
+        padding: 20px;
+        background: #ffffff;
+        border: 1.5px dashed #a9bfd5;
+        border-radius: 8px;
+    }
+
+    .drd-photo-icon {
+        width: 55px;
+        height: 55px;
+        background: #edf4ff;
+        color: #3675b9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        font-size: 23px;
+    }
+
+    .drd-photo-content {
+        flex: 1;
+        min-width: 180px;
+    }
+
+    .drd-photo-label {
+        color: #245b91;
+        font-weight: 700;
+        font-size: 13px;
+        cursor: pointer;
+        margin-bottom: 4px;
+    }
+
+    .drd-photo-content p {
+        margin: 0;
+        color: #526477;
+        font-size: 12px;
+    }
+
+    .drd-photo-content small {
+        color: #98a6b5;
+        font-size: 11px;
+    }
+
+    .drd-photo-input {
+        width: 280px;
+        max-width: 100%;
+    }
+
+        .drd-photo-input input {
+            font-size: 12px;
+        }
+
+    .drd-photo-filename {
+        width: 100%;
+        padding-top: 10px;
+        border-top: 1px solid #edf0f4;
+        color: #526477;
+        font-size: 12px;
+        overflow-wrap: anywhere;
+    }
 </style>
 
 <div class="ftd-page">
@@ -306,21 +411,6 @@
 
                         <div class="row g-3">
 
-                            <div class="col-lg-2 col-md-4 col-sm-6">
-                                <label asp-for="TblFtdMaster.FtdNo"
-                                       class="form-label">
-                                    FTD No.
-                                    <span class="text-danger">*</span>
-                                </label>
-
-                                <input asp-for="TblFtdMaster.FtdNo"
-                                       class="form-control readonly-field"
-                                       readonly />
-
-                                <span asp-validation-for="TblFtdMaster.FtdNo"
-                                      class="text-danger"></span>
-                            </div>
-
                             <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblFtdMaster.Control"
                                        class="form-label">
@@ -342,6 +432,20 @@
                                 <span asp-validation-for="TblFtdMaster.Control"
                                       class="text-danger"></span>
                             </div>
+                            <div class="col-lg-2 col-md-4 col-sm-6">
+                                <label asp-for="TblFtdMaster.FtdNo"
+                                       class="form-label">
+                                    FTD No.
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <input asp-for="TblFtdMaster.FtdNo"
+                                       class="form-control readonly-field"
+                                       readonly />
+
+                                <span asp-validation-for="TblFtdMaster.FtdNo"
+                                      class="text-danger"></span>
+                            </div>
 
                             <div class="col-lg-2 col-md-4 col-sm-6">
                                 <label asp-for="TblFtdMaster.Company"
@@ -356,6 +460,21 @@
                                        readonly />
 
                                 <span asp-validation-for="TblFtdMaster.Company"
+                                      class="text-danger"></span>
+                            </div>
+                            <div class="col-lg-2 col-md-4 col-sm-6">
+                                <label asp-for="TblFtdMaster.WorkingCompany"
+                                       class="form-label">
+                                    Working Company
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <input asp-for="TblFtdMaster.WorkingCompany"
+                                       id="TblFtdMaster_WCompany"
+                                       class="form-control readonly-field"
+                                       readonly />
+
+                                <span asp-validation-for="TblFtdMaster.WorkingCompany"
                                       class="text-danger"></span>
                             </div>
 
@@ -1480,9 +1599,7 @@
 
                         <div class="ftd-table-wrapper">
 
-                            <table class="table table-bordered ftd-table"
-                                   id="dyeingRecipeTable">
-
+                            <table class="table table-bordered ftd-table" id="dyeingRecipeTable">
                                 <thead>
                                     <tr>
                                         <th style="width:50px;">#</th>
@@ -1537,7 +1654,57 @@
                             </table>
 
                         </div>
+                        <!-- =========================================
+                             DRD PHOTO UPLOAD
+                        ========================================= -->
 
+                        <div class="drd-photo-section">
+
+                            <div class="drd-photo-header">
+                                <div>
+                                    <h6>
+                                        <i class="fas fa-camera me-2"></i>
+                                        Photo Attachment
+                                    </h6>
+                                    <small>Upload Dyeing Recipe Development Photo</small>
+                                </div>
+
+                                <span class="drd-photo-badge">
+                                    <i class="fas fa-image me-1"></i> Photo
+                                </span>
+                            </div>
+
+                            <div class="drd-photo-upload-area">
+
+                                <div class="drd-photo-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+
+                                <div class="drd-photo-content">
+                                    <label for="DrdPhoto" class="drd-photo-label">
+                                        Choose Photo
+                                    </label>
+
+                                    <p>
+                                        Click to browse and select an image
+                                    </p>
+
+                                    <small>
+                                        Supported formats: JPG, JPEG, PNG
+                                    </small>
+                                </div>
+
+                                <div class="drd-photo-input">
+                                    <input type="file"
+                                           name="DrdPhoto"
+                                           id="DrdPhoto"
+                                           accept="image/jpeg,image/png,image/jpg"
+                                           class="form-control" />
+                                </div>
+
+                            </div>
+
+                        </div>
                     </div>
 
                     <!--Squazing -->
@@ -2993,14 +3160,13 @@
                             <!-- GROUP -->
                             <div class="col-md-3">
                                 <label class="form-label">
-                                    Test Group <span class="text-danger">*</span>
+                                    Test Group
                                 </label>
 
                                 <select id="Ltgid"
                                         name="Ltgid"
                                         asp-items="ViewBag.GroupList"
-                                        class="form-select"
-                                        required>
+                                        class="form-select">
                                     <option value="">-- Select Group --</option>
                                 </select>
                             </div>
@@ -3008,13 +3174,12 @@
                             <!-- TEST NAME -->
                             <div class="col-md-3">
                                 <label class="form-label">
-                                    Test Name <span class="text-danger">*</span>
+                                    Test Name
                                 </label>
 
                                 <select id="Ltnid"
                                         name="Ltnid"
                                         class="form-select"
-                                        required
                                         disabled>
                                     <option value="">-- Select Test Name --</option>
                                 </select>
@@ -3023,13 +3188,12 @@
                             <!-- METHOD -->
                             <div class="col-md-3">
                                 <label class="form-label">
-                                    Method Name <span class="text-danger">*</span>
+                                    Method Name
                                 </label>
 
                                 <select id="Ltmid"
                                         name="Ltmid"
                                         class="form-select"
-                                        required
                                         disabled>
                                     <option value="">-- Select Method --</option>
                                 </select>
@@ -3093,13 +3257,11 @@
 
                                         <label class="form-label fw-bold mb-1">
                                             Overall Lab Test Report
-                                            <span class="text-danger">*</span>
                                         </label>
 
                                         <select name="Remarks"
                                                 id="Remarks"
-                                                class="form-select"
-                                                required>
+                                                class="form-select">
 
                                             <option value="">-- Select Test Status --</option>
                                             <option value="Pass">Pass - All Parameters Satisfactory</option>
@@ -3550,6 +3712,7 @@
         function clearMasterFields() {
 
             $("#TblFtdMaster_Company").val("");
+            $("#TblFtdMaster_WCompany").val("");
             $("#TblFtdMaster_BatchNo").val("");
             $("#TblFtdMaster_SysReq").val("");
             $("#TblFtdMaster_Buyer").val("");
@@ -4710,6 +4873,8 @@
 
                 $("#TblFtdMaster_Company")
                     .val(data.companyName || "");
+                    $("#TblFtdMaster_WCompany")
+                    .val(data.workingCompanyName || "");
 
                 $("#TblFtdMaster_BatchNo")
                     .val(data.batchNo || batchNo);

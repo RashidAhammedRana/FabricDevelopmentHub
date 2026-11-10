@@ -211,11 +211,27 @@ namespace FabricDevelopmentHub.Controllers
 
                 master.Trdate = DateOnly.FromDateTime(DateTime.Now);
 
+                // -------------------------------------------------
+                // SAVE DRD PHOTO
+                // -------------------------------------------------
+
+                if (model.DrdPhoto != null &&
+                    model.DrdPhoto.Length > 0)
+                {
+                    using var memoryStream = new MemoryStream();
+
+                    await model.DrdPhoto.CopyToAsync(memoryStream);
+
+                    master.DrdPhoto = memoryStream.ToArray();
+
+                    master.DrdPhotoContentType =
+                        model.DrdPhoto.ContentType;
+                }
+
                 _context.TblFtdMasters.Add(master);
 
                 await _context.SaveChangesAsync();
 
-                // Database-generated FTDID
                 int ftdId = master.Ftdid;
 
 
@@ -1032,6 +1048,7 @@ namespace FabricDevelopmentHub.Controllers
                     data = new
                     {
                         companyName = master.CompanyName,
+                        workingCompanyName = master.WorkingCompanyName,
                         companyShortName = master.CompanyShortName,
                         internalRef = master.InternalRef,
                         styleRefNo = master.StyleRefNo,
@@ -1459,8 +1476,9 @@ namespace FabricDevelopmentHub.Controllers
 
         public class FTDMasterDto
         {
-            public string? CompanyName { get; set; }
+            public string? CompanyName { get; set; }//LC Company
             public string? CompanyShortName { get; set; }
+            public string? WorkingCompanyName { get; set; }
 
             public string? InternalRef { get; set; }
 

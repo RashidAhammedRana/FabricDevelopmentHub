@@ -34,9 +34,7 @@ public partial class TblFtdKnit
     public string? Measurement { get; set; }
     public string? Uom { get; set; }
     public string? FeederNo { get; set; }
-
     public byte[]? Photo { get; set; }
-
     public string? PhotoContentType { get; set; }
 
     public DateTime? CreatedAt { get; set; }

@@ -32,6 +32,8 @@ namespace FabricDevelopmentHub.ViewModels
         //public TblLabDetails TblLabDetails { get; set; } = new();
         public DateTime Date { get; set; } = DateTime.Today;
         public List<IFormFile?> FtdKnitPhotos { get; set; } = new();
+        //public List<IFormFile?> FtdMasterPhotos { get; set; } = new();
+        public IFormFile? DrdPhoto { get; set; }
 
 
         public List<TblFtdFabric> TblFtdFabric { get; set; } = new();
