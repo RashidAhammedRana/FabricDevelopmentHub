@@ -113,44 +113,23 @@ namespace FabricDevelopmentHub.Controllers
         public async Task<IActionResult> Create()
         {
             var model = new FTDViewModel();
+
             await LoadGroupList();
-            // Get logged-in user's company
-            var userCompany = await _userManager
-                .GetUserAsync(User);
 
-            if (userCompany == null ||
-                string.IsNullOrWhiteSpace(userCompany.Company))
-            {
-                return Forbid();
-            }
+            // -----------------------------------------------------
+            // INITIALIZE COLLECTIONS
+            // -----------------------------------------------------
 
-            string companyCode = userCompany.Company;
-
-            string year = DateTime.Now.ToString("yy");
-            string prefix = $"{companyCode}-FTD-{year}-";
-
-            var lastNumber = _context.TblFtdMasters
-                .AsNoTracking()
-                .Where(x => x.FtdNo.StartsWith(prefix))
-                .Select(x => (int?)Convert.ToInt32(x.FtdNo.Substring(x.FtdNo.Length - 5)))
-                .Max() ?? 0;
-
-            string ftdNumber = $"{prefix}{(lastNumber + 1):D5}";
-
-            // Generate FTD No
-            //string datePart = DateTime.Now.ToString("yyyyMMdd");
-            //string ftdNumber = $"{companyCode}-FTD{datePart}";
-
-            model.TblFtdMaster.FtdNo = ftdNumber;
-
-            // Initialize collections
             model.TblFtdFabric = new List<TblFtdFabric>();
             model.TblFtdYarn = new List<TblFtdYarn>();
             model.TblFtdKnit = new List<TblFtdKnit>();
             model.TblFtdDyeingBasic = new List<TblFtdDyeingBasic>();
             model.TblFtdDyeingRecipe = new List<TblFtdDyeingRecipe>();
 
-            // Initialize finish process models
+            // -----------------------------------------------------
+            // INITIALIZE FINISH PROCESS MODELS
+            // -----------------------------------------------------
+
             model.TblFinishProcessHeatset = new TblFinishProcessHeatset();
             model.TblFinishProcessStenteringAb = new TblFinishProcessStenteringAb();
             model.TblFinishProcessStenteringBb = new TblFinishProcessStenteringBb();
@@ -159,6 +138,7 @@ namespace FabricDevelopmentHub.Controllers
             model.TblBrush = new TblBrush();
             model.TblCompacting = new TblCompacting();
             model.TblOtherProcess = new TblOtherProcess();
+
             // -----------------------------------------------------
             // CONTROL / BATCH LIST
             // -----------------------------------------------------
@@ -176,6 +156,12 @@ namespace FabricDevelopmentHub.Controllers
                     Text = $"{x.INTERNAL_REF} - {x.BATCH_NO}"
                 })
                 .ToList();
+
+            // -----------------------------------------------------
+            // FTD NUMBER WILL BE GENERATED AFTER CONTROL SELECTION
+            // -----------------------------------------------------
+
+            model.TblFtdMaster.FtdNo = "";
 
             return View(model);
         }
@@ -1016,6 +1002,7 @@ namespace FabricDevelopmentHub.Controllers
                     data = new
                     {
                         companyName = master.CompanyName,
+                        companyShortName = master.CompanyShortName,
                         internalRef = master.InternalRef,
                         styleRefNo = master.StyleRefNo,
                         sysReq = master.SysReq,
@@ -1443,6 +1430,7 @@ namespace FabricDevelopmentHub.Controllers
         public class FTDMasterDto
         {
             public string? CompanyName { get; set; }
+            public string? CompanyShortName { get; set; }
 
             public string? InternalRef { get; set; }
 
@@ -1731,6 +1719,23 @@ namespace FabricDevelopmentHub.Controllers
                 "Ltgid",
                 "GroupName"
             );
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetNextFtdNumber(string prefix)
+        {
+            var lastNumber = await _context.TblFtdMasters
+                .AsNoTracking()
+                .Where(x => x.FtdNo.StartsWith(prefix))
+                .Select(x => (int?)Convert.ToInt32(
+                    x.FtdNo.Substring(x.FtdNo.Length - 5)))
+                .MaxAsync() ?? 0;
+
+            string ftdNumber = $"{prefix}{(lastNumber + 1):D5}";
+
+            return Json(new
+            {
+                ftdNo = ftdNumber
+            });
         }
     }
 }
