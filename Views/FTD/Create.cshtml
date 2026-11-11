@@ -602,9 +602,9 @@
                                         <th>Req. Dia</th>
                                         <th>Dia Type</th>
                                         <th>Req. GSM</th>
-                                        <th>Fin. Dia</th>
+                                        @* <th>Fin. Dia</th>
                                         <th>Fin. Dia Type</th>
-                                        <th>Fin. GSM</th>
+                                        <th>Fin. GSM</th> *@
                                     </tr>
                                 </thead>
 
@@ -659,7 +659,7 @@
                                                            readonly />
                                                 </td>
 
-                                                <td>
+                                                @* <td>
                                                     <input asp-for="TblFtdFabric[i].FinDia"
                                                            class="form-control readonly-field" />
                                                 </td>
@@ -672,7 +672,7 @@
                                                 <td>
                                                     <input asp-for="TblFtdFabric[i].FinGsm"
                                                            class="form-control readonly-field" />
-                                                </td>
+                                                </td> *@
 
                                             </tr>
                                         }
@@ -2275,7 +2275,7 @@
 
                                 <input asp-for="TblFinishProcessStenteringBb.Chemical"
                                        class="form-control"
-                                       type="number"
+                                       type="text"
                                        step="any" />
 
                                 <span asp-validation-for="TblFinishProcessStenteringBb.Chemical"
@@ -2663,7 +2663,7 @@
 
                                 <input asp-for="TblFinishProcessStenteringAb.Chemical"
                                        class="form-control"
-                                       type="number"
+                                       type="text"
                                        step="any" />
 
                                 <span asp-validation-for="TblFinishProcessStenteringAb.Chemical"
@@ -3121,11 +3121,11 @@
                                 <span asp-validation-for="TblCompacting.AGsm" class="text-danger"></span>
                             </div>
 
-                            <!-- FGsm -->
+                            <!-- DiaType -->
                             <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblCompacting.FGsm" class="form-label"> F.Gsm </label>
-                                <input asp-for="TblCompacting.FGsm" class="form-control" type="number" step="any" />
-                                <span asp-validation-for="TblCompacting.FGsm" class="text-danger"></span>
+                                <label asp-for="TblCompacting.DiaType" class="form-label"> Dia Type </label>
+                                <input asp-for="TblCompacting.DiaType" class="form-control" type="text" step="any" />
+                                <span asp-validation-for="TblCompacting.DiaType" class="text-danger"></span>
                             </div>
 
                             <!-- RDia -->
@@ -4338,30 +4338,6 @@
                                         value="${escapeHtml(item.gsmWeight)}"
                                         class="form-control readonly-field"
                                         readonly />
-                                </td>
-
-                                <td>
-                                    <input
-                                        type="text"
-                                        name="TblFtdFabric[${index}].FinDia"
-                                        value=""
-                                        class="form-control"/>
-                                </td>
-
-                                <td>
-                                    <input
-                                        type="text"
-                                        name="TblFtdFabric[${index}].FinDiaType"
-                                        value=""
-                                        class="form-control fabric-dia-type"/>
-                                </td>
-
-                                <td>
-                                    <input
-                                        type="text"
-                                        name="TblFtdFabric[${index}].FinGsm"
-                                        value=""
-                                        class="form-control"/>
                                 </td>
 
                             </tr>

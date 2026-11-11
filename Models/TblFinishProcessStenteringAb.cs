@@ -21,7 +21,7 @@ public partial class TblFinishProcessStenteringAb
 
     public double? PPressure2 { get; set; }
 
-    public double? Chemical { get; set; }
+    public string? Chemical { get; set; }
 
     public double? BlowerSpeed { get; set; }
 

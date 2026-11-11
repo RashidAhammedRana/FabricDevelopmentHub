@@ -433,8 +433,8 @@ namespace FabricDevelopmentHub.Data
                 entity.Property(e => e.AGsm).HasColumnName("A_GSM");
                 entity.Property(e => e.AShrinkage).HasColumnName("A_SHRINKAGE");
                 entity.Property(e => e.BlowerSpeed).HasColumnName("BLOWER_SPEED");
-                entity.Property(e => e.Chemical).HasColumnName("CHEMICAL");
-                entity.Property(e => e.Comments).HasMaxLength(50).HasColumnName("COMMENTS");
+                entity.Property(e => e.Chemical).HasMaxLength(50).HasColumnName("CHEMICAL");
+                entity.Property(e => e.Comments).HasMaxLength(500).HasColumnName("COMMENTS");
                 entity.Property(e => e.Ftdid).HasColumnName("FTDID");
                 entity.Property(e => e.Noc).HasColumnName("NOC");
                 entity.Property(e => e.OFeed).HasColumnName("O_FEED");
@@ -456,7 +456,7 @@ namespace FabricDevelopmentHub.Data
                 entity.Property(e => e.AGsm).HasColumnName("A_GSM");
                 entity.Property(e => e.AShrinkage).HasColumnName("A_SHRINKAGE");
                 entity.Property(e => e.BlowerSpeed).HasColumnName("BLOWER_SPEED");
-                entity.Property(e => e.Chemical).HasColumnName("CHEMICAL");
+                entity.Property(e => e.Chemical).HasMaxLength(50).HasColumnName("CHEMICAL");
                 entity.Property(e => e.Comments).HasMaxLength(500).HasColumnName("COMMENTS");
                 entity.Property(e => e.AnglePercent).HasColumnName("ANGEL_PERCENT");
                 entity.Property(e => e.Ftdid).HasColumnName("FTDID");
@@ -531,7 +531,7 @@ namespace FabricDevelopmentHub.Data
                 entity.Property(e => e.AGsm).HasColumnName("A_GSM");
                 entity.Property(e => e.Comments).HasMaxLength(500).HasColumnName("COMMENTS");
                 entity.Property(e => e.CompactionPer).HasColumnName("COMPACTION_PER");
-                entity.Property(e => e.FGsm).HasColumnName("F_GSM");
+                entity.Property(e => e.DiaType).HasColumnName("DIA_TYPE");
                 entity.Property(e => e.Ftdid).HasColumnName("FTDID");
                 entity.Property(e => e.OFeed).HasColumnName("O_FEED");
                 entity.Property(e => e.RDia).HasColumnName("R_DIA");

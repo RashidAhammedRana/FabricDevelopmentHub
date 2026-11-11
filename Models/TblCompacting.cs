@@ -24,7 +24,7 @@ public partial class TblCompacting
 
     public double? AGsm { get; set; }
 
-    public double? FGsm { get; set; }
+    public string? DiaType { get; set; }
 
     public double? RDia { get; set; }
 
