@@ -121,7 +121,7 @@
                     <thead class="table-light">
 
                         <tr>
-
+                            <th>Date</th>
                             <th>FTD No.</th>
 
                             <th>LC Company</th>
@@ -152,7 +152,9 @@
                             foreach (var item in Model)
                             {
                                 <tr>
-
+                                    <td>
+                                        @item.Trdate
+                                    </td>
                                     <td>
                                         @item.FtdNo
                                     </td>

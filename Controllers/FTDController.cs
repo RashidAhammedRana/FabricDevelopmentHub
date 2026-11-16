@@ -93,7 +93,7 @@ namespace FabricDevelopmentHub.Controllers
 
             // Pagination
             var data = await query
-                .OrderByDescending(x => x.FtdNo)
+                .OrderByDescending(x => x.Trdate)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
