@@ -3,6 +3,19 @@
 @{
     ViewData["Title"] = "Create FTD";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    //USERS
+    var userName = User.Identity?.Name ?? "";
+
+    bool isLabUser = userName.EndsWith(
+        "lab",
+        StringComparison.OrdinalIgnoreCase
+    );
+
+    bool isDyeingbUser = userName.EndsWith(
+        "Dyeing",
+        StringComparison.OrdinalIgnoreCase
+    );
 }
 
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -357,7 +370,7 @@
 
                     <div class="stepper-item active" data-step="1">
                         <div class="step-counter">1</div>
-                        @* <div class="step-name">Booking Details</div> *@
+                        <div class="step-name">Booking & Fabric Details</div>
                     </div>
 
                     @* <div class="stepper-item" data-step="2">
@@ -367,7 +380,7 @@
 
                     <div class="stepper-item" data-step="2">
                         <div class="step-counter">2</div>
-                        @* <div class="step-name">Finish Process Stentering</div> *@
+                        <div class="step-name">Knitting Details</div>
                     </div>
 
                     @* <div class="stepper-item" data-step="4">
@@ -377,12 +390,12 @@
 
                     <div class="stepper-item" data-step="3">
                         <div class="step-counter">3</div>
-                        @* <div class="step-name">Brush</div> *@
+                        <div class="step-name">Dyeing Details</div>
                     </div>
 
                     <div class="stepper-item" data-step="4">
                         <div class="step-counter">4</div>
-                        @* <div class="step-name">Compacting & Other Process</div> *@
+                        <div class="step-name">Lab Test Result Details</div>
                     </div>
                     @* <div class="stepper-item" data-step="5">
                         <div class="step-counter">5</div>
@@ -693,12 +706,12 @@
                         </div>
 
                     </div>
+                </div>
+                <!-- STEP 1 END -->
+                <!-- STEP 2 START -->
+                <div class="step-content" id="step-2">
 
-
-                    <!-- =================================================
-                         YARN DETAILS
-                         ================================================= -->
-
+                    <!-- YARN DETAILS -->
                     <div class="ftd-section">
 
                         <div class="ftd-section-header">
@@ -787,12 +800,7 @@
                         </div>
 
                     </div>
-
-                    <!-- =================================================
-                    KNITTING DETAILS
-                    ================================================= -->
-
-
+                    <!--KNITTING DETAILS  -->
                     <div class="ftd-section">
 
                         <div class="ftd-section-header">
@@ -967,8 +975,10 @@
                         </div>
 
                     </div>
-
-
+                </div>
+                <!-- STEP 2 END -->
+                <!-- STEP 3 START -->
+                <div class="step-content" id="step-3">
                     <!--Heatset -->
                     <div class="ftd-section">
 
@@ -1409,10 +1419,7 @@
                         </div>
 
                     </div>
-                    <!-- =================================================
-                         DYEING BASIC DATA
-                         ================================================= -->
-
+                    <!-- DYEING BASIC DATA -->
                     <div class="ftd-section">
 
                         <div class="ftd-section-header">
@@ -1524,13 +1531,7 @@
                         </div>
 
                     </div>
-                    <!-- =================================================
-                    LAB DETAILS
-                    ================================================= -->
-                    <!-- =================================================
-                         LAB DIP DETAILS
-                         ================================================= -->
-
+                    <!--LAB DETAILS -->
                     <div class="ftd-section">
 
                         <div class="ftd-section-header">
@@ -1614,10 +1615,7 @@
 
                     </div>
 
-                    <!-- =================================================
-                         DYEING RECIPE DETAILS
-                         ================================================= -->
-
+                    <!-- DYEING RECIPE DETAILS -->
                     <div class="ftd-section">
 
                         <div class="ftd-section-header">
@@ -1749,7 +1747,6 @@
 
                         </div>
                     </div>
-
                     <!--Squazing -->
                     <div class="ftd-section mt-5">
                         <div class="ftd-section-header">
@@ -1835,296 +1832,7 @@
 
                     </div>
 
-                </div>
-                <!-- STEP 1 END -->
-                <!-- ==========================================
-                STEP 2: HEATSET PROCESS
-                ========================================== -->
-                <!-- STEP 2 START -->
-                @* <div class="step-content" id="step-2">
 
-                    <div class="ftd-section mt-0">
-
-                        <div class="ftd-section-header">
-                            <h6 class="ftd-section-title">
-                                Finish Process - Heatset
-                            </h6>
-                        </div>
-
-                        <hr class="ftd-section-line" />
-
-                        <div class="row g-3">
-                            <!-- Show Only FTD No.--!>
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label class="form-label">FTD No.</label>
-                                <div class="form-control bg-light">
-                                    <span class="text-dark">
-                                        @Model.TblFtdMaster.FtdNo
-                                    </span>
-                                </div>
-                            </div>
-                            <!-- NOC -->
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessHeatset.Noc"
-                                       class="form-label">
-                                    No. of Chamber
-                                </label>
-
-                                <input asp-for="TblFinishProcessHeatset.Noc"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessHeatset.Noc"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- NOP -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessHeatset.Nop"
-                                       class="form-label">
-                                    No. of Padder
-                                </label>
-
-                                <input asp-for="TblFinishProcessHeatset.Nop"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessHeatset.Nop"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- DWELL TIME -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessHeatset.DweelTime"
-                                       class="form-label">
-                                    Dwell Time
-                                </label>
-
-                                <input asp-for="TblFinishProcessHeatset.DweelTime"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessHeatset.DweelTime"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- GREY DIA -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessHeatset.GreyDia"
-                                       class="form-label">
-                                    Grey Dia
-                                </label>
-
-                                <input asp-for="TblFinishProcessHeatset.GreyDia"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessHeatset.GreyDia"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- GREY GSM -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessHeatset.GreyGsm"
-                                       class="form-label">
-                                    Grey GSM
-                                </label>
-
-                                <input asp-for="TblFinishProcessHeatset.GreyGsm"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessHeatset.GreyGsm"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- TEMPERATURE -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessHeatset.Temp"
-                                       class="form-label">
-                                    Temperature
-                                </label>
-
-                                <input asp-for="TblFinishProcessHeatset.Temp"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessHeatset.Temp"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- SPEED -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessHeatset.Speed"
-                                       class="form-label">
-                                    Speed
-                                </label>
-
-                                <input asp-for="TblFinishProcessHeatset.Speed"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessHeatset.Speed"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- OVER FEED -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessHeatset.OFeed"
-                                       class="form-label">
-                                    Over Feed
-                                </label>
-
-                                <input asp-for="TblFinishProcessHeatset.OFeed"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessHeatset.OFeed"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- UNDER FEED -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessHeatset.UFeed"
-                                       class="form-label">
-                                    Under Feed
-                                </label>
-
-                                <input asp-for="TblFinishProcessHeatset.UFeed"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessHeatset.UFeed"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- BLOWER -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessHeatset.Blower"
-                                       class="form-label">
-                                    Blower
-                                </label>
-
-                                <input asp-for="TblFinishProcessHeatset.Blower"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessHeatset.Blower"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- PP -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessHeatset.Pp"
-                                       class="form-label">
-                                    Padder Pressure
-                                </label>
-
-                                <input asp-for="TblFinishProcessHeatset.Pp"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessHeatset.Pp"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- STRETCHING -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessHeatset.Stretching"
-                                       class="form-label">
-                                    Stretching
-                                </label>
-
-                                <input asp-for="TblFinishProcessHeatset.Stretching"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessHeatset.Stretching"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- ACTUAL HEATSET GSM -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessHeatset.AHeatsetGsm"
-                                       class="form-label">
-                                    After GSM
-                                </label>
-
-                                <input asp-for="TblFinishProcessHeatset.AHeatsetGsm"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessHeatset.AHeatsetGsm"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- ACTUAL HEATSET DIA -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessHeatset.AHeatsetDia"
-                                       class="form-label">
-                                    After Dia
-                                </label>
-
-                                <input asp-for="TblFinishProcessHeatset.AHeatsetDia"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessHeatset.AHeatsetDia"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- COMMENTS -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblFinishProcessHeatset.Comments"
-                                       class="form-label">
-                                    Comments
-                                </label>
-
-                                <input asp-for="TblFinishProcessHeatset.Comments"
-                                       class="form-control"
-                                       type="text"
-                                       step="any" />
-
-                                <span asp-validation-for="TblFinishProcessHeatset.Comments"
-                                      class="text-danger"></span>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div> *@
-                <!-- STEP END -->
-                <!-- STEP 2 START -->
-                <div class="step-content" id="step-2">
                     <!-- For BB-->
                     <div class="ftd-section mt-5">
 
@@ -2775,270 +2483,8 @@
                         </div>
 
                     </div>
-                </div>
-                <!-- STEP 2 END -->
-                <!-- STEP START -->
-                @* <div class="step-content" id="step-4">
 
-                    <div class="ftd-section mt-0">
-
-                        <div class="ftd-section-header">
-                            <h6 class="ftd-section-title">
-                                Singeing
-                            </h6>
-                        </div>
-
-                        <hr class="ftd-section-line" />
-
-                        <div class="row g-3">
-                            <!-- Show Only FTD No.--!>
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label class="form-label">FTD No.</label>
-                                <div class="form-control bg-light">
-                                    <span class="text-dark">
-                                        @Model.TblFtdMaster.FtdNo
-                                    </span>
-                                </div>
-                            </div>
-
-                            <!-- BurnerTemp -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblSingeing.BurnerTemp"
-                                       class="form-label">
-                                    Burner Temp.
-                                </label>
-
-                                <input asp-for="TblSingeing.BurnerTemp"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblSingeing.BurnerTemp"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- FlameHeight -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblSingeing.FlameHeight"
-                                       class="form-label">
-                                    Flame Height
-                                </label>
-
-                                <input asp-for="TblSingeing.FlameHeight"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblSingeing.FlameHeight"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- Speed-->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblSingeing.Speed"
-                                       class="form-label">
-                                    Speed
-                                </label>
-
-                                <input asp-for="TblSingeing.Speed"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblSingeing.Speed"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- ASingeingGsm -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblSingeing.ASingeingGsm"
-                                       class="form-label">
-                                    A Singeing Gsm
-                                </label>
-
-                                <input asp-for="TblSingeing.ASingeingGsm"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblSingeing.ASingeingGsm"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- ASingeingDia -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblSingeing.ASingeingDia"
-                                       class="form-label">
-                                    A Singeing Dia
-                                </label>
-
-                                <input asp-for="TblSingeing.ASingeingDia"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblSingeing.ASingeingDia"
-                                      class="text-danger"></span>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- For Squeezing-->
                     <div class="ftd-section mt-5">
-
-                        <div class="ftd-section-header">
-                            <h6 class="ftd-section-title">
-                                Squeezing
-                            </h6>
-                        </div>
-
-                        <hr class="ftd-section-line" />
-
-                        <div class="row g-3">
-
-                            <!-- Pp -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblSqueezing.Pp"
-                                       class="form-label">
-                                    Padder Pressure
-                                </label>
-
-                                <input asp-for="TblSqueezing.Pp"
-                                       class="form-control"
-                                       type="number"
-                                       step="any" />
-
-                                <span asp-validation-for="TblSqueezing.Pp"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <!-- DiaType -->
-
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblSqueezing.DiaType"
-                                       class="form-label">
-                                    Dia Type
-                                </label>
-
-                                <input asp-for="TblSqueezing.DiaType"
-                                       class="form-control"
-                                       type="text"
-                                       step="any" />
-
-                                <span asp-validation-for="TblSqueezing.DiaType"
-                                      class="text-danger"></span>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div> *@
-                <!-- STEP  END -->
-                <!-- STEP  START -->
-                @* <div class="step-content" id="step-5">
-                    <div class="ftd-section mt-0">
-
-                        <div class="ftd-section-header">
-                            <h6 class="ftd-section-title">
-                                Brush
-                            </h6>
-                        </div>
-
-                        <hr class="ftd-section-line" />
-
-                        <div class="row g-3">
-
-                            <!-- Show Only FTD No.--!>
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label class="form-label">FTD No.</label>
-                                <div class="form-control bg-light">
-                                    <span class="text-dark">
-                                        @Model.TblFtdMaster.FtdNo
-                                    </span>
-                                </div>
-                            </div>
-
-                            <!-- UPile -->
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblBrush.UPile" class="form-label">U.Pile</label>
-                                <input asp-for="TblBrush.UPile" class="form-control" type="number" step="any" />
-                                <span asp-validation-for="TblBrush.UPile" class="text-danger"></span>
-                            </div>
-                            <!-- LPile -->
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblBrush.LPile" class="form-label">L.Pile</label>
-                                <input asp-for="TblBrush.LPile" class="form-control" type="number" step="any" />
-                                <span asp-validation-for="TblBrush.LPile" class="text-danger"></span>
-                            </div>
-                            <!-- UCp -->
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblBrush.UCp" class="form-label">U.CP</label>
-                                <input asp-for="TblBrush.UCp" class="form-control" type="number" step="any" />
-                                <span asp-validation-for="TblBrush.UCp" class="text-danger"></span>
-                            </div>
-                            <!-- LCp -->
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblBrush.LCp" class="form-label">L.CP</label>
-                                <input asp-for="TblBrush.LCp" class="form-control" type="number" step="any" />
-                                <span asp-validation-for="TblBrush.LCp" class="text-danger"></span>
-                            </div>
-                            <!-- UDrumSpeed -->
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblBrush.UDrumSpeed" class="form-label">U.Drum Speed</label>
-                                <input asp-for="TblBrush.UDrumSpeed" class="form-control" type="number" step="any" />
-                                <span asp-validation-for="TblBrush.UDrumSpeed" class="text-danger"></span>
-                            </div>
-                            <!-- LDrumSpeed -->
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblBrush.LDrumSpeed" class="form-label">L.Drum Speed</label>
-                                <input asp-for="TblBrush.LDrumSpeed" class="form-control" type="number" step="any" />
-                                <span asp-validation-for="TblBrush.LDrumSpeed" class="text-danger"></span>
-                            </div>
-                            <!-- UTension -->
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblBrush.UTension" class="form-label">U.Tension</label>
-                                <input asp-for="TblBrush.UTension" class="form-control" type="number" step="any" />
-                                <span asp-validation-for="TblBrush.UTension" class="text-danger"></span>
-                            </div>
-                            <!-- LTension -->
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblBrush.LTension" class="form-label">L.Tension</label>
-                                <input asp-for="TblBrush.LTension" class="form-control" type="number" step="any" />
-                                <span asp-validation-for="TblBrush.LTension" class="text-danger"></span>
-                            </div>
-                            <!-- McSpeed -->
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblBrush.McSpeed" class="form-label">Mc.Speed</label>
-                                <input asp-for="TblBrush.McSpeed" class="form-control" type="number" step="any" />
-                                <span asp-validation-for="TblBrush.McSpeed" class="text-danger"></span>
-                            </div>
-                            <!-- ADia -->
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblBrush.ADia" class="form-label">A.Dia</label>
-                                <input asp-for="TblBrush.ADia" class="form-control" type="number" step="any" />
-                                <span asp-validation-for="TblBrush.ADia" class="text-danger"></span>
-                            </div>
-                            <!-- AGsm -->
-                            <div class="col-lg-2 col-md-3 col-sm-6">
-                                <label asp-for="TblBrush.AGsm" class="form-label">A.Gsm</label>
-                                <input asp-for="TblBrush.AGsm" class="form-control" type="number" step="any" />
-                                <span asp-validation-for="TblBrush.AGsm" class="text-danger"></span>
-                            </div>
-                        </div>
-
-                    </div>
-                </div> *@
-                <!-- STEP  END -->
-                <!-- STEP 3 START -->
-                <div class="step-content" id="step-3">
-                    <div class="ftd-section mt-0">
                         <div class="ftd-section-header">
                             <h6 class="ftd-section-title">
                                 Compacting
@@ -3257,8 +2703,11 @@
                 </div>
                 <!-- STEP 3  END -->
                 <!-- STEP 4 START -->
+
                 <div class="step-content" id="step-4">
+
                     <div class="ftd-section mt-0">
+
                         <div class="ftd-section-header">
                             <h6 class="ftd-section-title">
                                 Lab Test Result
@@ -3266,18 +2715,10 @@
                         </div>
 
                         <hr class="ftd-section-line" />
+
                         <div class="row g-3">
 
-                            <!-- Show Only FTD No.--!>
-                            @* <div class="col-md-3">
-                                <label class="form-label">FTD No.</label>
-                                <div class="form-control bg-light">
-                                    <span class="text-dark">
-                                        @Model.TblFtdMaster.FtdNo
-                                    </span>
-                                </div>
-                            </div> *@
-                            <!-- GROUP -->
+                            <!-- TEST GROUP -->
                             <div class="col-md-3">
                                 <label class="form-label">
                                     Test Group
@@ -3286,8 +2727,11 @@
                                 <select id="Ltgid"
                                         name="Ltgid"
                                         asp-items="ViewBag.GroupList"
-                                        class="form-select">
+                                        class="form-select"
+                                        disabled="@(!isLabUser)">
+
                                     <option value="">-- Select Group --</option>
+
                                 </select>
                             </div>
 
@@ -3352,24 +2796,9 @@
 
                             </div>
 
-                            @* <div class="row mt-3">
-                                <div class="col-md-4">
-                                    <label class="form-label fw-semibold">
-                                        Overall Result <span class="text-danger">*</span>
-                                    </label>
-
-                                    <select name="Remarks"
-                                            id="Remarks"
-                                            class="form-select"
-                                            required>
-                                        <option value="">-- Select Result --</option>
-                                        <option value="Pass">Pass</option>
-                                        <option value="Fail">Fail</option>
-                                    </select>
-                                </div>
-                            </div> *@
-
+                            <!-- OVERALL LAB TEST REPORT -->
                             <div class="row mt-2">
+
                                 <div class="col-md-5">
 
                                     <div class="px-3 py-2 rounded-3"
@@ -3381,11 +2810,18 @@
 
                                         <select name="Remarks"
                                                 id="Remarks"
-                                                class="form-select">
+                                                class="form-select"
+                                                disabled="@(!isLabUser)">
 
                                             <option value="">-- Select Test Status --</option>
-                                            <option value="Pass">Pass - All Parameters Satisfactory</option>
-                                            <option value="Fail">Fail - One or More Parameters Failed</option>
+
+                                            <option value="Pass">
+                                                Pass - All Parameters Satisfactory
+                                            </option>
+
+                                            <option value="Fail">
+                                                Fail - One or More Parameters Failed
+                                            </option>
 
                                         </select>
 
@@ -3396,22 +2832,16 @@
                                     </div>
 
                                 </div>
+
                             </div>
 
-                            @* <div class="text-end">
-
-                                <button type="submit"
-                                        class="btn btn-primary px-4">
-                                    <i class="bi bi-save"></i> Save Results
-                                </button>
-
-                            </div> *@
-
                         </div>
+
                     </div>
 
                 </div>
-                <!-- STEP 7 END -->
+
+                <!-- STEP 4 END -->
                 <!-- ==========================================
                      STEPPER ACTIONS
                      ========================================== -->
@@ -3655,7 +3085,64 @@
 </script>
 <script>
 
+      // Current user permission
+    const isKnittingUser = @Html.Raw(
+                System.Text.Json.JsonSerializer.Serialize(
+                        (User.Identity?.Name ?? "").EndsWith(
+                                "knitting",
+                                StringComparison.OrdinalIgnoreCase
+                        )
+                )
+    );
+
+    const isDyeingUser = @Html.Raw(
+            System.Text.Json.JsonSerializer.Serialize(
+                    (User.Identity?.Name ?? "").EndsWith(
+                            "dyeing",
+                            StringComparison.OrdinalIgnoreCase
+                    )
+            )
+    );
+
     $(document).ready(function () {
+        if (!isDyeingUser) {
+
+        const dyeingSection = $("#step-3");
+
+        // Editable text, number, date inputs become readonly.
+        // Existing readonly inputs remain unchanged.
+        dyeingSection
+            .find('input:not([type="hidden"]):not([readonly])')
+            .not(':checkbox, :radio, :file')
+            .prop("readonly", true)
+            .addClass("readonly-field");
+
+        // Textarea
+        dyeingSection
+            .find("textarea:not([readonly])")
+            .prop("readonly", true)
+            .addClass("readonly-field");
+
+        // Dropdowns
+        dyeingSection
+            .find("select")
+            .prop("disabled", true);
+
+        // File upload
+        dyeingSection
+            .find('input[type="file"]')
+            .prop("disabled", true);
+
+        // Checkbox and radio
+        dyeingSection
+            .find(':checkbox, :radio')
+            .prop("disabled", true);
+
+        // Buttons
+        dyeingSection
+            .find("button")
+            .prop("disabled", true);
+    }
 
         // =========================================================
         // LOAD LAB DIP LIST
@@ -3980,229 +3467,239 @@
         // LOAD KNIT DETAILS
         // =========================================================
 
-        function loadKnitDetails(batchNo) {
 
-            if (!batchNo) {
-                clearKnitTable();
-                return;
-            }
+    function loadKnitDetails(batchNo) {
 
-            console.log(
-                "Loading Knit Details for Batch:",
-                batchNo
-            );
+        if (!batchNo) {
+            clearKnitTable();
+            return;
+        }
 
-            $("#knitTableBody").html(`
-                <tr>
-                    <td colspan="13" class="ftd-empty">
-                        Loading knitting details...
-                    </td>
-                </tr>
-            `);
+        console.log(
+            "Loading Knit Details for Batch:",
+            batchNo
+        );
 
-            $.ajax({
+        $("#knitTableBody").html(`
+            <tr>
+                <td colspan="15" class="ftd-empty">
+                    Loading knitting details...
+                </td>
+            </tr>
+        `);
 
-                url: '@Url.Action("GetKnitDetails", "FTD")',
+        $.ajax({
 
-                type: "GET",
+            url: '@Url.Action("GetKnitDetails", "FTD")',
 
-                data: {
-                    batchNo: batchNo
-                },
+            type: "GET",
 
-                success: function (response) {
+            data: {
+                batchNo: batchNo
+            },
 
-                    console.log("Knit Response:", response);
+            success: function (response) {
 
-                    if (!response || !response.success) {
+                console.log("Knit Response:", response);
 
-                        clearKnitTable();
-
-                        console.warn(
-                            response?.message ||
-                            "No Knit details found."
-                        );
-
-                        return;
-                    }
-
-                    let knits = response.data || [];
-
-                    $("#knitTableBody").empty();
-
-                    if (knits.length === 0) {
-
-                        $("#knitTableBody").append(`
-                            <tr id="knitEmptyRow">
-                                <td colspan="13" class="ftd-empty">
-                                    No Knit details available
-                                    for selected Batch.
-                                </td>
-                            </tr>
-                        `);
-
-                        return;
-                    }
-
-                    knits.forEach(function (item, index) {
-
-                        let row = `
-                            <tr class="knit-row">
-
-                                <td class="text-center row-number">
-                                    ${index + 1}
-                                </td>
-
-                                <td>
-                                    <input
-                                        type="text"
-                                        name="TblFtdKnit[${index}].ProgramNo"
-                                        value="${escapeHtml(item.programNo)}"
-                                        class="form-control knit-programNo readonly-field"
-                                        readonly />
-                                </td>
-                                <td>
-                                    <input
-                                        type="text"
-                                        name="TblFtdKnit[${index}].Construction"
-                                        value="${escapeHtml(item.construction)}"
-                                        class="form-control knit-construction readonly-field"
-                                        readonly />
-                                </td>
-                                <td>
-                                    <input
-                                        type="text"
-                                        name="TblFtdKnit[${index}].Source"
-                                        value="${escapeHtml(item.source)}"
-                                        class="form-control knit-source readonly-field"
-                                        readonly />
-                                </td>
-
-                                <td>
-                                    <input
-                                        type="text"
-                                        name="TblFtdKnit[${index}].KnitCom"
-                                        value="${escapeHtml(item.knitCom)}"
-                                        class="form-control knit-company readonly-field"
-                                        readonly />
-                                </td>
-
-                                <td>
-                                    <input
-                                        type="text"
-                                        name="TblFtdKnit[${index}].McNo"
-                                        value="${escapeHtml(item.mcNo)}"
-                                        class="form-control knit-mcNo readonly-field"
-                                        readonly />
-                                </td>
-
-                                <td>
-                                    <input
-                                        type="text"
-                                        name="TblFtdKnit[${index}].McDia"
-                                        value="${escapeHtml(item.mcDia)}"
-                                        class="form-control knit-mcDia readonly-field"
-                                        readonly />
-                                </td>
-
-                                <td>
-                                    <input
-                                        type="text"
-                                        name="TblFtdKnit[${index}].McGauge"
-                                        value="${escapeHtml(item.mcGauge)}"
-                                        class="form-control knit-mcGauge readonly-field"
-                                        readonly />
-                                </td>
-
-                                <td>
-                                    <input
-                                        type="text"
-                                        name="TblFtdKnit[${index}].Sl"
-                                        value="${escapeHtml(item.sl)}"
-                                        class="form-control knit-sl readonly-field"
-                                        readonly />
-                                </td>
-
-                                <td>
-                                    <input
-                                        type="number"
-                                        name="TblFtdKnit[${index}].Rpm"
-                                        value="${escapeHtml(item.rpm)}"
-                                        class="form-control knit-rpm" />
-                                </td>
-
-                                <td>
-                                    <input
-                                        type="text"
-                                        name="TblFtdKnit[${index}].ColorName"
-                                        value="${escapeHtml(item.colorName)}"
-                                        class="form-control knit-colorName readonly-field"
-                                        readonly />
-                                </td>
-
-                                <td>
-                                    <input
-                                        type="text"
-                                        name="TblFtdKnit[${index}].Measurement"
-                                        value="${escapeHtml(item.measurement)}"
-                                        class="form-control knit-measurement readonly-field"
-                                        readonly />
-                                </td>
-
-                                <td>
-                                    <input
-                                        type="text"
-                                        name="TblFtdKnit[${index}].Uom"
-                                        value="${escapeHtml(item.uom)}"
-                                        class="form-control knit-uom readonly-field"
-                                        readonly />
-                                </td>
-
-                                <td>
-                                    <input
-                                        type="text"
-                                        name="TblFtdKnit[${index}].FeederNo"
-                                        value="${escapeHtml(item.feederNo)}"
-                                        class="form-control knit-feederNo readonly-field"
-                                        readonly />
-                                </td>
-                                <td>
-                                    <input
-                                        type="file"
-                                        name="FtdKnitPhotos[${index}]"
-                                        class="form-control knit-photo"
-                                        accept="image/*" />
-                                </td>
-
-                            </tr>
-                        `;
-
-                        $("#knitTableBody").append(row);
-                    });
-
-                    updateKnitRowNumbers();
-                },
-
-                error: function (xhr) {
-
-                    console.error(
-                        "Knit AJAX Error:",
-                        xhr
-                    );
+                if (!response || !response.success) {
 
                     clearKnitTable();
 
-                    let message =
-                        "Unable to load Knit details.";
+                    console.warn(
+                        response?.message ||
+                        "No Knit details found."
+                    );
 
-                    if (xhr.responseJSON?.message) {
-                        message = xhr.responseJSON.message;
-                    }
-
-                    alert(message);
+                    return;
                 }
-            });
-        }
+
+                let knits = response.data || [];
+
+                $("#knitTableBody").empty();
+
+                if (knits.length === 0) {
+
+                    $("#knitTableBody").append(`
+                        <tr id="knitEmptyRow">
+                            <td colspan="15" class="ftd-empty">
+                                No Knit details available
+                                for selected Batch.
+                            </td>
+                        </tr>
+                    `);
+
+                    return;
+                }
+
+                knits.forEach(function (item, index) {
+
+                    let row = `
+                        <tr class="knit-row">
+
+                            <td class="text-center row-number">
+                                ${index + 1}
+                            </td>
+
+                            <td>
+                                <input
+                                    type="text"
+                                    name="TblFtdKnit[${index}].ProgramNo"
+                                    value="${escapeHtml(item.programNo)}"
+                                    class="form-control knit-programNo readonly-field"
+                                    readonly />
+                            </td>
+
+                            <td>
+                                <input
+                                    type="text"
+                                    name="TblFtdKnit[${index}].Construction"
+                                    value="${escapeHtml(item.construction)}"
+                                    class="form-control knit-construction readonly-field"
+                                    readonly />
+                            </td>
+
+                            <td>
+                                <input
+                                    type="text"
+                                    name="TblFtdKnit[${index}].Source"
+                                    value="${escapeHtml(item.source)}"
+                                    class="form-control knit-source readonly-field"
+                                    readonly />
+                            </td>
+
+                            <td>
+                                <input
+                                    type="text"
+                                    name="TblFtdKnit[${index}].KnitCom"
+                                    value="${escapeHtml(item.knitCom)}"
+                                    class="form-control knit-company readonly-field"
+                                    readonly />
+                            </td>
+
+                            <td>
+                                <input
+                                    type="text"
+                                    name="TblFtdKnit[${index}].McNo"
+                                    value="${escapeHtml(item.mcNo)}"
+                                    class="form-control knit-mcNo readonly-field"
+                                    readonly />
+                            </td>
+
+                            <td>
+                                <input
+                                    type="text"
+                                    name="TblFtdKnit[${index}].McDia"
+                                    value="${escapeHtml(item.mcDia)}"
+                                    class="form-control knit-mcDia readonly-field"
+                                    readonly />
+                            </td>
+
+                            <td>
+                                <input
+                                    type="text"
+                                    name="TblFtdKnit[${index}].McGauge"
+                                    value="${escapeHtml(item.mcGauge)}"
+                                    class="form-control knit-mcGauge readonly-field"
+                                    readonly />
+                            </td>
+
+                            <td>
+                                <input
+                                    type="text"
+                                    name="TblFtdKnit[${index}].Sl"
+                                    value="${escapeHtml(item.sl)}"
+                                    class="form-control knit-sl readonly-field"
+                                    readonly />
+                            </td>
+
+                            <!-- RPM: Knitting user only -->
+                            <td>
+                                <input
+                                    type="number"
+                                    name="TblFtdKnit[${index}].Rpm"
+                                    value="${escapeHtml(item.rpm)}"
+                                    class="form-control knit-rpm ${isKnittingUser ? '' : 'readonly-field'}"
+                                    step="any"
+                                    ${isKnittingUser ? '' : 'readonly'} />
+                            </td>
+
+                            <td>
+                                <input
+                                    type="text"
+                                    name="TblFtdKnit[${index}].ColorName"
+                                    value="${escapeHtml(item.colorName)}"
+                                    class="form-control knit-colorName readonly-field"
+                                    readonly />
+                            </td>
+
+                            <td>
+                                <input
+                                    type="text"
+                                    name="TblFtdKnit[${index}].Measurement"
+                                    value="${escapeHtml(item.measurement)}"
+                                    class="form-control knit-measurement readonly-field"
+                                    readonly />
+                            </td>
+
+                            <td>
+                                <input
+                                    type="text"
+                                    name="TblFtdKnit[${index}].Uom"
+                                    value="${escapeHtml(item.uom)}"
+                                    class="form-control knit-uom readonly-field"
+                                    readonly />
+                            </td>
+
+                            <td>
+                                <input
+                                    type="text"
+                                    name="TblFtdKnit[${index}].FeederNo"
+                                    value="${escapeHtml(item.feederNo)}"
+                                    class="form-control knit-feederNo readonly-field"
+                                    readonly />
+                            </td>
+
+                            <!-- Photo: Knitting user only -->
+                            <td>
+                                <input
+                                    type="file"
+                                    name="FtdKnitPhotos[${index}]"
+                                    class="form-control knit-photo"
+                                    accept="image/*"
+                                    ${isKnittingUser ? '' : 'disabled'} />
+                            </td>
+
+                        </tr>
+                    `;
+
+                    $("#knitTableBody").append(row);
+                });
+
+                updateKnitRowNumbers();
+            },
+
+            error: function (xhr) {
+
+                console.error(
+                    "Knit AJAX Error:",
+                    xhr
+                );
+
+                clearKnitTable();
+
+                let message =
+                    "Unable to load Knit details.";
+
+                if (xhr.responseJSON?.message) {
+                    message = xhr.responseJSON.message;
+                }
+
+                alert(message);
+            }
+        });
+    }
+
 
 
         // =========================================================
@@ -4375,155 +3872,159 @@
         // LOAD YARN DETAILS
         // =========================================================
 
-        function loadYarnDetails(batchNo) {
 
-            if (!batchNo) {
-                clearYarnTable();
-                return;
-            }
+    function loadYarnDetails(batchNo) {
 
-            console.log(
-                "Loading Yarn for Batch:",
-                batchNo
-            );
+        if (!batchNo) {
+            clearYarnTable();
+            return;
+        }
 
-            $("#yarnTableBody").html(`
-                <tr>
-                    <td colspan="8" class="ftd-empty">
-                        Loading yarn details...
-                    </td>
-                </tr>
-            `);
+        console.log(
+            "Loading Yarn for Batch:",
+            batchNo
+        );
 
-            $.ajax({
+        $("#yarnTableBody").html(`
+            <tr>
+                <td colspan="6" class="ftd-empty">
+                    Loading yarn details...
+                </td>
+            </tr>
+        `);
 
-                url: '@Url.Action("GetYarnDetails", "FTD")',
+        $.ajax({
 
-                type: "GET",
+            url: '@Url.Action("GetYarnDetails", "FTD")',
 
-                data: {
-                    batchNo: batchNo
-                },
+            type: "GET",
 
-                success: function (response) {
+            data: {
+                batchNo: batchNo
+            },
 
-                    console.log(
-                        "Yarn Response:",
-                        response
-                    );
+            success: function (response) {
 
-                    if (!response || !response.success) {
+                console.log(
+                    "Yarn Response:",
+                    response
+                );
 
-                        clearYarnTable();
-
-                        console.warn(
-                            response?.message ||
-                            "No yarn details found."
-                        );
-
-                        return;
-                    }
-
-                    let yarns =
-                        response.data || [];
-
-                    $("#yarnTableBody").empty();
-
-                    if (yarns.length === 0) {
-
-                        $("#yarnTableBody").append(`
-                            <tr id="yarnEmptyRow">
-                                <td colspan="8" class="ftd-empty">
-                                    No yarn details available
-                                    for selected Batch.
-                                </td>
-                            </tr>
-                        `);
-
-                        return;
-                    }
-
-                    yarns.forEach(function (item, index) {
-
-                        let row = `
-                            <tr class="yarn-row">
-
-                                <td class="text-center row-number">
-                                    ${index + 1}
-                                </td>
-                                <td>
-                                    <input
-                                        type="text"
-                                        name="TblFtdYarn[${index}].Construction"
-                                        value="${escapeHtml(item.construction)}"
-                                        class="form-control construction readonly-field"
-                                        readonly />
-                                </td>
-
-                                <td>
-                                    <input
-                                        type="text"
-                                        name="TblFtdYarn[${index}].Count"
-                                        value="${escapeHtml(item.count)}"
-                                        class="form-control count readonly-field"
-                                        readonly />
-                                </td>
-
-                                <td>
-                                    <input
-                                        type="text"
-                                        name="TblFtdYarn[${index}].BrandName"
-                                        value="${escapeHtml(item.brand)}"
-                                        class="form-control yarn-brand readonly-field"
-                                        readonly />
-                                </td>
-
-                                <td>
-                                    <input
-                                        type="text"
-                                        name="TblFtdYarn[${index}].Lot"
-                                        value="${escapeHtml(item.lot)}"
-                                        class="form-control yarn-lot readonly-field"
-                                        readonly />
-                                </td>
-
-                                <td>
-                                    <input
-                                        type="text"
-                                        name="TblFtdYarn[${index}].Remarks"
-                                        value=""
-                                        class="form-control yarn-remarks" />
-                                </td>
-
-                            </tr>
-                        `;
-
-                        $("#yarnTableBody").append(row);
-                    });
-
-                    updateYarnRowNumbers();
-                },
-
-                error: function (xhr) {
-
-                    console.error(
-                        "Yarn AJAX Error:",
-                        xhr
-                    );
+                if (!response || !response.success) {
 
                     clearYarnTable();
 
-                    let message =
-                        "Unable to load Yarn details.";
+                    console.warn(
+                        response?.message ||
+                        "No yarn details found."
+                    );
 
-                    if (xhr.responseJSON?.message) {
-                        message = xhr.responseJSON.message;
-                    }
-
-                    alert(message);
+                    return;
                 }
-            });
-        }
+
+                let yarns = response.data || [];
+
+                $("#yarnTableBody").empty();
+
+                if (yarns.length === 0) {
+
+                    $("#yarnTableBody").append(`
+                        <tr id="yarnEmptyRow">
+                            <td colspan="6" class="ftd-empty">
+                                No yarn details available
+                                for selected Batch.
+                            </td>
+                        </tr>
+                    `);
+
+                    return;
+                }
+
+                yarns.forEach(function (item, index) {
+
+                    let row = `
+                        <tr class="yarn-row">
+
+                            <td class="text-center row-number">
+                                ${index + 1}
+                            </td>
+
+                            <td>
+                                <input
+                                    type="text"
+                                    name="TblFtdYarn[${index}].Construction"
+                                    value="${escapeHtml(item.construction)}"
+                                    class="form-control construction readonly-field"
+                                    readonly />
+                            </td>
+
+                            <td>
+                                <input
+                                    type="text"
+                                    name="TblFtdYarn[${index}].Count"
+                                    value="${escapeHtml(item.count)}"
+                                    class="form-control count readonly-field"
+                                    readonly />
+                            </td>
+
+                            <td>
+                                <input
+                                    type="text"
+                                    name="TblFtdYarn[${index}].BrandName"
+                                    value="${escapeHtml(item.brand)}"
+                                    class="form-control yarn-brand readonly-field"
+                                    readonly />
+                            </td>
+
+                            <td>
+                                <input
+                                    type="text"
+                                    name="TblFtdYarn[${index}].Lot"
+                                    value="${escapeHtml(item.lot)}"
+                                    class="form-control yarn-lot readonly-field"
+                                    readonly />
+                            </td>
+
+                            <!-- Remarks: Knitting user only -->
+                            <td>
+                                <input
+                                    type="text"
+                                    name="TblFtdYarn[${index}].Remarks"
+                                    value=""
+                                    class="form-control yarn-remarks ${isKnittingUser ? '' : 'readonly-field'}"
+                                    ${isKnittingUser ? '' : 'readonly'} />
+                            </td>
+
+                        </tr>
+                    `;
+
+                    $("#yarnTableBody").append(row);
+                });
+
+                updateYarnRowNumbers();
+            },
+
+            error: function (xhr) {
+
+                console.error(
+                    "Yarn AJAX Error:",
+                    xhr
+                );
+
+                clearYarnTable();
+
+                let message =
+                    "Unable to load Yarn details.";
+
+                if (xhr.responseJSON?.message) {
+                    message = xhr.responseJSON.message;
+                }
+
+                alert(message);
+            }
+        });
+    }
+
 
 
         // =========================================================
