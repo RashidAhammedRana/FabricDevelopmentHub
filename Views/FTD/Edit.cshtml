@@ -431,7 +431,7 @@
 
                         <div class="row g-3">
 
-                            <div class="col-lg-2 col-md-3 col-sm-6">
+                            @* <div class="col-lg-2 col-md-3 col-sm-6">
                                 <label asp-for="TblFtdMaster.Control"
                                        class="form-label">
                                     Control / Batch
@@ -456,7 +456,7 @@
 
                                 <span asp-validation-for="TblFtdMaster.Control"
                                       class="text-danger"></span>
-                            </div>
+                            </div> *@
                             <div class="col-lg-2 col-md-4 col-sm-6">
                                 <label asp-for="TblFtdMaster.FtdNo"
                                        class="form-label">
@@ -469,6 +469,34 @@
                                        readonly />
 
                                 <span asp-validation-for="TblFtdMaster.FtdNo"
+                                      class="text-danger"></span>
+                            </div>
+                            <div class="col-lg-2 col-md-4 col-sm-6">
+                                <label class="form-label">
+                                    Control No.
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <input type="text"
+                                       id="TblFtdMaster_Control"
+                                       value="@Model.TblFtdMaster.Control"
+                                       class="form-control readonly-field"
+                                       readonly />
+                            </div>
+
+                            <div class="col-lg-2 col-md-4 col-sm-6">
+                                <label asp-for="TblFtdMaster.BatchNo"
+                                       class="form-label">
+                                    Batch No.
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <input asp-for="TblFtdMaster.BatchNo"
+                                       id="TblFtdMaster_BatchNo"
+                                       class="form-control readonly-field"
+                                       readonly />
+
+                                <span asp-validation-for="TblFtdMaster.BatchNo"
                                       class="text-danger"></span>
                             </div>
 
@@ -500,34 +528,6 @@
                                        readonly />
 
                                 <span asp-validation-for="TblFtdMaster.WorkingCompany"
-                                      class="text-danger"></span>
-                            </div>
-
-                            <div class="col-lg-2 col-md-4 col-sm-6">
-                                <label class="form-label">
-                                    Control No.
-                                    <span class="text-danger">*</span>
-                                </label>
-
-                                <input type="text"
-                                       id="TblFtdMaster_InternalRef"
-                                       class="form-control readonly-field"
-                                       readonly />
-                            </div>
-
-                            <div class="col-lg-2 col-md-4 col-sm-6">
-                                <label asp-for="TblFtdMaster.BatchNo"
-                                       class="form-label">
-                                    Batch No.
-                                    <span class="text-danger">*</span>
-                                </label>
-
-                                <input asp-for="TblFtdMaster.BatchNo"
-                                       id="TblFtdMaster_BatchNo"
-                                       class="form-control readonly-field"
-                                       readonly />
-
-                                <span asp-validation-for="TblFtdMaster.BatchNo"
                                       class="text-danger"></span>
                             </div>
 
@@ -4543,7 +4543,7 @@
                     .val(data.batchNo || batchNo);
 
                 $("#TblFtdMaster_InternalRef")
-                    .val(data.internalRef || internalRef);
+                    .val(data.control || control);
 
                 $("#TblFtdMaster_SysReq")
                     .val(data.sysReq || "");

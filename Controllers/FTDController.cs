@@ -206,7 +206,7 @@ namespace FabricDevelopmentHub.Controllers
                 // -------------------------------------------------
                 // SAVE FTD MASTER
                 // -------------------------------------------------
-
+                model.TblFtdMaster.Control = model.TblFtdMaster.Control?.Split('|')[0].Trim();
                 var master = model.TblFtdMaster;
 
                 master.Trdate = DateOnly.FromDateTime(DateTime.Now);
