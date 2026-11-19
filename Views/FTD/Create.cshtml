@@ -16,6 +16,11 @@
         "Dyeing",
         StringComparison.OrdinalIgnoreCase
     );
+
+    bool isBpaUser = userName.EndsWith(
+        "bpa",
+        StringComparison.OrdinalIgnoreCase
+    );
 }
 
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -2728,7 +2733,7 @@
                                         name="Ltgid"
                                         asp-items="ViewBag.GroupList"
                                         class="form-select"
-                                        disabled="@(!isLabUser)">
+                                        disabled="@(!isLabUser && !isBpaUser)">
 
                                     <option value="">-- Select Group --</option>
 
@@ -2811,7 +2816,7 @@
                                         <select name="Remarks"
                                                 id="Remarks"
                                                 class="form-select"
-                                                disabled="@(!isLabUser)">
+                                                disabled="@(!isLabUser && !isBpaUser)">
 
                                             <option value="">-- Select Test Status --</option>
 
@@ -2920,7 +2925,7 @@
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
 
-
+@* Save Loader *@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
 
@@ -3104,8 +3109,17 @@
             )
     );
 
+    const isBpaUser = @Html.Raw(
+          System.Text.Json.JsonSerializer.Serialize(
+                    (User.Identity?.Name ?? "").EndsWith(
+                                    "bpa",
+                                    StringComparison.OrdinalIgnoreCase
+                    )
+          )
+    );
+
     $(document).ready(function () {
-        if (!isDyeingUser) {
+        if (!isDyeingUser && !isBpaUser) {
 
         const dyeingSection = $("#step-3");
 
@@ -3619,9 +3633,9 @@
                                     type="number"
                                     name="TblFtdKnit[${index}].Rpm"
                                     value="${escapeHtml(item.rpm)}"
-                                    class="form-control knit-rpm ${isKnittingUser ? '' : 'readonly-field'}"
+                                    class="form-control knit-rpm ${isKnittingUser || isBpaUser ? '' : 'readonly-field'}"
                                     step="any"
-                                    ${isKnittingUser ? '' : 'readonly'} />
+                                    ${isKnittingUser|| isBpaUser ? '' : 'readonly'} />
                             </td>
 
                             <td>
@@ -3667,7 +3681,7 @@
                                     name="FtdKnitPhotos[${index}]"
                                     class="form-control knit-photo"
                                     accept="image/*"
-                                    ${isKnittingUser ? '' : 'disabled'} />
+                                    ${isKnittingUser || isBpaUser ? '' : 'disabled'} />
                             </td>
 
                         </tr>
@@ -3991,8 +4005,8 @@
                                     type="text"
                                     name="TblFtdYarn[${index}].Remarks"
                                     value=""
-                                    class="form-control yarn-remarks ${isKnittingUser ? '' : 'readonly-field'}"
-                                    ${isKnittingUser ? '' : 'readonly'} />
+                                    class="form-control yarn-remarks ${isKnittingUser || isBpaUser ? '' : 'readonly-field'}"
+                                    ${isKnittingUser || isBpaUser ? '' : 'readonly'} />
                             </td>
 
                         </tr>

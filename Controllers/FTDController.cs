@@ -409,8 +409,7 @@ namespace FabricDevelopmentHub.Controllers
                 {
                     model.TblSqueezing.Ftdid = ftdId;
 
-                    _context.TblSqueezing.Add(
-                        model.TblSqueezing);
+                    _context.TblSqueezing.Add(model.TblSqueezing);
                 }
 
 
@@ -670,7 +669,8 @@ namespace FabricDevelopmentHub.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            // 1. Get Master
+            await LoadGroupList();
+
             var master = await _context.TblFtdMasters
                 .FirstOrDefaultAsync(x => x.Ftdid == id);
 
@@ -679,60 +679,134 @@ namespace FabricDevelopmentHub.Controllers
                 return NotFound();
             }
 
-            // 2. Initialize ViewModel with existing data
             var model = new FTDViewModel
             {
                 TblFtdMaster = master,
+
+                // -----------------------------------------
+                // LOAD FABRIC
+                // -----------------------------------------
 
                 TblFtdFabric = await _context.TblFtdFabrics
                     .Where(x => x.Ftdid == id)
                     .ToListAsync(),
 
+                // -----------------------------------------
+                // LOAD YARN
+                // -----------------------------------------
+
                 TblFtdYarn = await _context.TblFtdYarns
                     .Where(x => x.Ftdid == id)
                     .ToListAsync(),
+
+                // -----------------------------------------
+                // LOAD KNITTING
+                // -----------------------------------------
 
                 TblFtdKnit = await _context.TblFtdKnits
                     .Where(x => x.Ftdid == id)
                     .ToListAsync(),
 
+                // -----------------------------------------
+                // LOAD DYEING BASIC
+                // -----------------------------------------
+
                 TblFtdDyeingBasic = await _context.TblFtdDyeingBasics
                     .Where(x => x.Ftdid == id)
                     .ToListAsync(),
+
+                // -----------------------------------------
+                // LOAD DYEING RECIPE
+                // -----------------------------------------
 
                 TblFtdDyeingRecipe = await _context.TblFtdDyeingRecipes
                     .Where(x => x.Ftdid == id)
                     .ToListAsync(),
 
+                // -----------------------------------------
+                // LOAD LAB DETAILS
+                // -----------------------------------------
+
+                TblLabDetails = await _context.TblLabDetails
+                    .Where(x => x.Ftdid == id)
+                    .ToListAsync(),
+
+                // -----------------------------------------
+                // LOAD FINISH PROCESS
+                // -----------------------------------------
+
                 TblFinishProcessHeatset =
                     await _context.TblFinishProcessHeatset
-                        .FirstOrDefaultAsync(x => x.Ftdid == id)
-                    ?? new TblFinishProcessHeatset(),
+                        .FirstOrDefaultAsync(x => x.Ftdid == id),
 
                 TblFinishProcessStenteringAb =
                     await _context.TblFinishProcessStenteringAb
-                        .FirstOrDefaultAsync(x => x.Ftdid == id)
-                    ?? new TblFinishProcessStenteringAb(),
+                        .FirstOrDefaultAsync(x => x.Ftdid == id),
 
                 TblFinishProcessStenteringBb =
                     await _context.TblFinishProcessStenteringBb
+                        .FirstOrDefaultAsync(x => x.Ftdid == id),
+
+                TblSingeing =
+                    await _context.TblSingeing
+                        .FirstOrDefaultAsync(x => x.Ftdid == id),
+
+                TblSqueezing =
+                    await _context.TblSqueezing
+                        .FirstOrDefaultAsync(x => x.Ftdid == id),
+
+                TblBrush =
+                    await _context.TblBrushe
+                        .FirstOrDefaultAsync(x => x.Ftdid == id),
+
+                TblCompacting =
+                    await _context.TblCompacting
+                        .FirstOrDefaultAsync(x => x.Ftdid == id),
+
+                TblOtherProcess =
+                    await _context.TblOtherProcess
                         .FirstOrDefaultAsync(x => x.Ftdid == id)
-                    ?? new TblFinishProcessStenteringBb(),
-
-                TblSingeing = await _context.TblSingeing
-                    .FirstOrDefaultAsync(x => x.Ftdid == id)
-                    ?? new TblSingeing(),
-
-                TblSqueezing = await _context.TblSqueezing
-                    .FirstOrDefaultAsync(x => x.Ftdid == id)
-                    ?? new TblSqueezing(),
-
-                TblBrush = await _context.TblBrushe
-                    .FirstOrDefaultAsync(x => x.Ftdid == id)
-                    ?? new TblBrush()
             };
 
-            // 3. Load Control / Batch dropdown
+            // -----------------------------------------
+            // INITIALIZE EMPTY COLLECTIONS
+            // -----------------------------------------
+
+            model.TblFtdFabric ??= new List<TblFtdFabric>();
+            model.TblFtdYarn ??= new List<TblFtdYarn>();
+            model.TblFtdKnit ??= new List<TblFtdKnit>();
+            model.TblFtdDyeingBasic ??= new List<TblFtdDyeingBasic>();
+            model.TblFtdDyeingRecipe ??= new List<TblFtdDyeingRecipe>();
+            model.TblLabDetails ??= new List<TblLabDetails>();
+
+            // -----------------------------------------
+            // INITIALIZE FINISH PROCESS MODELS
+            // -----------------------------------------
+
+            model.TblFinishProcessHeatset ??= new TblFinishProcessHeatset();
+            model.TblFinishProcessStenteringAb ??= new TblFinishProcessStenteringAb();
+            model.TblFinishProcessStenteringBb ??= new TblFinishProcessStenteringBb();
+            model.TblSingeing ??= new TblSingeing();
+            model.TblSqueezing ??= new TblSqueezing();
+            model.TblBrush ??= new TblBrush();
+            model.TblCompacting ??= new TblCompacting();
+            model.TblOtherProcess ??= new TblOtherProcess();
+
+            // -----------------------------------------
+            // LOAD LAB TEST RESULTS
+            // -----------------------------------------
+
+            var existingResults = await _context.TblLabTestResults
+                .Where(x => x.Ftdid == id)
+                .ToListAsync();
+
+            // Map your existing result properties to your view model.
+            // This section depends on the exact Results model.
+
+            // -----------------------------------------
+            // CONTROL LIST
+            // -----------------------------------------
+
             var controlList = await _context.Database
                 .SqlQueryRaw<FTDControlDto>(
                     "EXEC dbo.SP_GET_FTD_CONTROL_LIST")
@@ -754,15 +828,20 @@ namespace FabricDevelopmentHub.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, FTDViewModel model)
         {
-            if (model.TblFtdMaster == null ||
-                id != model.TblFtdMaster.Ftdid)
+            if (id != model.TblFtdMaster.Ftdid)
             {
                 return BadRequest();
             }
 
+            // -----------------------------------------
+            // MODEL VALIDATION
+            // -----------------------------------------
+
             if (!ModelState.IsValid)
             {
                 await ReloadCreateDropdowns();
+                await LoadGroupList();
+
                 return View(model);
             }
 
@@ -771,7 +850,10 @@ namespace FabricDevelopmentHub.Controllers
 
             try
             {
-                // 1. Update Master
+                // -----------------------------------------
+                // GET EXISTING MASTER
+                // -----------------------------------------
+
                 var master = await _context.TblFtdMasters
                     .FirstOrDefaultAsync(x => x.Ftdid == id);
 
@@ -780,178 +862,590 @@ namespace FabricDevelopmentHub.Controllers
                     return NotFound();
                 }
 
-                CopyNonKeyValues(master, model.TblFtdMaster);
+                // -----------------------------------------
+                // UPDATE MASTER
+                // -----------------------------------------
 
-                // 2. Update / Insert Fabric
+                var updatedMaster = model.TblFtdMaster;
+
+                _context.Entry(master).CurrentValues.SetValues(updatedMaster);
+
+                // Preserve original creation date if it should not change.
+                // Set it explicitly here if your application requires it.
+
+                // -----------------------------------------
+                // UPDATE DRD PHOTO
+                // -----------------------------------------
+
+                if (model.DrdPhoto != null &&
+                    model.DrdPhoto.Length > 0)
+                {
+                    using var memoryStream = new MemoryStream();
+
+                    await model.DrdPhoto.CopyToAsync(memoryStream);
+
+                    master.DrdPhoto = memoryStream.ToArray();
+
+                    master.DrdPhotoContentType =
+                        model.DrdPhoto.ContentType;
+                }
+
+                // -----------------------------------------
+                // UPDATE FABRIC
+                // -----------------------------------------
+
+                var oldFabric = await _context.TblFtdFabrics
+                    .Where(x => x.Ftdid == id)
+                    .ToListAsync();
+
+                _context.TblFtdFabrics.RemoveRange(oldFabric);
+
                 if (model.TblFtdFabric != null)
                 {
                     foreach (var item in model.TblFtdFabric)
                     {
                         item.Ftdid = id;
 
-                        if (item.Trid == 0)
-                        {
-                            _context.TblFtdFabrics.Add(item);
-                        }
-                        else
-                        {
-                            var existing = await _context.TblFtdFabrics
-                                .FirstOrDefaultAsync(x =>
-                                    x.Trid == item.Trid && x.Ftdid == id);
-
-                            if (existing == null)
-                                throw new InvalidOperationException(
-                                    $"Fabric TRID {item.Trid} not found.");
-
-                            CopyNonKeyValues(existing, item);
-                        }
+                        _context.TblFtdFabrics.Add(item);
                     }
                 }
 
-                // 3. Update / Insert Yarn
+                // -----------------------------------------
+                // UPDATE YARN
+                // -----------------------------------------
+
+                var oldYarn = await _context.TblFtdYarns
+                    .Where(x => x.Ftdid == id)
+                    .ToListAsync();
+
+                _context.TblFtdYarns.RemoveRange(oldYarn);
+
                 if (model.TblFtdYarn != null)
                 {
                     foreach (var item in model.TblFtdYarn)
                     {
                         item.Ftdid = id;
 
-                        if (item.Trid == 0)
-                        {
-                            _context.TblFtdYarns.Add(item);
-                        }
-                        else
-                        {
-                            var existing = await _context.TblFtdYarns
-                                .FirstOrDefaultAsync(x =>
-                                    x.Trid == item.Trid && x.Ftdid == id);
-
-                            if (existing == null)
-                                throw new InvalidOperationException(
-                                    $"Yarn TRID {item.Trid} not found.");
-
-                            CopyNonKeyValues(existing, item);
-                        }
+                        _context.TblFtdYarns.Add(item);
                     }
                 }
 
-                // 4. Update / Insert Knit
+                // -----------------------------------------
+                // UPDATE KNITTING
+                // -----------------------------------------
+
+                var oldKnit = await _context.TblFtdKnits
+                    .Where(x => x.Ftdid == id)
+                    .ToListAsync();
+
+                _context.TblFtdKnits.RemoveRange(oldKnit);
+
                 if (model.TblFtdKnit != null)
                 {
-                    foreach (var item in model.TblFtdKnit)
+                    for (int i = 0; i < model.TblFtdKnit.Count; i++)
                     {
+                        var item = model.TblFtdKnit[i];
+
                         item.Ftdid = id;
 
-                        // GsPhotoContentType is nullable.
-                        // Do not force it to an empty string.
+                        var photo = Request.Form.Files.GetFile(
+                            $"FtdKnitPhotos[{i}]");
 
-                        if (item.Trid == 0)
+                        if (photo != null && photo.Length > 0)
                         {
-                            _context.TblFtdKnits.Add(item);
-                        }
-                        else
-                        {
-                            var existing = await _context.TblFtdKnits
-                                .FirstOrDefaultAsync(x =>
-                                    x.Trid == item.Trid && x.Ftdid == id);
+                            using var memoryStream = new MemoryStream();
 
-                            if (existing == null)
-                                throw new InvalidOperationException(
-                                    $"Knit TRID {item.Trid} not found.");
+                            await photo.CopyToAsync(memoryStream);
 
-                            CopyNonKeyValues(existing, item);
+                            item.Photo = memoryStream.ToArray();
+
+                            item.PhotoContentType = photo.ContentType;
                         }
+
+                        _context.TblFtdKnits.Add(item);
                     }
                 }
 
-                // 5. Update / Insert Dyeing Basic
+                // -----------------------------------------
+                // UPDATE DYEING BASIC
+                // -----------------------------------------
+
+                var oldDyeingBasic = await _context.TblFtdDyeingBasics
+                    .Where(x => x.Ftdid == id)
+                    .ToListAsync();
+
+                _context.TblFtdDyeingBasics.RemoveRange(oldDyeingBasic);
+
                 if (model.TblFtdDyeingBasic != null)
                 {
                     foreach (var item in model.TblFtdDyeingBasic)
                     {
+                        item.Ftdid = id;
 
-                        if (item.Trid == 0)
-                        {
-                            _context.TblFtdDyeingBasics.Add(item);
-                        }
-                        else
-                        {
-                            var existing = await _context.TblFtdDyeingBasics
-                                .FirstOrDefaultAsync(x =>
-                                    x.Trid == item.Trid);
-
-                            if (existing == null)
-                                throw new InvalidOperationException(
-                                    $"Dyeing Basic TRID {item.Trid} not found.");
-
-                            CopyNonKeyValues(existing, item);
-                        }
+                        _context.TblFtdDyeingBasics.Add(item);
                     }
                 }
 
-                // 6. Update / Insert Dyeing Recipe
+                // -----------------------------------------
+                // UPDATE LAB DETAILS
+                // -----------------------------------------
+
+                var oldLabDetails = await _context.TblLabDetails
+                    .Where(x => x.Ftdid == id)
+                    .ToListAsync();
+
+                _context.TblLabDetails.RemoveRange(oldLabDetails);
+
+                if (model.TblLabDetails != null)
+                {
+                    foreach (var item in model.TblLabDetails)
+                    {
+                        item.Ftdid = id;
+
+                        _context.TblLabDetails.Add(item);
+                    }
+                }
+
+                // -----------------------------------------
+                // UPDATE DYEING RECIPE
+                // -----------------------------------------
+
+                var oldRecipes = await _context.TblFtdDyeingRecipes
+                    .Where(x => x.Ftdid == id)
+                    .ToListAsync();
+
+                _context.TblFtdDyeingRecipes.RemoveRange(oldRecipes);
+
                 if (model.TblFtdDyeingRecipe != null)
                 {
                     foreach (var item in model.TblFtdDyeingRecipe)
                     {
-                        if (item.Trid == 0)
-                        {
-                            _context.TblFtdDyeingRecipes.Add(item);
-                        }
-                        else
-                        {
-                            var existing = await _context.TblFtdDyeingRecipes
-                                .FirstOrDefaultAsync(x =>
-                                    x.Trid == item.Trid);
+                        item.Ftdid = id;
 
-                            if (existing == null)
-                                throw new InvalidOperationException(
-                                    $"Dyeing Recipe TRID {item.Trid} not found.");
-
-                            CopyNonKeyValues(existing, item);
-                        }
+                        _context.TblFtdDyeingRecipes.Add(item);
                     }
                 }
 
-                // 7. Update / Insert Heatset
-                await SaveSingleChild(
-                    id,
-                    model.TblFinishProcessHeatset,
-                    _context.TblFinishProcessHeatset);
+                // -----------------------------------------
+                // UPDATE FINISH PROCESS - HEATSET
+                // -----------------------------------------
 
-                // 8. Update / Insert Stentering A/B
-                await SaveSingleChild(
-                    id,
-                    model.TblFinishProcessStenteringAb,
-                    _context.TblFinishProcessStenteringAb);
+                var heatset = await _context.TblFinishProcessHeatset
+                    .FirstOrDefaultAsync(x => x.Ftdid == id);
 
-                // 9. Update / Insert Stentering B/B
-                await SaveSingleChild(
-                    id,
-                    model.TblFinishProcessStenteringBb,
-                    _context.TblFinishProcessStenteringBb);
+                if (heatset != null)
+                {
+                    if (model.TblFinishProcessHeatset != null)
+                    {
+                        var source = model.TblFinishProcessHeatset;
 
-                // 10. Update / Insert Singeing
-                await SaveSingleChild(
-                    id,
-                    model.TblSingeing,
-                    _context.TblSingeing);
+                        heatset.Noc = source.Noc;
+                        heatset.Nop = source.Nop;
+                        heatset.DweelTime = source.DweelTime;
+                        heatset.GreyDia = source.GreyDia;
+                        heatset.GreyGsm = source.GreyGsm;
+                        heatset.Temp = source.Temp;
+                        heatset.Speed = source.Speed;
+                        heatset.OFeed = source.OFeed;
+                        heatset.UFeed = source.UFeed;
+                        heatset.Blower = source.Blower;
+                        heatset.Pp = source.Pp;
+                        heatset.SettingDia = source.SettingDia;
+                        heatset.ChemicalName = source.ChemicalName;
+                        heatset.Ratio = source.Ratio;
+                        heatset.AHeatsetGsm = source.AHeatsetGsm;
+                        heatset.AHeatsetDia = source.AHeatsetDia;
+                        heatset.Comments = source.Comments;
+                    }
+                }
+                else if (model.TblFinishProcessHeatset != null)
+                {
+                    model.TblFinishProcessHeatset.Ftdid = id;
 
-                // 11. Update / Insert Squeezing
-                await SaveSingleChild(
-                    id,
-                    model.TblSqueezing,
-                    _context.TblSqueezing);
+                    _context.TblFinishProcessHeatset.Add(
+                        model.TblFinishProcessHeatset
+                    );
+                }
 
-                // 12. Update / Insert Brush
-                await SaveSingleChild(
-                    id,
-                    model.TblBrush,
-                    _context.TblBrushe);
+                // -----------------------------------------
+                // UPDATE STENTERING A/B
+                // -----------------------------------------
 
-                // 13. Save all changes
+                var stenterAb = await _context.TblFinishProcessStenteringAb
+                    .FirstOrDefaultAsync(x => x.Ftdid == id);
+
+                if (stenterAb != null)
+                {
+                    if (model.TblFinishProcessStenteringAb != null)
+                    {
+                        var source = model.TblFinishProcessStenteringAb;
+
+                        var entry = _context.Entry(stenterAb);
+
+                        foreach (var property in entry.Metadata.GetProperties())
+                        {
+                            // Never update Primary Key or Foreign Key
+                            if (property.Name == nameof(stenterAb.Trid) ||
+                                property.Name == nameof(stenterAb.Ftdid))
+                            {
+                                continue;
+                            }
+
+                            var sourceProperty = source.GetType()
+                                .GetProperty(property.Name);
+
+                            if (sourceProperty != null)
+                            {
+                                entry.Property(property.Name).CurrentValue =
+                                    sourceProperty.GetValue(source);
+                            }
+                        }
+                    }
+                }
+                else if (model.TblFinishProcessStenteringAb != null)
+                {
+                    model.TblFinishProcessStenteringAb.Ftdid = id;
+
+                    _context.TblFinishProcessStenteringAb.Add(
+                        model.TblFinishProcessStenteringAb
+                    );
+                }
+
+                // -----------------------------------------
+                // UPDATE STENTERING B/B
+                // -----------------------------------------
+
+                var stenterBb = await _context.TblFinishProcessStenteringBb
+                    .FirstOrDefaultAsync(x => x.Ftdid == id);
+
+                if (stenterBb != null)
+                {
+                    if (model.TblFinishProcessStenteringBb != null)
+                    {
+                        var source = model.TblFinishProcessStenteringBb;
+
+                        var entry = _context.Entry(stenterBb);
+
+                        foreach (var property in entry.Metadata.GetProperties())
+                        {
+                            // Never update Primary Key or Foreign Key
+                            if (property.Name == nameof(stenterBb.Trid) ||
+                                property.Name == nameof(stenterBb.Ftdid))
+                            {
+                                continue;
+                            }
+
+                            var sourceProperty = source.GetType()
+                                .GetProperty(property.Name);
+
+                            if (sourceProperty != null)
+                            {
+                                entry.Property(property.Name).CurrentValue =
+                                    sourceProperty.GetValue(source);
+                            }
+                        }
+                    }
+                }
+                else if (model.TblFinishProcessStenteringBb != null)
+                {
+                    model.TblFinishProcessStenteringBb.Ftdid = id;
+
+                    _context.TblFinishProcessStenteringBb.Add(
+                        model.TblFinishProcessStenteringBb
+                    );
+                }
+
+                // UPDATE SINGEING
+                var singeing = await _context.TblSingeing.FirstOrDefaultAsync(x => x.Ftdid == id);
+                if (singeing != null)
+                {
+                    if (model.TblSingeing != null)
+                    {
+                        var source = model.TblSingeing;
+
+                        var entry = _context.Entry(singeing);
+
+                        foreach (var property in entry.Metadata.GetProperties())
+                        {
+                            // Never update Primary Key or Foreign Key
+                            if (property.Name == nameof(stenterAb.Trid) ||
+                                property.Name == nameof(stenterAb.Ftdid))
+                            {
+                                continue;
+                            }
+
+                            var sourceProperty = source.GetType()
+                                .GetProperty(property.Name);
+
+                            if (sourceProperty != null)
+                            {
+                                entry.Property(property.Name).CurrentValue =
+                                    sourceProperty.GetValue(source);
+                            }
+                        }
+                    }
+                }
+                else if (model.TblSingeing != null)
+                {
+                    model.TblSingeing.Ftdid = id;
+
+                    _context.TblSingeing.Add(
+                        model.TblSingeing
+                    );
+                }
+
+                // UPDATE SQUEEZING
+                var squeezing = await _context.TblSqueezing.FirstOrDefaultAsync(x => x.Ftdid == id);
+                if (squeezing != null)
+                {
+                    if (model.TblSqueezing != null)
+                    {
+                        var source = model.TblSqueezing;
+
+                        var entry = _context.Entry(squeezing);
+
+                        foreach (var property in entry.Metadata.GetProperties())
+                        {
+                            // Never update Primary Key or Foreign Key
+                            if (property.Name == nameof(stenterAb.Trid) ||
+                                property.Name == nameof(stenterAb.Ftdid))
+                            {
+                                continue;
+                            }
+
+                            var sourceProperty = source.GetType()
+                                .GetProperty(property.Name);
+
+                            if (sourceProperty != null)
+                            {
+                                entry.Property(property.Name).CurrentValue =
+                                    sourceProperty.GetValue(source);
+                            }
+                        }
+                    }
+                }
+                else if (model.TblSqueezing != null)
+                {
+                    model.TblSqueezing.Ftdid = id;
+                    _context.TblSqueezing.Add(model.TblSqueezing);
+                }
+
+                // UPDATE BRUSH
+                var brush = await _context.TblBrushe.FirstOrDefaultAsync(x => x.Ftdid == id);
+                if (brush != null)
+                {
+                    if (model.TblBrush != null)
+                    {
+                        var source = model.TblBrush;
+
+                        var entry = _context.Entry(brush);
+
+                        foreach (var property in entry.Metadata.GetProperties())
+                        {
+                            // Never update Primary Key or Foreign Key
+                            if (property.Name == nameof(stenterAb.Trid) ||
+                                property.Name == nameof(stenterAb.Ftdid))
+                            {
+                                continue;
+                            }
+
+                            var sourceProperty = source.GetType()
+                                .GetProperty(property.Name);
+
+                            if (sourceProperty != null)
+                            {
+                                entry.Property(property.Name).CurrentValue =
+                                    sourceProperty.GetValue(source);
+                            }
+                        }
+                    }
+                }
+                else if (model.TblBrush != null)
+                {
+                    model.TblBrush.Ftdid = id;
+                    _context.TblBrushe.Add(model.TblBrush);
+                }
+
+                // UPDATE COMPACTING
+                var compacting = await _context.TblCompacting.FirstOrDefaultAsync(x => x.Ftdid == id);
+                if (compacting != null)
+                {
+                    if (model.TblCompacting != null)
+                    {
+                        var source = model.TblCompacting;
+
+                        var entry = _context.Entry(compacting);
+
+                        foreach (var property in entry.Metadata.GetProperties())
+                        {
+                            // Never update Primary Key or Foreign Key
+                            if (property.Name == nameof(stenterAb.Trid) ||
+                                property.Name == nameof(stenterAb.Ftdid))
+                            {
+                                continue;
+                            }
+
+                            var sourceProperty = source.GetType()
+                                .GetProperty(property.Name);
+
+                            if (sourceProperty != null)
+                            {
+                                entry.Property(property.Name).CurrentValue =
+                                    sourceProperty.GetValue(source);
+                            }
+                        }
+                    }
+                }
+                else if (model.TblCompacting != null)
+                {
+                    model.TblCompacting.Ftdid = id;
+                    _context.TblCompacting.Add(model.TblCompacting);
+                }
+
+                // UPDATE OTHER PROCESS
+
+                var otherProcess = await _context.TblOtherProcess.FirstOrDefaultAsync(x => x.Ftdid == id);
+                if (otherProcess != null)
+                {
+                    if (model.TblOtherProcess != null)
+                    {
+                        var source = model.TblOtherProcess;
+
+                        var entry = _context.Entry(squeezing);
+
+                        foreach (var property in entry.Metadata.GetProperties())
+                        {
+                            // Never update Primary Key or Foreign Key
+                            if (property.Name == nameof(stenterAb.Trid) ||
+                                property.Name == nameof(stenterAb.Ftdid))
+                            {
+                                continue;
+                            }
+
+                            var sourceProperty = source.GetType()
+                                .GetProperty(property.Name);
+
+                            if (sourceProperty != null)
+                            {
+                                entry.Property(property.Name).CurrentValue =
+                                    sourceProperty.GetValue(source);
+                            }
+                        }
+                    }
+                }
+                else if (model.TblOtherProcess != null)
+                {
+                    model.TblOtherProcess.Ftdid = id;
+                    _context.TblOtherProcess.Add(model.TblOtherProcess);
+                }
+
+
+                // -----------------------------------------
+                // UPDATE LAB TEST RESULTS
+                // -----------------------------------------
+
+                if (model.Results != null && model.Results.Any())
+                {
+                    var validTest = await _context.TblLabTestNames
+                        .AnyAsync(x =>
+                            x.Ltnid == model.Ltnid &&
+                            x.Ltgid == model.Ltgid &&
+                            x.Status == "Active");
+
+                    if (!validTest)
+                    {
+                        throw new InvalidOperationException(
+                            "Invalid Group or Test Name.");
+                    }
+
+                    var validMethod = await _context.TblLabTestMethods
+                        .AnyAsync(x =>
+                            x.Ltmid == model.Ltmid &&
+                            x.Ltnid == model.Ltnid &&
+                            x.Status == "Active");
+
+                    if (!validMethod)
+                    {
+                        throw new InvalidOperationException(
+                            "Invalid Method selected.");
+                    }
+
+                    var parameterIds = model.Results
+                        .Select(x => x.ParameterId)
+                        .ToList();
+
+                    if (parameterIds.Distinct().Count() != parameterIds.Count)
+                    {
+                        throw new InvalidOperationException(
+                            "Duplicate parameters found.");
+                    }
+
+                    var validParameters = await _context.TblLabTestParameters
+                        .Where(x =>
+                            x.Ltnid == model.Ltnid &&
+                            x.Status == "Active" &&
+                            parameterIds.Contains(x.ParameterId))
+                        .Select(x => x.ParameterId)
+                        .ToListAsync();
+
+                    if (validParameters.Count != parameterIds.Count)
+                    {
+                        throw new InvalidOperationException(
+                            "Invalid Test Parameters.");
+                    }
+
+                    var enteredResults = model.Results
+                        .Where(x =>
+                            !string.IsNullOrWhiteSpace(x.ResultValue))
+                        .ToList();
+
+                    if (!enteredResults.Any())
+                    {
+                        throw new InvalidOperationException(
+                            "Please enter at least one result.");
+                    }
+
+                    // Delete old results and insert updated results.
+
+                    var oldResults = await _context.TblLabTestResults
+                        .Where(x => x.Ftdid == id)
+                        .ToListAsync();
+
+                    _context.TblLabTestResults.RemoveRange(oldResults);
+
+                    var resultList = enteredResults.Select(x =>
+                        new TblLabTestResult
+                        {
+                            Ftdid = id,
+                            Ltnid = model.Ltnid,
+                            ParameterId = x.ParameterId,
+                            ResultValue = x.ResultValue!.Trim(),
+                            EntryDate = DateTime.Now,
+                            Remarks = model.Remarks
+                        })
+                        .ToList();
+
+                    _context.TblLabTestResults.AddRange(resultList);
+                }
+                else
+                {
+                    var oldResults = await _context.TblLabTestResults
+                        .Where(x => x.Ftdid == id)
+                        .ToListAsync();
+
+                    _context.TblLabTestResults.RemoveRange(oldResults);
+                }
+
+                // -----------------------------------------
+                // SAVE ALL CHANGES
+                // -----------------------------------------
+
                 await _context.SaveChangesAsync();
 
-                // 14. Commit
+                // -----------------------------------------
+                // COMMIT
+                // -----------------------------------------
+
                 await transaction.CommitAsync();
 
                 TempData["SuccessMessage"] =
@@ -961,18 +1455,32 @@ namespace FabricDevelopmentHub.Controllers
             }
             catch (Exception ex)
             {
-                await transaction.RollbackAsync();
-
                 _logger.LogError(
                     ex,
-                    "Failed to update FTD ID: {FtdId}",
+                    "Failed to update FTD. FTD ID: {FtdId}",
                     id);
+
+                try
+                {
+                    await transaction.RollbackAsync();
+                }
+                catch (Exception rollbackEx)
+                {
+                    _logger.LogError(
+                        rollbackEx,
+                        "Rollback failed while updating FTD.");
+                }
+
+                TempData["ErrorMessage"] =
+                    "Failed to update FTD data. Please check your input.";
 
                 ModelState.AddModelError(
                     string.Empty,
-                    "Failed to update FTD. Check application logs.");
+                    "Failed to update FTD data. Check application logs.");
 
                 await ReloadCreateDropdowns();
+                await LoadGroupList();
+
                 return View(model);
             }
         }
@@ -1784,6 +2292,326 @@ namespace FabricDevelopmentHub.Controllers
             {
                 ftdNo = ftdNumber
             });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                // -------------------------------------------------
+                // FIND FTD MASTER
+                // -------------------------------------------------
+
+                var master = await _context.TblFtdMasters
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(x => x.Ftdid == id);
+
+                if (master == null)
+                {
+                    TempData["ErrorMessage"] = "FTD record not found.";
+                    return RedirectToAction(nameof(FTDList));
+                }
+
+                // -------------------------------------------------
+                // LOAD VIEW MODEL
+                // -------------------------------------------------
+
+                var model = new FTDViewModel
+                {
+                    TblFtdMaster = master
+                };
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(
+                    ex,
+                    "Error loading FTD Delete page. FTD ID: {FtdId}",
+                    id);
+
+                TempData["ErrorMessage"] =
+                    "Failed to load FTD details.";
+
+                return RedirectToAction(nameof(FTDList));
+            }
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ConfirmDelete(int id)
+        {
+            await using var transaction =
+                await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                // -------------------------------------------------
+                // FIND FTD MASTER
+                // -------------------------------------------------
+
+                var master = await _context.TblFtdMasters
+                    .FirstOrDefaultAsync(x => x.Ftdid == id);
+
+                if (master == null)
+                {
+                    TempData["ErrorMessage"] =
+                        "FTD record not found.";
+
+                    return RedirectToAction(nameof(FTDList));
+                }
+
+
+                // -------------------------------------------------
+                // DELETE LAB TEST RESULTS
+                // -------------------------------------------------
+
+                var labResults = await _context.TblLabTestResults
+                    .Where(x => x.Ftdid == id)
+                    .ToListAsync();
+
+                if (labResults.Any())
+                {
+                    _context.TblLabTestResults.RemoveRange(labResults);
+                }
+
+
+                // -------------------------------------------------
+                // DELETE FABRIC DETAILS
+                // -------------------------------------------------
+
+                var fabrics = await _context.TblFtdFabrics
+                    .Where(x => x.Ftdid == id)
+                    .ToListAsync();
+
+                _context.TblFtdFabrics.RemoveRange(fabrics);
+
+
+                // -------------------------------------------------
+                // DELETE YARN DETAILS
+                // -------------------------------------------------
+
+                var yarns = await _context.TblFtdYarns
+                    .Where(x => x.Ftdid == id)
+                    .ToListAsync();
+
+                _context.TblFtdYarns.RemoveRange(yarns);
+
+
+                // -------------------------------------------------
+                // DELETE KNITTING DETAILS
+                // -------------------------------------------------
+
+                var knits = await _context.TblFtdKnits
+                    .Where(x => x.Ftdid == id)
+                    .ToListAsync();
+
+                _context.TblFtdKnits.RemoveRange(knits);
+
+
+                // -------------------------------------------------
+                // DELETE DYEING BASIC DETAILS
+                // -------------------------------------------------
+
+                var dyeingBasics = await _context.TblFtdDyeingBasics
+                    .Where(x => x.Ftdid == id)
+                    .ToListAsync();
+
+                _context.TblFtdDyeingBasics.RemoveRange(dyeingBasics);
+
+
+                // -------------------------------------------------
+                // DELETE LAB DETAILS
+                // -------------------------------------------------
+
+                var labDetails = await _context.TblLabDetails
+                    .Where(x => x.Ftdid == id)
+                    .ToListAsync();
+
+                _context.TblLabDetails.RemoveRange(labDetails);
+
+
+                // -------------------------------------------------
+                // DELETE DYEING RECIPE DETAILS
+                // -------------------------------------------------
+
+                var dyeingRecipes = await _context.TblFtdDyeingRecipes
+                    .Where(x => x.Ftdid == id)
+                    .ToListAsync();
+
+                _context.TblFtdDyeingRecipes.RemoveRange(dyeingRecipes);
+
+
+                // -------------------------------------------------
+                // DELETE HEATSET
+                // -------------------------------------------------
+
+                var heatset = await _context.TblFinishProcessHeatset
+                    .Where(x => x.Ftdid == id)
+                    .ToListAsync();
+
+                _context.TblFinishProcessHeatset.RemoveRange(heatset);
+
+
+                // -------------------------------------------------
+                // DELETE STENTERING A/B
+                // -------------------------------------------------
+
+                var stenteringAb = await _context.TblFinishProcessStenteringAb
+                    .Where(x => x.Ftdid == id)
+                    .ToListAsync();
+
+                _context.TblFinishProcessStenteringAb.RemoveRange(stenteringAb);
+
+
+                // -------------------------------------------------
+                // DELETE STENTERING B/B
+                // -------------------------------------------------
+
+                var stenteringBb = await _context.TblFinishProcessStenteringBb
+                    .Where(x => x.Ftdid == id)
+                    .ToListAsync();
+
+                _context.TblFinishProcessStenteringBb.RemoveRange(stenteringBb);
+
+
+                // -------------------------------------------------
+                // DELETE SINGEING
+                // -------------------------------------------------
+
+                var singeing = await _context.TblSingeing
+                    .Where(x => x.Ftdid == id)
+                    .ToListAsync();
+
+                _context.TblSingeing.RemoveRange(singeing);
+
+
+                // -------------------------------------------------
+                // DELETE SQUEEZING
+                // -------------------------------------------------
+
+                var squeezing = await _context.TblSqueezing
+                    .Where(x => x.Ftdid == id)
+                    .ToListAsync();
+
+                _context.TblSqueezing.RemoveRange(squeezing);
+
+
+                // -------------------------------------------------
+                // DELETE BRUSH
+                // -------------------------------------------------
+
+                var brush = await _context.TblBrushe
+                    .Where(x => x.Ftdid == id)
+                    .ToListAsync();
+
+                _context.TblBrushe.RemoveRange(brush);
+
+
+                // -------------------------------------------------
+                // DELETE COMPACTING
+                // -------------------------------------------------
+
+                var compacting = await _context.TblCompacting
+                    .Where(x => x.Ftdid == id)
+                    .ToListAsync();
+
+                _context.TblCompacting.RemoveRange(compacting);
+
+
+                // -------------------------------------------------
+                // DELETE OTHER PROCESS
+                // -------------------------------------------------
+
+                var otherProcess = await _context.TblOtherProcess
+                    .Where(x => x.Ftdid == id)
+                    .ToListAsync();
+
+                _context.TblOtherProcess.RemoveRange(otherProcess);
+
+
+                // -------------------------------------------------
+                // SAVE CHILD RECORD DELETIONS
+                // -------------------------------------------------
+
+                await _context.SaveChangesAsync();
+
+
+                // -------------------------------------------------
+                // DELETE FTD MASTER
+                // -------------------------------------------------
+
+                _context.TblFtdMasters.Remove(master);
+
+                await _context.SaveChangesAsync();
+
+
+                // -------------------------------------------------
+                // COMMIT TRANSACTION
+                // -------------------------------------------------
+
+                await transaction.CommitAsync();
+
+                TempData["SuccessMessage"] =
+                    "FTD deleted successfully.";
+
+                return RedirectToAction(nameof(FTDList));
+            }
+            catch (Exception ex)
+            {
+                // -------------------------------------------------
+                // LOG ERROR
+                // -------------------------------------------------
+
+                _logger.LogError(
+                    ex,
+                    "Failed to delete FTD. FTD ID: {FtdId}",
+                    id);
+
+
+                // -------------------------------------------------
+                // GET ROOT EXCEPTION
+                // -------------------------------------------------
+
+                var sqlError = ex;
+
+                while (sqlError.InnerException != null)
+                {
+                    sqlError = sqlError.InnerException;
+                }
+
+                _logger.LogError(
+                    "Root exception: {ExceptionMessage}",
+                    sqlError.Message);
+
+
+                // -------------------------------------------------
+                // ROLLBACK TRANSACTION
+                // -------------------------------------------------
+
+                try
+                {
+                    await transaction.RollbackAsync();
+                }
+                catch (Exception rollbackEx)
+                {
+                    _logger.LogError(
+                        rollbackEx,
+                        "Rollback failed while deleting FTD.");
+                }
+
+
+                // -------------------------------------------------
+                // ERROR MESSAGE
+                // -------------------------------------------------
+
+                TempData["ErrorMessage"] =
+                    "Failed to delete FTD data. Please try again.";
+
+                return RedirectToAction(nameof(FTDList));
+            }
         }
     }
 }
