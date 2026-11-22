@@ -30,7 +30,7 @@ public partial class TblCompacting
 
     public double? RGsm { get; set; }
 
-    public double? Shrinkage { get; set; }
+    public string? Shrinkage { get; set; }
 
     public double? Comments { get; set; }
 }

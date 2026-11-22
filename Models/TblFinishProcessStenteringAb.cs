@@ -31,7 +31,7 @@ public partial class TblFinishProcessStenteringAb
 
     public double? AGsm { get; set; }
 
-    public double? AShrinkage { get; set; }
+    public string? AShrinkage { get; set; }
 
     public string? Comments { get; set; }
 }

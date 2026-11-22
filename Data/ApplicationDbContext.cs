@@ -431,7 +431,7 @@ namespace FabricDevelopmentHub.Data
                 entity.Property(e => e.Trid).HasColumnName("TRID");
                 entity.Property(e => e.ADia).HasColumnName("A_DIA");
                 entity.Property(e => e.AGsm).HasColumnName("A_GSM");
-                entity.Property(e => e.AShrinkage).HasColumnName("A_SHRINKAGE");
+                entity.Property(e => e.AShrinkage).HasMaxLength(50).HasColumnName("A_SHRINKAGE");
                 entity.Property(e => e.BlowerSpeed).HasColumnName("BLOWER_SPEED");
                 entity.Property(e => e.Chemical).HasMaxLength(50).HasColumnName("CHEMICAL");
                 entity.Property(e => e.Comments).HasMaxLength(500).HasColumnName("COMMENTS");
@@ -454,7 +454,7 @@ namespace FabricDevelopmentHub.Data
                 entity.Property(e => e.Trid).HasColumnName("TRID");
                 entity.Property(e => e.ADia).HasColumnName("A_DIA");
                 entity.Property(e => e.AGsm).HasColumnName("A_GSM");
-                entity.Property(e => e.AShrinkage).HasColumnName("A_SHRINKAGE");
+                entity.Property(e => e.AShrinkage).HasMaxLength(50).HasColumnName("A_SHRINKAGE");
                 entity.Property(e => e.BlowerSpeed).HasColumnName("BLOWER_SPEED");
                 entity.Property(e => e.Chemical).HasMaxLength(50).HasColumnName("CHEMICAL");
                 entity.Property(e => e.Comments).HasMaxLength(500).HasColumnName("COMMENTS");
@@ -536,7 +536,7 @@ namespace FabricDevelopmentHub.Data
                 entity.Property(e => e.OFeed).HasColumnName("O_FEED");
                 entity.Property(e => e.RDia).HasColumnName("R_DIA");
                 entity.Property(e => e.RGsm).HasColumnName("R_GSM");
-                entity.Property(e => e.Shrinkage).HasColumnName("SHRINKAGE");
+                entity.Property(e => e.Shrinkage).HasMaxLength(50).HasColumnName("SHRINKAGE");
                 entity.Property(e => e.Speed).HasColumnName("SPEED");
                 entity.Property(e => e.Steam).HasColumnName("STEAM");
                 entity.Property(e => e.Temp).HasColumnName("TEMP");
