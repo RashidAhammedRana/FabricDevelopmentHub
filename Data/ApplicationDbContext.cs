@@ -271,7 +271,7 @@ namespace FabricDevelopmentHub.Data
                     .HasMaxLength(50)
                     .HasColumnName("CREATED_BY");
                 entity.Property(e => e.FtdNo).HasMaxLength(50).HasColumnName("FTD_NO");
-                entity.Property(e => e.StyleRef).HasMaxLength(50).HasColumnName("STYLE_REF");
+                entity.Property(e => e.StyleRef).HasMaxLength(250).HasColumnName("STYLE_REF");
                 entity.Property(e => e.SysReq).HasMaxLength(50).HasColumnName("SYS_REQ");
                 entity.Property(e => e.Trdate).HasColumnName("TRDATE");
                 entity.Property(e => e.UpdatedAt)
