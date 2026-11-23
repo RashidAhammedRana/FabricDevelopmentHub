@@ -2613,5 +2613,45 @@ namespace FabricDevelopmentHub.Controllers
                 return RedirectToAction(nameof(FTDList));
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> CheckBatchAlreadyExists(string batchNo)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(batchNo))
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        exists = false,
+                        message = "Batch No. is required."
+                    });
+                }
+
+                batchNo = batchNo.Trim();
+
+                bool exists = await _context.TblFtdMasters
+                    .AnyAsync(x => x.BatchNo == batchNo);
+
+                return Json(new
+                {
+                    success = true,
+                    exists = exists,
+                    message = exists
+                        ? "This Batch No. already exists in FTD."
+                        : "Batch No. is available."
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    exists = false,
+                    message = ex.Message
+                });
+            }
+        }
     }
+
 }

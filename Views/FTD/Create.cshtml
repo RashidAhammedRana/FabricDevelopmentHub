@@ -29,8 +29,8 @@
 <style>
 
     /* =========================================
-                                   FTD STEPPER
-                                   ========================================= */
+                                       FTD STEPPER
+                                       ========================================= */
 
     .stepper-wrapper {
         display: flex;
@@ -125,8 +125,8 @@
     }
 
     /* =========================================
-                                   STEP CONTENT
-                                   ========================================= */
+                                       STEP CONTENT
+                                       ========================================= */
 
     .step-content {
         display: none;
@@ -150,8 +150,8 @@
     }
 
     /* =========================================
-                                   STEPPER ACTION BUTTONS
-                                   ========================================= */
+                                       STEPPER ACTION BUTTONS
+                                       ========================================= */
 
     .ftd-actions {
         display: flex;
@@ -187,8 +187,8 @@
         }
 
     /* =========================================
-                                   RESPONSIVE
-                                   ========================================= */
+                                       RESPONSIVE
+                                       ========================================= */
 
     @@media (max-width: 576px) {
         .stepper-wrapper {
@@ -248,8 +248,8 @@
         }
 
     /* =========================================
-       DRD PHOTO UPLOAD DESIGN
-    ========================================= */
+           DRD PHOTO UPLOAD DESIGN
+        ========================================= */
 
     .drd-photo-section {
         margin-top: 22px;
@@ -509,19 +509,39 @@
                             </div>
 
                             <div class="col-lg-2 col-md-4 col-sm-6">
+
                                 <label asp-for="TblFtdMaster.BatchNo"
-                                       class="form-label">
+                                       class="form-label fw-semibold">
+
+                                    <i class="bi bi-upc-scan me-1 text-primary"></i>
                                     Batch No.
                                     <span class="text-danger">*</span>
+
                                 </label>
 
-                                <input asp-for="TblFtdMaster.BatchNo"
-                                       id="TblFtdMaster_BatchNo"
-                                       class="form-control readonly-field"
-                                       readonly />
+                                <div class="input-group">
+
+                                    <span class="input-group-text bg-light">
+                                        <i class="bi bi-box-seam text-primary"></i>
+                                    </span>
+
+                                    <input asp-for="TblFtdMaster.BatchNo"
+                                           id="TblFtdMaster_BatchNo"
+                                           class="form-control readonly-field"
+                                           placeholder="Auto Generated"
+                                           readonly />
+
+                                </div>
+
+                                <div id="batchExistsMessage"
+                                     class="small mt-2"
+                                     style="display:none;">
+                                </div>
 
                                 <span asp-validation-for="TblFtdMaster.BatchNo"
-                                      class="text-danger"></span>
+                                      class="text-danger small">
+                                </span>
+
                             </div>
 
                             <div class="col-lg-2 col-md-4 col-sm-6">
@@ -3092,31 +3112,31 @@
 
       // Current user permission
     const isKnittingUser = @Html.Raw(
-                System.Text.Json.JsonSerializer.Serialize(
-                        (User.Identity?.Name ?? "").EndsWith(
-                                "knitting",
-                                StringComparison.OrdinalIgnoreCase
-                        )
-                )
-    );
+                                System.Text.Json.JsonSerializer.Serialize(
+                                                (User.Identity?.Name ?? "").EndsWith(
+                                                                "knitting",
+                                                                StringComparison.OrdinalIgnoreCase
+                                                )
+                                )
+        );
 
     const isDyeingUser = @Html.Raw(
-            System.Text.Json.JsonSerializer.Serialize(
-                    (User.Identity?.Name ?? "").EndsWith(
-                            "dyeing",
-                            StringComparison.OrdinalIgnoreCase
-                    )
-            )
-    );
+                        System.Text.Json.JsonSerializer.Serialize(
+                                        (User.Identity?.Name ?? "").EndsWith(
+                                                        "dyeing",
+                                                        StringComparison.OrdinalIgnoreCase
+                                        )
+                        )
+        );
 
     const isBpaUser = @Html.Raw(
-          System.Text.Json.JsonSerializer.Serialize(
-                    (User.Identity?.Name ?? "").EndsWith(
-                                    "bpa",
-                                    StringComparison.OrdinalIgnoreCase
+                    System.Text.Json.JsonSerializer.Serialize(
+                                        (User.Identity?.Name ?? "").EndsWith(
+                                                                        "bpa",
+                                                                        StringComparison.OrdinalIgnoreCase
+                                        )
                     )
-          )
-    );
+        );
 
     $(document).ready(function () {
         if (!isDyeingUser && !isBpaUser) {
@@ -4367,15 +4387,18 @@
     // CONTROL / BATCH CHANGE
     // =========================================================
 
+
+    let controlRequest = null;
+
     $("#Control").on("change", function () {
 
         let selectedValue = $(this).val();
 
         console.log("Selected Control Value:", selectedValue);
 
-        // =====================================================
+        // ==========================================
         // NOTHING SELECTED
-        // =====================================================
+        // ==========================================
 
         if (!selectedValue) {
 
@@ -4386,12 +4409,15 @@
             clearDyeingBasicTable();
             clearDyeingRecipeTable();
 
+            $("#TblFtdMaster_FtdNo").val("");
+            $("#TblFtdMaster_BatchNo").val("");
+
             return;
         }
 
-        // =====================================================
+        // ==========================================
         // SPLIT INTERNAL REF + BATCH
-        // =====================================================
+        // ==========================================
 
         let parts = selectedValue.split("|");
 
@@ -4401,27 +4427,34 @@
         console.log("Internal Ref:", internalRef);
         console.log("Batch No:", batchNo);
 
-        // =====================================================
+        // ==========================================
         // VALIDATION
-        // =====================================================
+        // ==========================================
 
         if (!internalRef || !batchNo) {
 
-            alert("Invalid Control / Batch selection.");
-
-            clearMasterFields();
-            clearFabricTable();
-            clearYarnTable();
-            clearKnitTable();
-            clearDyeingBasicTable();
-            clearDyeingRecipeTable();
+            Swal.fire({
+                icon: "error",
+                title: "Invalid Selection!",
+                text: "Please select a valid Control / Batch.",
+                confirmButtonColor: "#dc3545"
+            });
 
             return;
         }
 
-        // =====================================================
+        // ==========================================
+        // CANCEL PREVIOUS REQUEST
+        // ==========================================
+
+        if (controlRequest) {
+            controlRequest.abort();
+            controlRequest = null;
+        }
+
+        // ==========================================
         // CLEAR OLD DATA
-        // =====================================================
+        // ==========================================
 
         clearMasterFields();
         clearFabricTable();
@@ -4431,221 +4464,412 @@
         clearDyeingRecipeTable();
 
         $("#TblFtdMaster_FtdNo").val("");
+        $("#TblFtdMaster_BatchNo").val("");
 
-        // =====================================================
-        // DISABLE CONTROL DURING LOAD
-        // =====================================================
+        // ==========================================
+        // DISABLE CONTROL DURING VERIFICATION
+        // ==========================================
 
         $("#Control").prop("disabled", true);
 
-        // =====================================================
-        // LOAD MASTER DATA
-        // =====================================================
+        Swal.fire({
+            title: "Checking Batch...",
+            html: "Please wait while we verify the selected Batch.",
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            showConfirmButton: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
 
-        $.ajax({
+        // ==========================================
+        // STEP 1: CHECK EXISTING BATCH
+        // ==========================================
 
-            url: '@Url.Action("GetControlDetails", "FTD")',
+        controlRequest = $.ajax({
+
+            url: '@Url.Action("CheckBatchAlreadyExists", "FTD")',
 
             type: "GET",
 
             dataType: "json",
 
             data: {
-
-                // IMPORTANT:
-                // Send actual Internal Ref, NOT Batch No
-
-                internalRef: batchNo
+                batchNo: batchNo
             },
 
-            success: function (response) {
+            success: function (checkResponse) {
 
-                console.log("Master Response:", response);
+                console.log("Batch Check Response:", checkResponse);
 
-                if (
-                    !response ||
-                    !response.success ||
-                    !response.data
-                ) {
+                // ======================================
+                // CHECK RESPONSE VALIDATION
+                // ======================================
 
-                    alert(
-                        response?.message ||
-                        "No master data found."
-                    );
+                if (!checkResponse ||
+                    checkResponse.success !== true) {
 
-                    return;
-                }
+                    Swal.fire({
+                        icon: "error",
+                        title: "Verification Failed!",
+                        text: checkResponse?.message ||
+                              "Unable to verify Batch No.",
+                        confirmButtonColor: "#dc3545"
+                    });
 
-                let data = response.data;
-
-                // =================================================
-                // MASTER DATA AUTO FILL
-                // =================================================
-
-                $("#TblFtdMaster_Company")
-                    .val(data.companyName || "");
-                    $("#TblFtdMaster_WCompany")
-                    .val(data.workingCompanyName || "");
-
-                $("#TblFtdMaster_BatchNo")
-                    .val(data.batchNo || batchNo);
-
-                $("#TblFtdMaster_InternalRef")
-                    .val(data.internalRef || internalRef);
-
-                $("#TblFtdMaster_SysReq")
-                    .val(data.sysReq || "");
-
-                $("#TblFtdMaster_Buyer")
-                    .val(data.buyerName || "");
-
-                $("#TblFtdMaster_StyleRef")
-                    .val(data.styleRefNo || "");
-
-                $("#TblFtdMaster_Fso")
-                    .val(data.fso || "");
-
-
-                // =================================================
-                // GENERATE COMPANY SHORT NAME
-                // =================================================
-
-                let companyCode = data.companyShortName || "";
-
-                if (!companyCode) {
-
-                    alert("Company Name not found.");
+                    $("#Control").val("").trigger("change.select2");
 
                     return;
                 }
 
+                // ======================================
+                // BATCH ALREADY EXISTS
+                // ======================================
 
-                // =================================================
-                // GENERATE FTD PREFIX
-                // =================================================
+                if (checkResponse.exists === true) {
 
-                let year = new Date()
-                    .getFullYear()
-                    .toString()
-                    .slice(-2);
+                    Swal.fire({
 
-                let prefix = `${companyCode}-FTD-${year}-`;
+                        icon: "warning",
 
+                        title: "This Batch Already Used!",
 
-                // =================================================
-                // GENERATE FTD NUMBER
-                // =================================================
+                        html: `
+                            <div style="padding:10px 5px;">
+
+                                <div style="
+                                    background:#fff3cd;
+                                    border:1px solid #ffe69c;
+                                    border-radius:12px;
+                                    padding:18px;
+                                    margin-bottom:15px;
+                                ">
+
+                                    <div style="
+                                        color:#856404;
+                                        font-size:12px;
+                                        font-weight:700;
+                                        letter-spacing:1px;
+                                        margin-bottom:8px;
+                                    ">
+                                        DUPLICATE BATCH NUMBER
+                                    </div>
+
+                                    <div style="
+                                        font-size:23px;
+                                        font-weight:700;
+                                        color:#dc3545;
+                                        word-break:break-word;
+                                    ">
+                                        ${$("<div>").text(batchNo).html()}
+                                    </div>
+
+                                </div>
+
+                                <p style="
+                                    font-size:14px;
+                                    color:#555;
+                                    margin-bottom:8px;
+                                ">
+                                    This Batch No. already exists
+                                    in the FTD.
+                                </p>
+
+                                <p style="
+                                    font-size:13px;
+                                    color:#dc3545;
+                                    font-weight:600;
+                                    margin:0;
+                                ">
+                                    Please select another Batch.
+                                </p>
+
+                            </div>
+                        `,
+
+                        confirmButtonText: "OK, Got It",
+
+                        confirmButtonColor: "#dc3545",
+
+                        allowOutsideClick: false,
+
+                        allowEscapeKey: false,
+
+                        width: "430px"
+
+                    }).then(function () {
+
+                        $("#Control")
+                            .val("")
+                            .trigger("change.select2");
+
+                        $("#TblFtdMaster_BatchNo").val("");
+                        $("#TblFtdMaster_FtdNo").val("");
+
+                        clearMasterFields();
+                        clearFabricTable();
+                        clearYarnTable();
+                        clearKnitTable();
+                        clearDyeingBasicTable();
+                        clearDyeingRecipeTable();
+
+                    });
+
+                    return;
+                }
+
+                // ======================================
+                // BATCH AVAILABLE
+                // ======================================
+
+                Swal.close();
+
+                console.log("Batch Available. Loading Master Data...");
+
+                // ======================================
+                // STEP 2: LOAD MASTER DATA
+                // ======================================
 
                 $.ajax({
 
-                    url: '@Url.Action("GetNextFtdNumber", "FTD")',
+                    url: '@Url.Action("GetControlDetails", "FTD")',
 
                     type: "GET",
 
                     dataType: "json",
 
                     data: {
-                        prefix: prefix
+                        // Keep your existing parameter mapping
+                        internalRef: batchNo
                     },
 
-                    success: function (result) {
+                    success: function (response) {
 
-                        console.log("FTD Number Response:", result);
+                        console.log("Master Response:", response);
 
-                        if (result && result.ftdNo) {
+                        if (!response ||
+                            !response.success ||
+                            !response.data) {
 
-                            $("#TblFtdMaster_FtdNo")
-                                .val(result.ftdNo);
+                            Swal.fire({
+                                icon: "warning",
+                                title: "No Master Data!",
+                                text: response?.message ||
+                                      "No master data found.",
+                                confirmButtonColor: "#f0ad4e"
+                            });
 
-                            console.log(
-                                "Generated FTD Number:",
-                                result.ftdNo
-                            );
-
-                        } else {
-
-                            alert("FTD Number generation failed.");
-
+                            return;
                         }
+
+                        let data = response.data;
+
+                        // ==================================
+                        // MASTER DATA AUTO FILL
+                        // ==================================
+
+                        $("#TblFtdMaster_Company")
+                            .val(data.companyName || "");
+
+                        $("#TblFtdMaster_WCompany")
+                            .val(data.workingCompanyName || "");
+
+                        $("#TblFtdMaster_BatchNo")
+                            .val(data.batchNo || batchNo);
+
+                        $("#TblFtdMaster_InternalRef")
+                            .val(data.internalRef || internalRef);
+
+                        $("#TblFtdMaster_SysReq")
+                            .val(data.sysReq || "");
+
+                        $("#TblFtdMaster_Buyer")
+                            .val(data.buyerName || "");
+
+                        $("#TblFtdMaster_StyleRef")
+                            .val(data.styleRefNo || "");
+
+                        $("#TblFtdMaster_Fso")
+                            .val(data.fso || "");
+
+                        // ==================================
+                        // COMPANY SHORT NAME
+                        // ==================================
+
+                        let companyCode = data.companyShortName || "";
+
+                        if (!companyCode) {
+
+                            Swal.fire({
+                                icon: "error",
+                                title: "Company Code Missing!",
+                                text: "Company Short Name not found.",
+                                confirmButtonColor: "#dc3545"
+                            });
+
+                            return;
+                        }
+
+                        // ==================================
+                        // GENERATE FTD PREFIX
+                        // ==================================
+
+                        let year = new Date()
+                            .getFullYear()
+                            .toString()
+                            .slice(-2);
+
+                        let prefix = `${companyCode}-FTD-${year}-`;
+
+                        // ==================================
+                        // STEP 3: GENERATE FTD NUMBER
+                        // ==================================
+
+                        $.ajax({
+
+                            url: '@Url.Action("GetNextFtdNumber", "FTD")',
+
+                            type: "GET",
+
+                            dataType: "json",
+
+                            data: {
+                                prefix: prefix
+                            },
+
+                            success: function (result) {
+
+                                console.log("FTD Number Response:", result);
+
+                                if (result && result.ftdNo) {
+
+                                    $("#TblFtdMaster_FtdNo")
+                                        .val(result.ftdNo);
+
+                                    console.log(
+                                        "Generated FTD Number:",
+                                        result.ftdNo
+                                    );
+
+                                } else {
+
+                                    Swal.fire({
+                                        icon: "error",
+                                        title: "FTD Number Failed!",
+                                        text: "Unable to generate FTD Number.",
+                                        confirmButtonColor: "#dc3545"
+                                    });
+
+                                }
+
+                            },
+
+                            error: function (xhr) {
+
+                                console.error(
+                                    "FTD Number AJAX Error:",
+                                    xhr.responseText
+                                );
+
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "FTD Number Error!",
+                                    text: "Failed to generate FTD Number.",
+                                    confirmButtonColor: "#dc3545"
+                                });
+
+                            }
+
+                        });
+
+                        // ==================================
+                        // STEP 4: LOAD FABRIC
+                        // ==================================
+
+                        loadFabricDetails(batchNo);
+
+                        // ==================================
+                        // STEP 5: LOAD YARN
+                        // ==================================
+
+                        loadYarnDetails(batchNo);
+
+                        // ==================================
+                        // STEP 6: LOAD KNIT
+                        // ==================================
+
+                        loadKnitDetails(batchNo);
+
+                        // ==================================
+                        // STEP 7: LOAD DYEING BASIC
+                        // ==================================
+
+                        loadDyeingBasicData(batchNo);
+
+                        // ==================================
+                        // STEP 8: LOAD DYEING RECIPE
+                        // ==================================
+
+                        loadDyeingRecipeData(batchNo);
+
                     },
 
                     error: function (xhr) {
 
                         console.error(
-                            "FTD Number AJAX Error:",
+                            "Master AJAX Error:",
                             xhr.responseText
                         );
 
-                        alert("Failed to generate FTD Number.");
+                        clearMasterFields();
+                        clearFabricTable();
+                        clearYarnTable();
+                        clearKnitTable();
+                        clearDyeingBasicTable();
+                        clearDyeingRecipeTable();
+
+                        $("#TblFtdMaster_FtdNo").val("");
+
+                        Swal.fire({
+                            icon: "error",
+                            title: "Master Data Error!",
+                            text: xhr.responseJSON?.message ||
+                                  "Unable to load Control details.",
+                            confirmButtonColor: "#dc3545"
+                        });
 
                     }
 
                 });
 
-
-                // =================================================
-                // LOAD FABRIC
-                // =================================================
-
-                loadFabricDetails(batchNo);
-
-
-                // =================================================
-                // LOAD YARN
-                // =================================================
-
-                loadYarnDetails(batchNo);
-
-
-                // =================================================
-                // LOAD KNIT
-                // =================================================
-
-                loadKnitDetails(batchNo);
-
-
-                // =================================================
-                // LOAD DYEING BASIC
-                // =================================================
-
-                loadDyeingBasicData(batchNo);
-
-
-                // =================================================
-                // LOAD DYEING RECIPE
-                // =================================================
-
-                loadDyeingRecipeData(batchNo);
-
             },
 
-            error: function (xhr) {
+            error: function (xhr, status) {
+
+                if (status === "abort") {
+                    return;
+                }
 
                 console.error(
-                    "Master AJAX Error:",
+                    "Batch Verification AJAX Error:",
                     xhr.responseText
                 );
 
-                clearMasterFields();
-                clearFabricTable();
-                clearYarnTable();
-                clearKnitTable();
-                clearDyeingBasicTable();
-                clearDyeingRecipeTable();
+                Swal.fire({
+                    icon: "error",
+                    title: "Server Error!",
+                    text: "Unable to verify Batch No. Please try again.",
+                    confirmButtonColor: "#dc3545"
+                });
 
-                $("#TblFtdMaster_FtdNo").val("");
-
-                let message = "Unable to load Control details.";
-
-                if (xhr.responseJSON?.message) {
-                    message = xhr.responseJSON.message;
-                }
-
-                alert(message);
+                $("#Control").val("").trigger("change.select2");
 
             },
 
             complete: function () {
+
+                controlRequest = null;
 
                 $("#Control").prop("disabled", false);
 
@@ -4654,6 +4878,7 @@
         });
 
     });
+
 
 
 
