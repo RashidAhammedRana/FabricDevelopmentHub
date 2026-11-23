@@ -3128,15 +3128,6 @@
           )
     );
 
-     const isBpaUser = @Html.Raw(
-           System.Text.Json.JsonSerializer.Serialize(
-                  (User.Identity?.Name ?? "").EndsWith(
-                         "bpa",
-                         StringComparison.OrdinalIgnoreCase
-                  )
-           )
-     );
-
     const isLabUser = @Html.Raw(
             System.Text.Json.JsonSerializer.Serialize(
                    (User.Identity?.Name ?? "").EndsWith(
