@@ -365,7 +365,8 @@
 
             <form asp-action="Edit" method="post" id="ftdForm" enctype="multipart/form-data">
                 <input type="hidden" asp-for="TblFtdMaster.Ftdid" />
-
+                <input type="hidden" asp-for="TblFtdMaster.Trdate" />
+                <input type="hidden" asp-for="TblFtdMaster.Control" />
 
                 <div asp-validation-summary="ModelOnly"
                      class="text-danger mb-3">

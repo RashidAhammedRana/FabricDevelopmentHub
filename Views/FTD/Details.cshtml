@@ -850,6 +850,56 @@
             </div>
         </div>
 
+        <!-- LAB TEST RESULTS -->
+        <div class="ftd-section">
+
+            <div class="ftd-section-header">
+                <h6 class="ftd-section-title">Lab Test Results</h6>
+            </div>
+
+            <hr class="ftd-section-line" />
+
+            <div class="ftd-table-wrapper">
+                <table class="table table-bordered ftd-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Date</th>
+                            <th>Parameter</th>
+                            <th>Result Value</th>
+                            <th>Overall Lab Test Report</th>
+                            
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (Model.TblLabTestResult != null && Model.TblLabTestResult.Count > 0)
+                        {
+                            for (int i = 0; i < Model.TblLabTestResult.Count; i++)
+                            {
+                                <tr>
+                                    <td class="text-center">@(i + 1)</td>
+                                    <td>@(Model.TblLabTestResult[i].EntryDate.ToString("dd-MMM-yyyy"))</td>
+                                    <td>@(Model.TblLabTestResult[i].Parameter?.ParameterName)</td>
+                                    <td>@(Model.TblLabTestResult[i].ResultValue)</td>
+                                    <td>@(Model.TblLabTestResult[i].Remarks)</td>
+                                    
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="ftd-empty">
+                                    No lab test results available.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <!-- FOOTER BUTTONS -->
         <div class="ftd-footer">
 

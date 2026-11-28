@@ -24,13 +24,17 @@ namespace FabricDevelopmentHub.ViewModels
         public TblLabTestGroup TblLabTestGroup { get; set; } = new();
         public TblLabTestMethod TblLabTestMethod { get; set; } = new();
         public TblLabTestName TblLabTestName { get; set; } = new();
+
+        public List<TblLabDetails> TblLabDetails { get; set; } = new();
+        public List<TblLabTestResult> TblLabTestResult { get; set; } = new();
+
         //public TblLabTestParameter TblLabTestParameter { get; set; } = new();
         //public TblLabTestResult TblLabTestResult { get; set; } = new();
 
 
 
         //public TblLabDetails TblLabDetails { get; set; } = new();
-        public DateTime Date { get; set; } = DateTime.Today;
+        //public DateTime Date { get; set; } = DateTime.Today;
         public List<IFormFile?> FtdKnitPhotos { get; set; } = new();
         //public List<IFormFile?> FtdMasterPhotos { get; set; } = new();
         public IFormFile? DrdPhoto { get; set; }
@@ -42,7 +46,6 @@ namespace FabricDevelopmentHub.ViewModels
         public List<TblFtdYarn> TblFtdYarn { get; set; } = new();
         public List<TblFtdDyeingBasic> TblFtdDyeingBasic { get; set; } = new();
         public List<TblFtdDyeingRecipe> TblFtdDyeingRecipe { get; set; } = new();
-        public List<TblLabDetails> TblLabDetails { get; set; } = new();
 
 
 

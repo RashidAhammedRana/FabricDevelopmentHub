@@ -113,7 +113,6 @@ namespace FabricDevelopmentHub.Controllers
         public async Task<IActionResult> Create()
         {
             var model = new FTDViewModel();
-
             await LoadGroupList();
 
             // -----------------------------------------------------
@@ -210,6 +209,8 @@ namespace FabricDevelopmentHub.Controllers
                 var master = model.TblFtdMaster;
 
                 master.Trdate = DateOnly.FromDateTime(DateTime.Now);
+                master.CreatedAt = DateTime.Now;
+                master.CreatedBy = User.Identity?.Name ?? "System";
 
                 // -------------------------------------------------
                 // SAVE DRD PHOTO
@@ -866,7 +867,9 @@ namespace FabricDevelopmentHub.Controllers
                 // UPDATE MASTER
                 // -----------------------------------------
 
-                var updatedMaster = model.TblFtdMaster;
+                var updatedMaster = master;
+                updatedMaster.UpdatedAt = DateTime.Now;
+                updatedMaster.UpdatedBy = User.Identity?.Name ?? "System";
 
                 _context.Entry(master).CurrentValues.SetValues(updatedMaster);
 
@@ -2184,72 +2187,69 @@ namespace FabricDevelopmentHub.Controllers
                 return NotFound();
             }
 
-            // Step 2: Load Fabric Details
+            // Step 2-8: Load list-based collections
             var fabricList = await _context.TblFtdFabrics
-                .Where(x => x.Ftdid == master.Ftdid)
-                .ToListAsync();
+                .Where(x => x.Ftdid == master.Ftdid).ToListAsync();
 
-            // Step 3: Load Yarn Details
             var yarnList = await _context.TblFtdYarns
-                .Where(x => x.Ftdid == master.Ftdid)
-                .ToListAsync();
+                .Where(x => x.Ftdid == master.Ftdid).ToListAsync();
 
-            // Step 4: Load Knit Details
             var knitList = await _context.TblFtdKnits
-                .Where(x => x.Ftdid == master.Ftdid)
-                .ToListAsync();
+                .Where(x => x.Ftdid == master.Ftdid).ToListAsync();
 
-            // Step 5: Load Dyeing Basic Details
             var dyeingBasicList = await _context.TblFtdDyeingBasics
-                .Where(x => x.Ftdid == master.Ftdid)
-                .ToListAsync();
+                .Where(x => x.Ftdid == master.Ftdid).ToListAsync();
 
-            // Step 6: Load Dyeing Recipe Details
+            // NEW: Lab Details (was missing)
+            var labDetailsList = await _context.TblLabDetails
+                .Where(x => x.Ftdid == master.Ftdid).ToListAsync();
+
             var dyeingRecipeList = await _context.TblFtdDyeingRecipes
+                .Where(x => x.Ftdid == master.Ftdid).ToListAsync();
+
+            // Lab Test Results — Include Parameter so ParameterName is populated
+            var labTestResultList = await _context.TblLabTestResults
+                .Include(x => x.Parameter)
                 .Where(x => x.Ftdid == master.Ftdid)
                 .ToListAsync();
 
-            // Step 7: Load Heatset Details
+            // Step 9-16: Load single-object process models (null-safe)
             var heatset = await _context.TblFinishProcessHeatset
-                .FirstOrDefaultAsync(x => x.Ftdid == master.Ftdid);
+                .FirstOrDefaultAsync(x => x.Ftdid == master.Ftdid) ?? new TblFinishProcessHeatset();
 
-            // Step 8: Load Stentering A/B Details
             var stenteringAb = await _context.TblFinishProcessStenteringAb
-                .FirstOrDefaultAsync(x => x.Ftdid == master.Ftdid);
+                .FirstOrDefaultAsync(x => x.Ftdid == master.Ftdid) ?? new TblFinishProcessStenteringAb();
 
-            // Step 9: Load Stentering B/B Details
             var stenteringBb = await _context.TblFinishProcessStenteringBb
-                .FirstOrDefaultAsync(x => x.Ftdid == master.Ftdid);
+                .FirstOrDefaultAsync(x => x.Ftdid == master.Ftdid) ?? new TblFinishProcessStenteringBb();
 
-            // Step 10: Load Singeing Details
             var singeing = await _context.TblSingeing
-                .FirstOrDefaultAsync(x => x.Ftdid == master.Ftdid);
+                .FirstOrDefaultAsync(x => x.Ftdid == master.Ftdid) ?? new TblSingeing();
 
-            // Step 11: Load Squeezing Details
             var squeezing = await _context.TblSqueezing
-                .FirstOrDefaultAsync(x => x.Ftdid == master.Ftdid);
+                .FirstOrDefaultAsync(x => x.Ftdid == master.Ftdid) ?? new TblSqueezing();
 
-            // Step 12: Load Brush Details
             var brush = await _context.TblBrushe
-                .FirstOrDefaultAsync(x => x.Ftdid == master.Ftdid);
+                .FirstOrDefaultAsync(x => x.Ftdid == master.Ftdid) ?? new TblBrush();
 
-            // Step 13: Load Compacting Details
             var compacting = await _context.TblCompacting
-                .FirstOrDefaultAsync(x => x.Ftdid == master.Ftdid);
+                .FirstOrDefaultAsync(x => x.Ftdid == master.Ftdid) ?? new TblCompacting();
 
-            // Step 14: Load Other Process Details
             var otherProcess = await _context.TblOtherProcess
-                .FirstOrDefaultAsync(x => x.Ftdid == master.Ftdid);
+                .FirstOrDefaultAsync(x => x.Ftdid == master.Ftdid) ?? new TblOtherProcess();
 
-            // Step 15: Prepare ViewModel
+            // Step 17: Prepare ViewModel — SAME shape as Create
             var model = new FTDViewModel
             {
                 TblFtdMaster = master,
+
                 TblFtdFabric = fabricList,
                 TblFtdYarn = yarnList,
                 TblFtdKnit = knitList,
                 TblFtdDyeingBasic = dyeingBasicList,
+                TblLabDetails = labDetailsList,        // NEW
                 TblFtdDyeingRecipe = dyeingRecipeList,
+                TblLabTestResult = labTestResultList,     // NEW
 
                 TblFinishProcessHeatset = heatset,
                 TblFinishProcessStenteringAb = stenteringAb,
